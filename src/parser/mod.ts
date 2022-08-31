@@ -3,14 +3,11 @@ import {
   coroutine,
   choice,
   char,
-  many,
   recursiveParser,
-  anyCharExcept
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
 import keyParser from "./key.ts";
-import valueParser from "./value.ts";
 import referenceParser from "./reference.ts";
 import definitionsParser from "./definitions.ts";
 
@@ -46,9 +43,14 @@ Line
     Key ws Value
 */
 const lineParser = coroutine(function* () {
-  // TODO: finish
-  const line = yield many (anyCharExcept (newlineChar));
-  return line.join("");
+  const key = yield keyParser;
+  yield whitespaceParser;
+  const value = yield valueParser;
+  
+  return {
+    key,
+    value
+  };
 });
 
 /*
@@ -56,7 +58,7 @@ Value
     Reference
     Definitions
 */
-const textParser = choice([
+const valueParser = choice([
   referenceParser,
   definitionsParser,
 ]);
