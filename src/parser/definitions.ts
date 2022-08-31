@@ -11,24 +11,28 @@ import tagsParser from "./tag.ts";
 
 /*
 Definitions
+    DefinitionList
     Definition
-    List
 */
+const definitionsParser = choice([
+  definitionsListParser,
+  definitionParser,
+]);
 
 // beware: extended McKeeman Form with regex repetition operator and argument
 /*
-List
-    ListItem(1) ws ListItem(2) (ws ListItem(i+3))*i
+DefinitionList
+    DefinitionListItem(1) ws DefinitionListItem(2) (ws DefinitionListItem(i+3))*i
 */
-const listParser = coroutine( function* () {
+const definitionsListParser = coroutine( function* () {
   const res = [];
 
-  res.push(yield listItemParserFactory(1));
+  res.push(yield definitionsListItemParserFactory(1));
   
-  res.push(yield listItemParserFactory(2));
+  res.push(yield definitionsListItemParserFactory(2));
   
   for (let i = 3; i += 1) {
-    const maybe = yield listItemParserFactory(i);
+    const maybe = yield definitionsListItemParserFactory(i);
     
     if (maybe.isError) {
       break;
@@ -42,10 +46,10 @@ const listParser = coroutine( function* () {
 
 // beware: extended McKeeman Form with parameter variable `Integer`
 /*
-ListItem(Integer)
+DefinitionListItem(Integer)
     Integer "." ws Definition
 */
-const listItemParserFactory = position => coroutine( function* () {
+const definitionsListItemParserFactory = position => coroutine( function* () {
   const _ = yield char(position);
   yield char(".");
   yield whitespaceParser;
@@ -59,6 +63,11 @@ const listItemParserFactory = position => coroutine( function* () {
 /*
 Definition
     Entries
+    EntriesTagged
+*/
+
+/*
+EntriesTagged
     Tags ws Entries
 */
 
