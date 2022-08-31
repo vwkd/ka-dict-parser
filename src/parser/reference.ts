@@ -16,7 +16,10 @@ Reference
     ReferenceValueTagged
 */
 const referenceParser = recursiveParser( () => choice([
-  referenceValueParser,
+  referenceValueParser.map(reference => ({
+    tags: [],
+    ...reference,
+  })),
   referenceValueTaggedParser
 ]));
 
@@ -30,9 +33,8 @@ const referenceValueTaggedParser = coroutine( function* () {
   const reference = yield referenceValueParser;
   
   return {
-    ...reference,
-    // note: overwrites `tags: []` property from `reference`!
     tags,
+    ...reference,
   };
 });
 
@@ -46,10 +48,7 @@ const referenceValueParser = recursiveParser( () => choice([
   referenceDirectParser,
   referenceMeaningParser,
   referenceIdenticalParser
-]).map(o => {
-  o.tags = [];
-  return o;
-}));
+]));
 
 /*
 ReferenceDirect
