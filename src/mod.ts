@@ -33,7 +33,7 @@ const multilineParser = coroutine(function* () {
 
 const lineParser = coroutine(function* () {
   // TODO: finish
-  const line = yield many (anyCharExcept (newlineChar);
+  const line = yield many (anyCharExcept (newlineChar));
   return line;
 });
 
