@@ -101,10 +101,10 @@ Entries
 const entriesParser = recursiveParser( () => choice([
   entryListParser,
   entryParser,
-])).map(entries => ({
+]).map(entries => ({
   tags: [],
   entries,
-}));
+})));
 
 /*
 EntryList
