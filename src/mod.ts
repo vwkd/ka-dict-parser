@@ -7,7 +7,7 @@ import {
 
 // ---------- Parser ----------
 
-const helloString = str("hello");
+const helloString = str("Hello");
 
 const spaceChar = char(" ");
 
