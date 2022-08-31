@@ -57,8 +57,9 @@ const definitionsListItemParserFactory = position => coroutine( function* () {
   const definition = yield definitionParser;
   
   return {
+    ...definition,
+    // note: overwrites `position: 0` property from `definition`!
     position,
-    definition,
   };
 });
 
@@ -70,7 +71,10 @@ Definition
 const definitionParser = recursiveParser( () => choice([
   entriesParser,
   entriesTaggedParser,
-]));
+])).map(s => ({
+    position: 1,
+    definition: s,
+}));
 
 /*
 EntriesTagged
