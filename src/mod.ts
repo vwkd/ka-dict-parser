@@ -37,12 +37,10 @@ const newlineChar = char(`
 
 // ---------- Execution ----------
 
-const runParse = input => fullParser.fork(input,
+const input = `ადგილ umstellen, translozieren
+ადვილ erleichtern`;
+
+textParser.fork(input,
   (error, _) => console.error(error),
   (result, _) => console.log(result)
 );
-
-const input1 = `ადგილ umstellen, translozieren
-ადვილ erleichtern`;
-
-const result1 = runParse(input1);
