@@ -17,7 +17,10 @@ Definitions
 */
 const definitionsParser = recursiveParser( () => choice([
   definitionsListParser,
-  definitionParser,
+  definitionParser.map(definition => ({
+    position: 1,
+    ...definition,
+  })),
 ]));
 
 // beware: extended McKeeman Form with regex repetition operator and argument
@@ -57,9 +60,8 @@ const definitionsListItemParserFactory = position => coroutine( function* () {
   const definition = yield definitionParser;
   
   return {
-    ...definition,
-    // note: overwrites `position: 0` property from `definition`!
     position,
+    ...definition,
   };
 });
 
@@ -69,12 +71,12 @@ Definition
     EntriesTagged
 */
 const definitionParser = recursiveParser( () => choice([
-  entriesParser,
+  entriesParser.map(entries => ({
+    tags: [],
+    entries,
+  })),
   entriesTaggedParser,
-])).map(s => ({
-    position: 1,
-    definition: s,
-}));
+]));
 
 /*
 EntriesTagged
@@ -86,8 +88,7 @@ const entriesTaggedParser = coroutine( function* () {
   const entries = yield entriesParser;
   
   return {
-    ...entries,
-    // note: overwrites `tags: []` property from `entries`!
+    entries,
     tags,
   };
 });
@@ -101,10 +102,7 @@ Entries
 const entriesParser = recursiveParser( () => choice([
   entryListParser,
   entryParser,
-])).map(o => {
-  o.tags = [];
-  return o;
-});
+]));
 
 /*
 EntryList
