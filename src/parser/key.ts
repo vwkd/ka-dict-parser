@@ -14,10 +14,10 @@ Key
     IndexVariant
     Index
 */
-const keyParser = choice([
+const keyParser = recursiveParser( () => choice([
   indexVariantParser,
   indexParser,
-]);
+]));
 
 /*
 IndexVariant
@@ -37,7 +37,7 @@ const indexVariantParser = coroutine( function* () {
 Index
     WordKa
 */
-const indexParser = wordKaParser;
+const indexParser = recursiveParser( () => wordKaParser);
 
 /*
 WordKa

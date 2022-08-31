@@ -15,10 +15,10 @@ Definitions
     DefinitionList
     Definition
 */
-const definitionsParser = choice([
+const definitionsParser = recursiveParser( () => choice([
   definitionsListParser,
   definitionParser,
-]);
+]));
 
 // beware: extended McKeeman Form with regex repetition operator and argument
 /*
@@ -67,10 +67,10 @@ Definition
     Entries
     EntriesTagged
 */
-const definitionParser = choice([
+const definitionParser = recursiveParser( () => choice([
   entriesParser,
   entriesTaggedParser,
-]);
+]));
 
 /*
 EntriesTagged
@@ -123,7 +123,7 @@ const entryListParser = coroutine( function* () {
 Entry
     WordsDe
 */
-const entryParser = wordsDeParser.map(s => [s]);
+const entryParser = recursiveParser( () => wordsDeParser.map(s => [s]));
 
 /*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
@@ -152,7 +152,7 @@ WordDe
     CharDeBig CharsDeSmall
     CharDeSmall CharsDeSmall
 */
-const wordDeParser = choice([
+const wordDeParser = recursiveParser( () => choice([
   sequenceOf([
     charDeBigParser,
     charsDeSmallParser,
@@ -161,7 +161,7 @@ const wordDeParser = choice([
     charDeSmallParser,
     charsDeSmallParser,
   ]).map(a => a.join("")),
-]);
+]));
 
 /*
 CharsDeSmall
