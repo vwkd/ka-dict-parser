@@ -2,22 +2,38 @@ import {
   str,
   coroutine,
   choice,
-  char
+  char,
+  many,
+  recursiveParser,
+  everyCharUntil
 } from './deps.ts';
 
 // ---------- Parser ----------
 
-const fullParser = coroutine(function* () {
-  const helloString = yield str("Hello");
-  
-  const spaceChar = yield char(" ");
-  
-  const nameString = yield choice([
-    str("there"),
-    str("everyone"),
-    str("world"),
-  ]);
+/*
+Text
+    Line
+    Line n Text
+*/
+const textParser = recursiveParser( () => choice([
+  lineParser,
+  multilineParser,
+]));
+
+const multilineParser = coroutine(function* () {
+  const line = yield lineParser;
+  yield newlineChar;
+  return line;
 });
+
+const lineParser = coroutine(function* () {
+  // TODO: finish
+  const line = yield everyCharUntil(newlineChar);
+  return line;
+});
+
+const newlineChar = char(`
+`); // regex(/\n/);
 
 // ---------- Execution ----------
 
@@ -26,10 +42,7 @@ const runParse = input => fullParser.fork(input,
   (result, _) => console.log(result)
 );
 
-const input1 = "Hello world";
+const input1 = `ადგილ umstellen, translozieren
+ადვილ erleichtern`;
 
 const result1 = runParse(input1);
-
-const input2 = "Hello cream";
-
-const result2 = runParse(input2);
