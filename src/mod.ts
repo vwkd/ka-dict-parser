@@ -12,12 +12,13 @@ import {
 
 /*
 Text
-    Line
     Line n Text
+    Line
 */
+// TODO: use startOfInput and endOfInput?
 const textParser = recursiveParser( () => choice([
   multilineParser,
-  lineParser,
+  // lineParser,
 ]));
 
 const multilineParser = coroutine(function* () {
