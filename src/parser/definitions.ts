@@ -51,7 +51,7 @@ DefinitionListItem(Integer)
     Integer "." ws Definition
 */
 const definitionsListItemParserFactory = position => coroutine( function* () {
-  const _ = yield char(position);
+  const _ = yield char(`${position}`);
   yield char(".");
   yield whitespaceParser;
   const definition = yield definitionParser;
