@@ -26,7 +26,7 @@ Categories
     Category
 */
 const categoriesParser = recursiveParser( () => choice([
-  categoryListParser
+  categoryListParser,
   categoryParser,
 ]));
 
