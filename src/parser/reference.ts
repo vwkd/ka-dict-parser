@@ -31,7 +31,7 @@ const referenceValueTaggedParser = coroutine( function* () {
   
   return {
     ...reference,
-    // note: overwrites empty tags property from `reference`!
+    // note: overwrites `tags: []` property from `reference`!
     tags,
   };
 });

@@ -83,7 +83,7 @@ const entriesTaggedParser = coroutine( function* () {
   
   return {
     ...entries,
-    // note: overwrites empty tags property from `entries`!
+    // note: overwrites `tags: []` property from `entries`!
     tags,
   };
 });
