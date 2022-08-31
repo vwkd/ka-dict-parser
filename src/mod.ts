@@ -1,27 +1,23 @@
 import {
   str,
-  sequenceOf,
+  coroutine,
   choice,
   char
 } from './deps.ts';
 
 // ---------- Parser ----------
 
-const helloString = str("Hello");
-
-const spaceChar = char(" ");
-
-const nameString = choice([
-  str("there"),
-  str("everyone"),
-  str("world"),
-]);
-
-const fullParser = sequenceOf([
-  helloString,
-  spaceChar,
-  nameString,
-]);
+const fullParser = coroutine(function* () {
+  const helloString = yield str("Hello");
+  
+  const spaceChar = yield char(" ");
+  
+  const nameString = yield choice([
+    str("there"),
+    str("everyone"),
+    str("world"),
+  ]);
+});
 
 // ---------- Execution ----------
 
