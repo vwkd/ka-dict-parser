@@ -25,9 +25,11 @@ const multilineParser = coroutine(function* () {
   const line = yield lineParser;
   yield newlineChar;
   const rest = yield textParser;
+  const restArr = Array.isArray(rest) ? rest : [rest];
+  
   return [
     line,
-    Array.isArray(rest) ? ...rest : rest,
+    ...restArr,
   ];
 });
 
