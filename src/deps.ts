@@ -5,5 +5,4 @@ export {
   choice,
   char,
   recursiveParser,
-  digits,
 } from "https://cdn.skypack.dev/arcsecond";
