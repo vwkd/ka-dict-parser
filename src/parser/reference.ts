@@ -15,10 +15,10 @@ Reference
     ReferenceValue
     ReferenceValueTagged
 */
-const referenceParser = choice([
+const referenceParser = recursiveParser( () => choice([
   referenceValueParser,
   referenceValueTaggedParser
-]);
+]));
 
 /*
 ReferenceValueTagged
@@ -42,14 +42,14 @@ ReferenceValue
     ReferenceMeaning
     ReferenceIdentical
 */
-const referenceValueParser = choice([
+const referenceValueParser = recursiveParser( () => choice([
   referenceDirectParser,
   referenceMeaningParser,
   referenceIdenticalParser
 ]).map(o => {
   o.tags = [];
   return o;
-});
+}));
 
 /*
 ReferenceDirect
