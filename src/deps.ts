@@ -3,4 +3,4 @@ export {
   sequenceOf,
   choice,
   char
-} from 'https://cdn.skypack.dev/arcsecond";
+} from "https://cdn.skypack.dev/arcsecond";
