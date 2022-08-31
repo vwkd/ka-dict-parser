@@ -20,7 +20,7 @@ const definitionsParser = recursiveParser( () => choice([
   definitionParser.map(definition => ({
     position: 1,
     ...definition,
-  }),
+  })),
 ]));
 
 // beware: extended McKeeman Form with regex repetition operator and argument
