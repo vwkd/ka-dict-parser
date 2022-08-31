@@ -4,6 +4,7 @@ import {
   choice,
   char,
   recursiveParser,
+  sequenceOf,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -29,8 +30,8 @@ const indexVariantParser = coroutine( function* () {
   return {
     variant,
     index,
-  }
-}
+  };
+});
 
 /*
 Index
@@ -61,7 +62,7 @@ const wordKaParser = recursiveParser( () => choice([
 CharKa
     UNICODE_GEORGIAN_CHARACTER
 */
-// beware: not whole Unicode block!
+// beware: not complete Unicode block!
 const charKaParser = choice([
   char("ა"),
   char("ბ"),
