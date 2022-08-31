@@ -1,5 +1,6 @@
 export {
   str,
+  sequenceOf,
   coroutine,
   choice,
   char,
