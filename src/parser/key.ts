@@ -16,7 +16,10 @@ Key
 */
 const keyParser = recursiveParser( () => choice([
   indexVariantParser,
-  indexParser,
+  indexParser.map(index => ({
+    variant: 1,
+    index,
+  })),
 ]));
 
 /*
@@ -41,9 +44,8 @@ const indexVariantParser = coroutine( function* () {
   const variant = VARIANT[superscriptNumber];
   
   return {
-    ...index,
-    // note: overwrites `variant: 1` property from `index`!
     variant,
+    index,
   };
 });
 
@@ -51,10 +53,7 @@ const indexVariantParser = coroutine( function* () {
 Index
     WordKa
 */
-const indexParser = recursiveParser( () => wordKaParser.map(s => ({
-  variant: 1,
-  index: s,
-})));
+const indexParser = recursiveParser( () => wordKaParser);
 
 /*
 WordKa
