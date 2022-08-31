@@ -17,7 +17,7 @@ Reference
 */
 const referenceParser = recursiveParser( () => choice([
   referenceValueParser.map(reference => ({
-    tags = [],
+    tags: [],
     ...reference,
   })),
   referenceValueTaggedParser
