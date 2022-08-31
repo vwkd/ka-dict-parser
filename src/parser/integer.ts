@@ -4,6 +4,7 @@ import {
   char,
   recursiveParser,
   sequenceOf,
+  digits
 } from "../deps.ts";
 
 /*
@@ -13,27 +14,7 @@ Integer
 */
 const integerParser = choice([
   digitNonZeroParser,
-  sequenceOf([digitNonZeroParser, digitsParser]).map(a => a.join("")),
-]);
-
-/*
-Digits
-    Digit
-    Digit Digits
-*/
-const digitsParser = recursiveParser( () => choice([
-  digitParser,
-  sequenceOf([digitParser, digitsParser]).map(a => a.join("")),
-]));
-
-/*
-Digit
-    "0"
-    DigitNonZero
-*/
-const digitParser = choice([
-  char("0"),
-  digitNonZeroParser
+  sequenceOf([digitNonZeroParser, digits]).map(a => a.join("")),
 ]);
 
 /*
