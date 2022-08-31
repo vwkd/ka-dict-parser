@@ -5,5 +5,5 @@ export {
   char,
   many,
   recursiveParser,
-  everyCharUntil
+  anyCharExcept
 } from "https://cdn.skypack.dev/arcsecond";
