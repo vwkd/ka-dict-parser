@@ -12,12 +12,39 @@ import { whitespaceParser } from "./chars.ts";
 Tags
     "{" Categories "}"
 */
+const tagsParser = coroutine( function* () {
+  yield char("{");
+  const categories = categoriesParser;
+  yield char("}");
+  
+  return categories;
+});
 
 /*
 Categories
-    Category "," ws Categories
+    CategoryList
     Category
 */
+const categoriesParser = recursiveParser( () => choice([
+  categoryListParser
+  categoryParser,
+]));
+
+/*
+CategoryList
+    Category "," ws Categories
+*/
+const categoryListParser = coroutine( function* () {
+  const category = yield categoryParser;
+  yield char(",");
+  yield whitespaceParser;
+  const categories = yield categoriesParser;
+  
+  return [
+    ...category,
+    ...categories,
+  ];
+});
 
 /*
 Category
@@ -70,5 +97,55 @@ Category
     "va."
     "vulg."
 */
+const categoryParser = choice([
+  str("biol."),
+  str("bot."),
+  str("chem."),
+  str("chew."),
+  str("desp."),
+  str("elektr."),
+  str("ethn."),
+  str("fig."),
+  str("gr."),
+  str("gur."),
+  str("hist."),
+  str("HV."),
+  str("imer."),
+  str("ing."),
+  str("iro."),
+  str("jur."),
+  str("kach."),
+  str("khar."),
+  str("khis."),
+  str("landw."),
+  str("letsch."),
+  str("math."),
+  str("med."),
+  str("mil."),
+  str("moch."),
+  str("moral."),
+  str("mthiul."),
+  str("mus."),
+  str("neg."),
+  str("nz."),
+  str("o-imer."),
+  str("photogr."),
+  str("phys."),
+  str("poet."),
+  str("pol."),
+  str("psch."),
+  str("ratsch."),
+  str("rl."),
+  str("spo."),
+  str("tech."),
+  str("thusch."),
+  str("typ."),
+  str("u-imer."),
+  str("u-ratsch."),
+  str("umg."),
+  str("unk."),
+  str("va."),
+  str("vulg."),
+]).map(s => [s]);;
 
 export default tagsParser;
