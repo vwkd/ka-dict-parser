@@ -25,11 +25,25 @@ IndexVariant
 */
 const indexVariantParser = coroutine( function* () {
   const index = yield indexParser;
-  const variant = yield superscriptNumberParser;
+  const superscriptNumber = yield superscriptNumberParser;
+  
+  const VARIANT = {
+    "¹": 1,
+    "²": 2,
+    "³": 3,
+    "⁴": 4,
+    "⁵": 5,
+    "⁶": 6,
+    "⁷": 7,
+    "⁸": 8,
+    "⁹": 9,
+  }
+  const variant = VARIANT[superscriptNumber];
   
   return {
+    ...index,
+    // note: overwrites `variant: 1` property from `index`!
     variant,
-    index,
   };
 });
 
@@ -37,7 +51,10 @@ const indexVariantParser = coroutine( function* () {
 Index
     WordKa
 */
-const indexParser = recursiveParser( () => wordKaParser);
+const indexParser = recursiveParser( () => wordKaParser.map(s => ({
+  variant: 1,
+  index: s,
+}));
 
 /*
 WordKa
