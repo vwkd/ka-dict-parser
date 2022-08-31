@@ -7,7 +7,7 @@ import {
 
 // ---------- Parser ----------
 
-const fullParser = coroutine(function* () => {
+const fullParser = coroutine(function* () {
   const helloString = yield str("Hello");
   
   const spaceChar = yield char(" ");
