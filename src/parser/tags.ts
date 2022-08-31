@@ -14,7 +14,7 @@ Tags
 */
 const tagsParser = coroutine( function* () {
   yield char("{");
-  const categories = categoriesParser;
+  const categories = yield categoriesParser;
   yield char("}");
   
   return categories;
@@ -27,7 +27,7 @@ Categories
 */
 const categoriesParser = recursiveParser( () => choice([
   categoryListParser,
-  categoryParser,
+  categoryParser.map(s => [s]),
 ]));
 
 /*
@@ -41,7 +41,7 @@ const categoryListParser = coroutine( function* () {
   const categories = yield categoriesParser;
   
   return [
-    ...category,
+    category,
     ...categories,
   ];
 });
@@ -146,6 +146,6 @@ const categoryParser = choice([
   str("unk."),
   str("va."),
   str("vulg."),
-]).map(s => [s]);;
+]);
 
 export default tagsParser;
