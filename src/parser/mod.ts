@@ -8,9 +8,11 @@ import {
   anyCharExcept
 } from "../deps.ts";
 
+import { newlineParser, whitespaceParser } from "./chars.ts";
 import keyParser from "./key.ts";
 import valueParser from "./value.ts";
-import { newlineParser, whitespaceParser } from "./chars.ts";
+import referenceParser from "./reference.ts";
+import definitionsParser from "./definitions.ts";
 
 /*
 Text
@@ -48,5 +50,15 @@ const lineParser = coroutine(function* () {
   const line = yield many (anyCharExcept (newlineChar));
   return line.join("");
 });
+
+/*
+Value
+    Reference
+    Definitions
+*/
+const textParser = choice([
+  referenceParser,
+  definitionsParser,
+]);
 
 export default textParser;
