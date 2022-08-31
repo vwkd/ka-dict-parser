@@ -27,14 +27,14 @@ const multilineParser = coroutine(function* () {
   const rest = yield textParser;
   return [
     line,
-    ...rest,
+    Array.isArray(rest) ? ...rest : rest,
   ];
 });
 
 const lineParser = coroutine(function* () {
   // TODO: finish
   const line = yield many (anyCharExcept (newlineChar));
-  return line;
+  return line.join("");
 });
 
 const newlineChar = char(`
