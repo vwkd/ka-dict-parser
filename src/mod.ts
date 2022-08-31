@@ -25,6 +25,15 @@ const fullParser = sequenceOf([
 
 // ---------- Execution ----------
 
-const input = "Hello world";
+const runParse = input => fullParser.fork(input,
+  (error, _) => console.error(error),
+  (result, _) => console.log(result)
+);
 
-const result = fullParser.run(input).result;
+const input1 = "Hello world";
+
+const result1 = runParse(input1);
+
+const input2 = "Hello cream";
+
+const result2 = runParse(input2);
