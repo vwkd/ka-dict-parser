@@ -5,7 +5,7 @@ import {
   char,
   many,
   recursiveParser,
-  everyCharUntil
+  anyCharExcept
 } from './deps.ts';
 
 // ---------- Parser ----------
@@ -18,7 +18,7 @@ Text
 // TODO: use startOfInput and endOfInput?
 const textParser = recursiveParser( () => choice([
   multilineParser,
-  // lineParser,
+  lineParser,
 ]));
 
 const multilineParser = coroutine(function* () {
@@ -33,7 +33,7 @@ const multilineParser = coroutine(function* () {
 
 const lineParser = coroutine(function* () {
   // TODO: finish
-  const line = yield everyCharUntil(newlineChar);
+  const line = yield many (anyCharExcept (newlineChar);
   return line;
 });
 
