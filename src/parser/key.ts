@@ -54,7 +54,7 @@ Index
 const indexParser = recursiveParser( () => wordKaParser.map(s => ({
   variant: 1,
   index: s,
-}));
+})));
 
 /*
 WordKa
