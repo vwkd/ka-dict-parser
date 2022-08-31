@@ -8,7 +8,7 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import tagsParser from "./tag.ts";
+import tagsParser from "./tags.ts";
 
 /*
 Definitions
@@ -32,7 +32,7 @@ const definitionsListParser = coroutine( function* () {
   
   res.push(yield definitionsListItemParserFactory(2));
   
-  for (let i = 3; i += 1) {
+  for (let i = 3; ; i += 1) {
     const maybe = yield definitionsListItemParserFactory(i);
     
     if (maybe.isError) {
@@ -57,8 +57,9 @@ const definitionsListItemParserFactory = position => coroutine( function* () {
   const definition = yield definitionParser;
   
   return {
-    position;
-    definition;
+    position,
+    definition,
+  };
 });
 
 /*
@@ -84,7 +85,7 @@ const entriesTaggedParser = coroutine( function* () {
     ...entries,
     // note: overwrites empty tags property from `entries`!
     tags,
-  }
+  };
 });
 
 /*
@@ -112,8 +113,8 @@ const entryListParser = coroutine( function* () {
   const entries = yield entriesParser;
   
   return [
-    ...entry
-    ...entries
+    ...entry,
+    ...entries,
   ];
 });
 
