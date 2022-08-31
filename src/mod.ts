@@ -16,14 +16,18 @@ Text
     Line n Text
 */
 const textParser = recursiveParser( () => choice([
-  lineParser,
   multilineParser,
+  lineParser,
 ]));
 
 const multilineParser = coroutine(function* () {
   const line = yield lineParser;
   yield newlineChar;
-  return line;
+  const rest = yield textParser;
+  return [
+    line,
+    ...rest,
+  ];
 });
 
 const lineParser = coroutine(function* () {
