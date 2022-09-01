@@ -72,8 +72,8 @@ Definition
 */
 const definitionParser = recursiveParser( () => choice([
   entriesParser.map(entries => ({
-    tags: [],
     entries,
+    tags: [],
   })),
   entriesTaggedParser,
 ]));
