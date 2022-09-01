@@ -5,6 +5,7 @@ import {
   char,
   recursiveParser,
   sequenceOf,
+  possibly,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -36,9 +37,9 @@ const definitionsListParser = coroutine( function* () {
   const res = [item1, item2];
   
   for (let i = 3; ; i += 1) {
-    const maybe = yield whitespaceAndDefinitionsListItemParserFactory(i);
+    const maybe = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
     
-    if (maybe.isError) {
+    if (maybe.result === null) {
       break;
     } else {
       res.push(maybe);
