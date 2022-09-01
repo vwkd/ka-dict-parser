@@ -26,17 +26,17 @@ const definitionsParser = recursiveParser( () => choice([
 // beware: extended McKeeman Form with regex repetition operator and argument
 /*
 DefinitionList
-    DefinitionListItem(1) ws DefinitionListItem(2) (ws DefinitionListItem(i+3))*i
+    DefinitionListItem(1) WhitespaceAndDefinitionsListItem(2) (WhitespaceAndDefinitionsListItem(i + 3))*i
 */
 const definitionsListParser = coroutine( function* () {
-  const res = [];
-
-  res.push(yield definitionsListItemParserFactory(1));
+  const item1 = yield definitionsListItemParserFactory(1);
   
-  res.push(yield definitionsListItemParserFactory(2));
+  const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
+  
+  const res = [item1, item2];
   
   for (let i = 3; ; i += 1) {
-    const maybe = yield definitionsListItemParserFactory(i);
+    const maybe = yield whitespaceAndDefinitionsListItemParserFactory(i);
     
     if (maybe.isError) {
       break;
@@ -50,12 +50,24 @@ const definitionsListParser = coroutine( function* () {
 
 // beware: extended McKeeman Form with parameter variable `Integer`
 /*
+WhitespaceAndDefinitionsListItem(Integer)
+    ws DefinitionListItem(Integer)
+*/
+
+const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( function* () {
+  yield whitespaceParser;
+  const definitionListItem = yield definitionsListItemParserFactory(position);
+  
+  return definitionListItem;
+});
+
+// beware: extended McKeeman Form with parameter variable `Integer`
+/*
 DefinitionListItem(Integer)
     Integer "." ws Definition
 */
 const definitionsListItemParserFactory = position => coroutine( function* () {
-  const _ = yield char(`${position}`);
-  yield char(".");
+  yield str(`${position}.`);
   yield whitespaceParser;
   const definition = yield definitionParser;
   
