@@ -3,7 +3,7 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
+  many,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -22,28 +22,28 @@ const tagsParser = coroutine( function* () {
 
 /*
 Categories
-    CategoryList
-    Category
+    Category CommaWhitespaceCategory*
 */
-const categoriesParser = recursiveParser( () => choice([
-  categoryListParser,
-  categoryParser.map(s => [s]),
-]));
-
-/*
-CategoryList
-    Category "," ws Categories
-*/
-const categoryListParser = coroutine( function* () {
+const categoriesParser = coroutine( function* () {
   const category = yield categoryParser;
-  yield char(",");
-  yield whitespaceParser;
-  const categories = yield categoriesParser;
+  const categories = yield many( commaWhitespaceCategoryParser);
   
   return [
     category,
     ...categories,
   ];
+});
+
+/*
+CommaWhitespaceCategory
+    "," ws Category
+*/
+const commaWhitespaceCategoryParser = coroutine( function* () {
+  yield char(",");
+  yield whitespaceParser;
+  const category = yield categoryParser;
+  
+  return category;
 });
 
 /*
