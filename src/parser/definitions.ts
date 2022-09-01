@@ -6,7 +6,6 @@ import {
   sequenceOf,
   possibly,
   many,
-  many1,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
