@@ -18,11 +18,11 @@ Text
 // TODO: use startOfInput and endOfInput?
 const textParser = coroutine(function* () {
   const line = yield lineParser;
-  const rest = yield many( newlineLineParser);
+  const lines = yield many( newlineLineParser);
   
   return [
     line,
-    ...rest,
+    ...lines,
   ];
 });
 
