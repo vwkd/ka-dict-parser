@@ -3,52 +3,11 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
 import keyParser from "./key.ts";
 import tagsParser from "./tags.ts";
-
-/*
-Reference
-    ReferenceValue
-    ReferenceValueTagged
-*/
-const referenceParser = recursiveParser( () => choice([
-  referenceValueParser.map(reference => ({
-    ...reference,
-    tags: [],
-  })),
-  referenceValueTaggedParser
-]));
-
-/*
-ReferenceValueTagged
-    Tags ws ReferenceValue
-*/
-const referenceValueTaggedParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
-  const reference = yield referenceValueParser;
-  
-  return {
-    ...reference,
-    tags,
-  };
-});
-
-/*
-ReferenceValue
-    ReferenceDirect
-    ReferenceMeaning
-    ReferenceIdentical
-*/
-const referenceValueParser = recursiveParser( () => choice([
-  referenceDirectParser,
-  referenceMeaningParser,
-  referenceIdenticalParser
-]));
 
 /*
 ReferenceDirect
@@ -96,5 +55,45 @@ const referenceIdenticalParser = coroutine( function* () {
     key,
   };
 });
+
+/*
+ReferenceValue
+    ReferenceDirect
+    ReferenceMeaning
+    ReferenceIdentical
+*/
+const referenceValueParser = choice([
+  referenceDirectParser,
+  referenceMeaningParser,
+  referenceIdenticalParser
+]);
+
+/*
+ReferenceValueTagged
+    Tags ws ReferenceValue
+*/
+const referenceValueTaggedParser = coroutine( function* () {
+  const tags = yield tagsParser;
+  yield whitespaceParser;
+  const reference = yield referenceValueParser;
+  
+  return {
+    ...reference,
+    tags,
+  };
+});
+
+/*
+Reference
+    ReferenceValue
+    ReferenceValueTagged
+*/
+const referenceParser = choice([
+  referenceValueParser.map(reference => ({
+    ...reference,
+    tags: [],
+  })),
+  referenceValueTaggedParser
+]);
 
 export default referenceParser;
