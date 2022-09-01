@@ -6,4 +6,5 @@ export {
   char,
   recursiveParser,
   possibly,
+  many,
 } from "https://cdn.skypack.dev/arcsecond";
