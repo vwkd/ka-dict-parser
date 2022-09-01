@@ -5,6 +5,7 @@ import {
   char,
   sequenceOf,
   many1,
+  possibly,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -96,17 +97,20 @@ const wordKaParser = many1( charKaParser).map(a => a.join(""));
 
 /*
 Index
-    WordKa "-" WordKa
-    WordKa
+    WordKa ("-" WordKa)?
 */
-const indexParser = choice([
-  sequenceOf([
-    wordKaParser,
-    char("-"),
-    wordKaParser,
-  ]).map(a => a.join(""))
-  wordKaParser,
-]);
+const indexParser = coroutine( function* () {
+    const word = yield wordKaParser;
+    const rest = yield possibly( sequenceOf([
+      char("-"),
+      wordKaParser,
+    ]));
+    
+    return [
+      word,
+      ...(rest ?? []),
+    ];
+}).map(a => a.join(""));
 
 /*
 IndexVariant
