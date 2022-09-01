@@ -89,28 +89,37 @@ const charKaParser = choice([
 ]);
 
 /*
-// note: allow only single hyphen in word
-WordKa
+CharsKa
     CharKa+
 */
-const wordKaParser = many1( charKaParser).map(a => a.join(""));
+const charsKaParser = many1( charKaParser).map(a => a.join(""));
+
+/*
+// note: allow only single hyphen in word
+WordKaHyphen
+    CharsKa "-" CharsKa
+*/
+const wordKaHyphenParser = sequenceOf([
+  charsKaParser,
+  char("-"),
+  charsKaParser,
+]).map(a => a.join(""));
+
+/*
+WordKa
+    WordKaHyphen
+    CharsKa
+*/
+const wordKaParser = choice([
+  wordKaHyphenParser,
+  charsKaParser
+]);
 
 /*
 Index
-    WordKa ("-" WordKa)?
+    WordKa
 */
-const indexParser = coroutine( function* () {
-    const word = yield wordKaParser;
-    const rest = yield possibly( sequenceOf([
-      char("-"),
-      wordKaParser,
-    ]));
-    
-    return [
-      word,
-      ...(rest ?? []),
-    ];
-}).map(a => a.join(""));
+const indexParser = wordKaParser;
 
 /*
 IndexVariant
