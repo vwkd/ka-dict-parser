@@ -5,6 +5,7 @@ import {
   char,
   recursiveParser,
   sequenceOf,
+  many1,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -39,28 +40,24 @@ const indexVariantParser = coroutine( function* () {
 
 /*
 Index
+    WordKa "-" WordKa
     WordKa
 */
-const indexParser = recursiveParser( () => wordKaParser);
-
-/*
-WordKa
-    CharKa WordKa
-    CharKa
-    CharKa "-" WordKa
-*/
-const wordKaParser = recursiveParser( () => choice([
+const indexParser = choice([
   sequenceOf([
-    charKaParser,
     wordKaParser,
-  ]).map(a => a.join("")),
-  charKaParser,
-  sequenceOf([
-    charKaParser,
     char("-"),
     wordKaParser,
-  ]).map(a => a.join("")),
-]));
+  ]).map(a => a.join(""))
+  wordKaParser,
+]);
+
+/*
+// note: allow only single hyphen in word
+WordKa
+    CharKa+
+*/
+const wordKaParser = many1( charKaParser).map(a => a.join(""));
 
 /*
 CharKa
