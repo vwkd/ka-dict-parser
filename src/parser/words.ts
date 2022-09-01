@@ -3,6 +3,7 @@ import {
   choice,
   char,
   sequenceOf,
+  many,
   many1,
 } from "../deps.ts";
 
@@ -152,11 +153,11 @@ coroutine( function* () {
 /*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
 WordsDe
-    WordDe WhitespaceWordDe+
+    WordDe WhitespaceWordDe*
 */
 const wordsDeParser = coroutine( function* () {
   const first = yield wordDeParser;
-  const rest = yield many1( whitespaceWordDeParser);
+  const rest = yield many( whitespaceWordDeParser);
   
   return [
     first,
