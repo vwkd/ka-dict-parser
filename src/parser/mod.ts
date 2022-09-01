@@ -3,7 +3,7 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
+  many,
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
@@ -13,29 +13,28 @@ import definitionsParser from "./definitions.ts";
 
 /*
 Text
-    Lines
-    Line
+    Line NewlineLine*
 */
 // TODO: use startOfInput and endOfInput?
-const textParser = recursiveParser( () => choice([
-  linesParser,
-  lineParser,
-]));
-
-/*
-Lines
-    Line nl Text
-*/
-const linesParser = coroutine(function* () {
+const textParser = coroutine(function* () {
   const line = yield lineParser;
-  yield newlineParser;
-  const rest = yield textParser;
-  const restArr = Array.isArray(rest) ? rest : [rest];
+  const lines = yield many( newlineLineParser);
   
   return [
     line,
-    ...restArr,
+    ...lines,
   ];
+});
+
+/*
+NewlineLine
+    nl Line
+*/
+const newlineLineParser = coroutine(function* () {
+  yield newlineParser;
+  const line = yield lineParser;
+  
+  return line;
 });
 
 /*
