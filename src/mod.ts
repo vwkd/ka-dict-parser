@@ -1,6 +1,6 @@
 import parser from "./parser/mod.ts"
 
-const input = `ადგილ umstellen, translozieren
+const input = `ადგილ umstellen
 `;
 
 parser.fork(input,
