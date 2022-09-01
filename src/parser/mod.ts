@@ -49,7 +49,7 @@ const lineParser = coroutine(function* () {
   
   return {
     key,
-    value
+    value,
   };
 });
 
