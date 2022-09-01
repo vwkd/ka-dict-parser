@@ -3,7 +3,6 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
   sequenceOf,
   possibly,
   many,
@@ -12,175 +11,6 @@ import {
 
 import { whitespaceParser } from "./chars.ts";
 import tagsParser from "./tags.ts";
-
-/*
-Definitions
-    DefinitionList
-    Definition
-*/
-const definitionsParser = recursiveParser( () => choice([
-  definitionListParser,
-  definitionParser.map(definition => [{
-    position: 1,
-    ...definition,
-  }]),
-]));
-
-/*
-DefinitionList
-    DefinitionListItem(1) WhitespaceDefinitionListItem_i=2(i + 1)+
-*/
-const definitionListParser = coroutine( function* () {
-  const item1 = yield definitionsListItemParserFactory(1);
-  
-  const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
-  
-  const results = [item1, item2];
-  
-  for (let i = 3; ; i += 1) {
-    const result = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
-    
-    if (result === null) {
-      break;
-    } else {
-      results.push(result);
-    }
-  }
-  
-  return results;
-})
-
-/*
-WhitespaceDefinitionListItem(i)
-    ws DefinitionListItem(i)
-*/
-
-const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( function* () {
-  yield whitespaceParser;
-  const definitionListItem = yield definitionsListItemParserFactory(position);
-  
-  return definitionListItem;
-});
-
-/*
-DefinitionListItem(i)
-    i "." ws Definition
-*/
-const definitionsListItemParserFactory = position => coroutine( function* () {
-  yield str(`${position}.`);
-  yield whitespaceParser;
-  const definition = yield definitionParser;
-  
-  return {
-    position,
-    ...definition,
-  };
-});
-
-/*
-Definition
-    Entries
-    EntriesTagged
-*/
-const definitionParser = recursiveParser( () => choice([
-  entriesParser.map(entries => ({
-    entries,
-    tags: [],
-  })),
-  entriesTaggedParser,
-]));
-
-/*
-EntriesTagged
-    Tags ws Entries
-*/
-const entriesTaggedParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
-  const entries = yield entriesParser;
-  
-  return {
-    entries,
-    tags,
-  };
-});
-
-/*
-// todo: assumes entries if and only if separated by comma, not yet true ❗️
-Entries
-    Entry CommaWhitespaceEntry*
-*/
-const entriesParser = coroutine( function* () {
-  const entry = yield entryParser;
-  const entries = yield many( commaWhitespaceEntryParser);
-  
-  return [
-    entry,
-    ...entries,
-  ];
-});
-
-/*
-CommaWhitespaceEntry
-    "," ws Entry
-*/
-const commaWhitespaceEntryParser = coroutine( function* () {
-  yield char(",");
-  yield whitespaceParser;
-  const entry = yield entryParser;
-  
-  return entry;
-});
-
-/*
-// todo: not true, might have other WordsKa ❗️
-Entry
-    WordsDe
-*/
-const entryParser = recursiveParser( () => wordsDeParser);
-
-/*
-// todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
-// note: allow only single hyphen in word, note: in grammar is two words
-WordsDe
-    WordDe "-" WordDe
-    WordDe+
-*/
-const wordsDeParser = recursiveParser( () => choice([
-  sequenceOf([
-    wordDeParser,
-    char("-"),
-    wordDeParser,
-  ]),
-  many1( wordDeParser),
-]).map(a => a.join("")) );
-
-/*
-// note: require at least two letters
-WordDe
-    CharDeBig CharDeSmall+
-    CharDeSmall{2,}
-*/
-const wordDeParser = recursiveParser( () => choice([
-  coroutine( function* () {
-    const first = yield charDeBigParser;
-    const rest = yield many1( charDeSmallParser);
-
-    return [
-      first,
-      ...rest,
-    ];
-  }),
-  coroutine( function* () {
-    const first = yield charDeSmallParser;
-    const rest = yield many1( charDeSmallParser);
-
-    return [
-      first,
-      ...rest,
-    ];
-  }),
-]).map(a => a.join("")) );
 
 /*
 CharDeBig
@@ -256,6 +86,175 @@ const charDeSmallParser = choice([
   char("ö"),
   char("ü"),
   char("ß"),
+]);
+
+/*
+// note: require at least two letters
+WordDe
+    CharDeBig CharDeSmall+
+    CharDeSmall{2,}
+*/
+const wordDeParser = choice([
+  coroutine( function* () {
+    const first = yield charDeBigParser;
+    const rest = yield many1( charDeSmallParser);
+
+    return [
+      first,
+      ...rest,
+    ];
+  }),
+  coroutine( function* () {
+    const first = yield charDeSmallParser;
+    const rest = yield many1( charDeSmallParser);
+
+    return [
+      first,
+      ...rest,
+    ];
+  }),
+]).map(a => a.join(""));
+
+/*
+// todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
+// note: allow only single hyphen in word, note: in grammar is two words
+WordsDe
+    WordDe "-" WordDe
+    WordDe+
+*/
+const wordsDeParser = choice([
+  sequenceOf([
+    wordDeParser,
+    char("-"),
+    wordDeParser,
+  ]),
+  many1( wordDeParser),
+]).map(a => a.join(""));
+
+/*
+// todo: not true, might have other WordsKa ❗️
+Entry
+    WordsDe
+*/
+const entryParser = wordsDeParser;
+
+/*
+CommaWhitespaceEntry
+    "," ws Entry
+*/
+const commaWhitespaceEntryParser = coroutine( function* () {
+  yield char(",");
+  yield whitespaceParser;
+  const entry = yield entryParser;
+  
+  return entry;
+});
+
+/*
+// todo: assumes entries if and only if separated by comma, not yet true ❗️
+Entries
+    Entry CommaWhitespaceEntry*
+*/
+const entriesParser = coroutine( function* () {
+  const entry = yield entryParser;
+  const entries = yield many( commaWhitespaceEntryParser);
+  
+  return [
+    entry,
+    ...entries,
+  ];
+});
+
+/*
+EntriesTagged
+    Tags ws Entries
+*/
+const entriesTaggedParser = coroutine( function* () {
+  const tags = yield tagsParser;
+  yield whitespaceParser;
+  const entries = yield entriesParser;
+  
+  return {
+    entries,
+    tags,
+  };
+});
+
+/*
+Definition
+    Entries
+    EntriesTagged
+*/
+const definitionParser = choice([
+  entriesParser.map(entries => ({
+    entries,
+    tags: [],
+  })),
+  entriesTaggedParser,
+]);
+
+/*
+DefinitionListItem(i)
+    i "." ws Definition
+*/
+const definitionsListItemParserFactory = position => coroutine( function* () {
+  yield str(`${position}.`);
+  yield whitespaceParser;
+  const definition = yield definitionParser;
+  
+  return {
+    position,
+    ...definition,
+  };
+});
+
+/*
+WhitespaceDefinitionListItem(i)
+    ws DefinitionListItem(i)
+*/
+
+const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( function* () {
+  yield whitespaceParser;
+  const definitionListItem = yield definitionsListItemParserFactory(position);
+  
+  return definitionListItem;
+});
+
+/*
+DefinitionList
+    DefinitionListItem(1) WhitespaceDefinitionListItem_i=2(i + 1)+
+*/
+const definitionListParser = coroutine( function* () {
+  const item1 = yield definitionsListItemParserFactory(1);
+  
+  const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
+  
+  const results = [item1, item2];
+  
+  for (let i = 3; ; i += 1) {
+    const result = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
+    
+    if (result === null) {
+      break;
+    } else {
+      results.push(result);
+    }
+  }
+  
+  return results;
+})
+
+/*
+Definitions
+    DefinitionList
+    Definition
+*/
+const definitionsParser = choice([
+  definitionListParser,
+  definitionParser.map(definition => [{
+    position: 1,
+    ...definition,
+  }]),
 ]);
 
 export default definitionsParser;

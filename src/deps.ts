@@ -4,7 +4,6 @@ export {
   coroutine,
   choice,
   char,
-  recursiveParser,
   possibly,
   many,
   many1,
