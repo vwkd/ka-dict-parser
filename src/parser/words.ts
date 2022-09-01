@@ -86,30 +86,56 @@ const charDeSmallParser = choice([
 
 /*
 // note: require at least two letters
-WordDe
+WordDeBig
     CharDeBig CharDeSmall+
+*/
+const wordDeBigParser = coroutine( function* () {
+  const first = yield charDeBigParser;
+  const rest = yield many1( charDeSmallParser);
+
+  return [
+    first,
+    ...rest,
+  ].join("");
+});
+
+/*
+// note: require at least two letters
+WordDeSmall
     CharDeSmall{2,}
 */
-const wordDeParser = choice([
-  coroutine( function* () {
-    const first = yield charDeBigParser;
-    const rest = yield many1( charDeSmallParser);
+const wordDeSmallParser = coroutine( function* () {
+  const first = yield charDeSmallParser;
+  const rest = yield many1( charDeSmallParser);
 
-    return [
-      first,
-      ...rest,
-    ];
-  }),
-  coroutine( function* () {
-    const first = yield charDeSmallParser;
-    const rest = yield many1( charDeSmallParser);
+  return [
+    first,
+    ...rest,
+  ].join("");
+});
 
-    return [
-      first,
-      ...rest,
-    ];
-  }),
+/*
+// todo: allow WordDeSmall?
+WordDeHyphen
+    WordDeBig "-" WordDeBig
+*/
+const wordDeHyphenParser = sequenceOf([
+  wordDeBigParser,
+  char("-"),
+  wordDeBigParser,
 ]).map(a => a.join(""));
+
+/*
+WordDe
+    WordDeBig
+    WordDeSmall
+    WordDeHyphen
+*/
+const wordDeParser = choice([
+  wordDeBigParser,
+  wordDeSmallParser,
+  wordDeHyphenParser,
+]);
 
 /*
 WhitespaceWordDe
@@ -125,26 +151,17 @@ coroutine( function* () {
 
 /*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
-// note: allow only single hyphen in word, note: in grammar is two words
 WordsDe
-    WordDe "-" WordDe
     WordDe WhitespaceWordDe+
 */
-const wordsDeParser = choice([
-  sequenceOf([
-    wordDeParser,
-    char("-"),
-    wordDeParser,
-  ]),
-  coroutine( function* () {
-    const first = yield wordDeParser;
-    const rest = yield many1( whitespaceWordDeParser);
-
-    return [
-      first,
-      ...rest,
-    ];
-  }),
-]).map(a => a.join(""));
+const wordsDeParser = coroutine( function* () {
+  const first = yield wordDeParser;
+  const rest = yield many1( whitespaceWordDeParser);
+  
+  return [
+    first,
+    ...rest,
+  ].join("");
+});
 
 export default wordsDeParser;
