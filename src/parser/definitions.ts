@@ -97,7 +97,7 @@ WordDe
 const wordDeParser = choice([
   coroutine( function* () {
     const first = yield charDeBigParser;
-    const rest = yield many1( charsDeSmallParser);
+    const rest = yield many1( charDeSmallParser);
 
     return [
       first,
@@ -105,8 +105,8 @@ const wordDeParser = choice([
     ];
   }),
   coroutine( function* () {
-    const first = yield charsDeSmallParser;
-    const rest = yield many1( charsDeSmallParser);
+    const first = yield charDeSmallParser;
+    const rest = yield many1( charDeSmallParser);
 
     return [
       first,
