@@ -3,7 +3,6 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
   sequenceOf,
   many1,
 } from "../deps.ts";
@@ -11,53 +10,41 @@ import {
 import { whitespaceParser } from "./chars.ts";
 
 /*
-Key
-    IndexVariant
-    Index
+// todo: maybe more?
+SuperscriptNumber
+    "¹"
+    "²"
+    "³"
+    "⁴"
+    "⁵"
+    "⁶"
+    "⁷"
+    "⁸"
+    "⁹"
 */
-const keyParser = recursiveParser( () => choice([
-  indexVariantParser,
-  indexParser.map(index => ({
-    variant: 1,
-    index,
-  })),
-]));
-
-/*
-IndexVariant
-    Index SuperscriptNumber
-*/
-const indexVariantParser = coroutine( function* () {
-  const index = yield indexParser;
-  const superscriptNumber = yield superscriptNumberParser;
-  const variant = VARIANT[superscriptNumber];
-  
-  return {
-    variant,
-    index,
-  };
-});
-
-/*
-Index
-    WordKa "-" WordKa
-    WordKa
-*/
-const indexParser = choice([
-  sequenceOf([
-    wordKaParser,
-    char("-"),
-    wordKaParser,
-  ]).map(a => a.join(""))
-  wordKaParser,
+const superscriptNumberParser = choice([
+  char("¹"),
+  char("²"),
+  char("³"),
+  char("⁴"),
+  char("⁵"),
+  char("⁶"),
+  char("⁷"),
+  char("⁸"),
+  char("⁹"),
 ]);
 
-/*
-// note: allow only single hyphen in word
-WordKa
-    CharKa+
-*/
-const wordKaParser = many1( charKaParser).map(a => a.join(""));
+const VARIANT = {
+  "¹": 1,
+  "²": 2,
+  "³": 3,
+  "⁴": 4,
+  "⁵": 5,
+  "⁶": 6,
+  "⁷": 7,
+  "⁸": 8,
+  "⁹": 9,
+}
 
 /*
 CharKa
@@ -101,40 +88,52 @@ const charKaParser = choice([
 ]);
 
 /*
-// todo: maybe more?
-SuperscriptNumber
-    "¹"
-    "²"
-    "³"
-    "⁴"
-    "⁵"
-    "⁶"
-    "⁷"
-    "⁸"
-    "⁹"
+// note: allow only single hyphen in word
+WordKa
+    CharKa+
 */
-const superscriptNumberParser = choice([
-  char("¹"),
-  char("²"),
-  char("³"),
-  char("⁴"),
-  char("⁵"),
-  char("⁶"),
-  char("⁷"),
-  char("⁸"),
-  char("⁹"),
+const wordKaParser = many1( charKaParser).map(a => a.join(""));
+
+/*
+Index
+    WordKa "-" WordKa
+    WordKa
+*/
+const indexParser = choice([
+  sequenceOf([
+    wordKaParser,
+    char("-"),
+    wordKaParser,
+  ]).map(a => a.join(""))
+  wordKaParser,
 ]);
 
-const VARIANT = {
-  "¹": 1,
-  "²": 2,
-  "³": 3,
-  "⁴": 4,
-  "⁵": 5,
-  "⁶": 6,
-  "⁷": 7,
-  "⁸": 8,
-  "⁹": 9,
-}
+/*
+IndexVariant
+    Index SuperscriptNumber
+*/
+const indexVariantParser = coroutine( function* () {
+  const index = yield indexParser;
+  const superscriptNumber = yield superscriptNumberParser;
+  const variant = VARIANT[superscriptNumber];
+  
+  return {
+    variant,
+    index,
+  };
+});
+
+/*
+Key
+    IndexVariant
+    Index
+*/
+const keyParser = choice([
+  indexVariantParser,
+  indexParser.map(index => ({
+    variant: 1,
+    index,
+  })),
+]);
 
 export default keyParser;
