@@ -24,8 +24,8 @@ CommaWhitespaceEntry
     "," ws Entry
 */
 const commaWhitespaceEntryParser = coroutine( function* () {
-  yield whitespaceParser;
   yield char(",");
+  yield whitespaceParser;
   const entry = yield entryParser;
   
   return entry;
@@ -105,7 +105,7 @@ const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( fun
 DefinitionList
     DefinitionListItem(1) WhitespaceDefinitionListItem_i=2(i + 1)+
 */
-const definitionsListParser = coroutine( function* () {
+const definitionListParser = coroutine( function* () {
   const item1 = yield definitionsListItemParserFactory(1);
   
   const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
@@ -131,7 +131,7 @@ Definitions
     Definition
 */
 const definitionsParser = choice([
-  definitionsListParser,
+  definitionListParser,
   definitionParser.map(definition => [{
     position: 1,
     ...definition,
