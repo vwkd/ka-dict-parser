@@ -17,8 +17,8 @@ Reference
 */
 const referenceParser = recursiveParser( () => choice([
   referenceValueParser.map(reference => ({
-    tags: [],
     ...reference,
+    tags: [],
   })),
   referenceValueTaggedParser
 ]));
@@ -33,8 +33,8 @@ const referenceValueTaggedParser = coroutine( function* () {
   const reference = yield referenceValueParser;
   
   return {
-    tags,
     ...reference,
+    tags,
   };
 });
 
