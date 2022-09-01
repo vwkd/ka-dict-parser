@@ -34,19 +34,19 @@ const definitionsListParser = coroutine( function* () {
   yield whitespaceParser;
   const item2 = yield definitionsListItemParserFactory(2);
   
-  const res = [item1, item2];
+  const results = [item1, item2];
   
   for (let i = 3; ; i += 1) {
-    const maybe = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
+    const result = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
     
-    if (maybe.result === null) {
+    if (result === null) {
       break;
     } else {
-      res.push(maybe);
+      results.push(result);
     }
   }
   
-  return res;
+  return results;
 })
 
 // beware: extended McKeeman Form with parameter variable `Integer`
