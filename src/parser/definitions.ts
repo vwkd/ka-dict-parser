@@ -27,12 +27,12 @@ const definitionsParser = recursiveParser( () => choice([
 // beware: extended McKeeman Form with regex repetition operator and argument
 /*
 DefinitionList
-    DefinitionListItem(1) ws DefinitionListItem(2) (WhitespaceAndDefinitionsListItem(i + 3))*i
+    DefinitionListItem(1) WhitespaceAndDefinitionsListItem(2) (WhitespaceAndDefinitionsListItem(i + 3))*i
 */
 const definitionsListParser = coroutine( function* () {
   const item1 = yield definitionsListItemParserFactory(1);
-  yield whitespaceParser;
-  const item2 = yield definitionsListItemParserFactory(2);
+  
+  const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
   
   const results = [item1, item2];
   
