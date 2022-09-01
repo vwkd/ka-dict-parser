@@ -116,11 +116,23 @@ const wordDeParser = choice([
 ]).map(a => a.join(""));
 
 /*
+WhitespaceWordDe
+    ws WordDe
+*/
+const whitespaceWordDeParser =
+coroutine( function* () {
+  yield whitespaceParser;
+  const word = yield wordDeParser;
+
+  return word;
+});
+
+/*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
 // note: allow only single hyphen in word, note: in grammar is two words
 WordsDe
     WordDe "-" WordDe
-    WordDe+
+    WordDe WhitespaceWordDe+
 */
 const wordsDeParser = choice([
   sequenceOf([
@@ -128,9 +140,17 @@ const wordsDeParser = choice([
     char("-"),
     wordDeParser,
   ]),
-  many1( wordDeParser),
-]).map(a => a.join(""));
+  coroutine( function* () {
+    const first = yield wordDeParser;
+    const rest = yield many1( whitespaceWordDeParser);
 
+    return [
+      first,
+      ...rest,
+    ];
+  }),
+]).map(a => a.join(""));
+  
 /*
 // todo: not true, might have other WordsKa ❗️
 Entry
