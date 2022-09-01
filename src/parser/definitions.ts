@@ -6,6 +6,8 @@ import {
   recursiveParser,
   sequenceOf,
   possibly,
+  many,
+  many1,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -17,19 +19,18 @@ Definitions
     Definition
 */
 const definitionsParser = recursiveParser( () => choice([
-  definitionsListParser,
+  definitionListParser,
   definitionParser.map(definition => [{
     position: 1,
     ...definition,
   }]),
 ]));
 
-// beware: extended McKeeman Form with regex repetition operator and argument
 /*
 DefinitionList
-    DefinitionListItem(1) WhitespaceAndDefinitionsListItem(2) (WhitespaceAndDefinitionsListItem(i + 3))*i
+    DefinitionListItem(1) WhitespaceDefinitionListItem_i=2(i + 1)+
 */
-const definitionsListParser = coroutine( function* () {
+const definitionListParser = coroutine( function* () {
   const item1 = yield definitionsListItemParserFactory(1);
   
   const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
@@ -49,10 +50,9 @@ const definitionsListParser = coroutine( function* () {
   return results;
 })
 
-// beware: extended McKeeman Form with parameter variable `Integer`
 /*
-WhitespaceAndDefinitionsListItem(Integer)
-    ws DefinitionListItem(Integer)
+WhitespaceDefinitionListItem(i)
+    ws DefinitionListItem(i)
 */
 
 const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( function* () {
@@ -62,10 +62,9 @@ const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( fun
   return definitionListItem;
 });
 
-// beware: extended McKeeman Form with parameter variable `Integer`
 /*
-DefinitionListItem(Integer)
-    Integer "." ws Definition
+DefinitionListItem(i)
+    i "." ws Definition
 */
 const definitionsListItemParserFactory = position => coroutine( function* () {
   yield str(`${position}.`);
@@ -109,28 +108,28 @@ const entriesTaggedParser = coroutine( function* () {
 /*
 // todo: assumes entries if and only if separated by comma, not yet true ❗️
 Entries
-    EntryList
-    Entry
+    Entry CommaWhitespaceEntry*
 */
-const entriesParser = recursiveParser( () => choice([
-  entryListParser,
-  entryParser,
-]));
-
-/*
-EntryList
-    Entry "," ws Entries
-*/
-const entryListParser = coroutine( function* () {
+const entriesParser = coroutine( function* () {
   const entry = yield entryParser;
-  yield char(",");
-  yield whitespaceParser;
-  const entries = yield entriesParser;
+  const entries = yield many( commaWhitespaceEntryParser);
   
   return [
-    ...entry,
+    entry,
     ...entries,
   ];
+});
+
+/*
+CommaWhitespaceEntry
+    "," ws Entry
+*/
+const commaWhitespaceEntryParser = coroutine( function* () {
+  yield char(",");
+  yield whitespaceParser;
+  const entry = yield entryParser;
+  
+  return entry;
 });
 
 /*
@@ -138,58 +137,50 @@ const entryListParser = coroutine( function* () {
 Entry
     WordsDe
 */
-const entryParser = recursiveParser( () => wordsDeParser.map(s => [s]));
+const entryParser = recursiveParser( () => wordsDeParser);
 
 /*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
+// note: allow only single hyphen in word, note: in grammar is two words
 WordsDe
-    WordDe "-" WordsDe
-    WordDe ws WordsDe
-    WordDe
+    WordDe "-" WordDe
+    WordDe+
 */
 const wordsDeParser = recursiveParser( () => choice([
   sequenceOf([
     wordDeParser,
     char("-"),
-    wordsDeParser,
-  ]).map(a => a.join("")),
-    sequenceOf([
     wordDeParser,
-    whitespaceParser,
-    wordsDeParser,
-  ]).map(a => a.join("")),
-  wordDeParser,
-]));
+  ]),
+  many1( wordDeParser),
+]).map(a => a.join("")) );
 
 /*
 // note: require at least two letters
 WordDe
-    CharDeBig CharsDeSmall
-    CharDeSmall CharsDeSmall
+    CharDeBig CharDeSmall+
+    CharDeSmall{2,}
 */
 const wordDeParser = recursiveParser( () => choice([
-  sequenceOf([
-    charDeBigParser,
-    charsDeSmallParser,
-  ]).map(a => a.join("")),
-  sequenceOf([
-    charDeSmallParser,
-    charsDeSmallParser,
-  ]).map(a => a.join("")),
-]));
+  coroutine( function* () {
+    const first = yield charDeBigParser;
+    const rest = yield many1( charDeSmallParser);
 
-/*
-CharsDeSmall
-    CharDeSmall CharsDeSmall
-    CharDeSmall
-*/
-const charsDeSmallParser = recursiveParser( () => choice([
-  sequenceOf([
-    charDeSmallParser,
-    charsDeSmallParser,
-  ]).map(a => a.join("")),
-  charDeSmallParser,
-]));
+    return [
+      first,
+      ...rest,
+    ];
+  }),
+  coroutine( function* () {
+    const first = yield charDeSmallParser;
+    const rest = yield many1( charDeSmallParser);
+
+    return [
+      first,
+      ...rest,
+    ];
+  }),
+]).map(a => a.join("")) );
 
 /*
 CharDeBig
