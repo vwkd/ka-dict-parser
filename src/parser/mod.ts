@@ -3,7 +3,6 @@ import {
   coroutine,
   choice,
   char,
-  recursiveParser,
   many,
 } from "../deps.ts";
 
