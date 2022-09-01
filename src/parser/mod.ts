@@ -4,12 +4,22 @@ import {
   choice,
   char,
   many,
+  startOfInput,
+  endOfInput,
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
 import keyParser from "./key.ts";
 import referenceParser from "./reference.ts";
 import definitionsParser from "./definitions.ts";
+
+const parser = coroutine(function* () {
+  yield startOfInput;
+  const text = yield textParser;
+  yield endOfInput;
+  
+  return text;
+});
 
 /*
 Text
@@ -62,4 +72,4 @@ const valueParser = choice([
   definitionsParser,
 ]);
 
-export default textParser;
+export default parser;
