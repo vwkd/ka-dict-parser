@@ -35,7 +35,7 @@ const referenceParser = coroutine( function* () {
   const tags = (yield possibly( sequenceOf([
     tagsParser,
     whitespaceParser
-  ]).map(a => a[1]))) ?? [];
+  ]).map(a => a[0]))) ?? [];
   
   const type_ = yield typeParser;
   yield whitespaceParser;

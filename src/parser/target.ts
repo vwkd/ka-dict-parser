@@ -10,132 +10,116 @@ import {
 
 import { whitespaceParser } from "./chars.ts";
 import tagsParser from "./tags.ts";
-import wordsDeParser from "./words.ts";
-  
-/*
-// todo: not true, might have other WordsKa ❗️
-Entry
-    WordsDe
-*/
-const entryParser = wordsDeParser;
+import sentenceParser from "./sentence.ts";
 
 /*
-CommaWhitespaceEntry
-    "," ws Entry
+CommaWhitespaceSentence
+    "," ws Sentence
 */
-const commaWhitespaceEntryParser = coroutine( function* () {
+const commaWhitespaceSentenceParser = coroutine( function* () {
   yield char(",");
   yield whitespaceParser;
-  const entry = yield entryParser;
+  const sentence = yield sentenceParser;
   
-  return entry;
+  return sentence;
 });
 
 /*
-// todo: assumes entries if and only if separated by comma, not yet true ❗️
-Entries
-    Entry CommaWhitespaceEntry*
+// todo: assumes sentences if and only if separated by comma, not yet true ❗️
+Sentences
+    SentenceDe CommaWhitespaceSentenceDe*
 */
-const entriesParser = coroutine( function* () {
-  const entry = yield entryParser;
-  const entries = yield many( commaWhitespaceEntryParser);
+const sentencesParser = coroutine( function* () {
+  const sentence = yield sentenceParser;
+  const sentences = yield many( commaWhitespaceSentenceParser);
   
   return [
-    entry,
-    ...entries,
+    sentence,
+    ...sentences,
   ];
 });
 
 /*
-EntriesTagged
-    Tags ws Entries
+Value
+    (Tags ws)? Sentences
 */
-const entriesTaggedParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
-  const entries = yield entriesParser;
+const valueParser = coroutine( function* () {
+  const tags = (yield possibly( sequenceOf([
+    tagsParser,
+    whitespaceParser
+  ]).map(a => a[0]))) ?? [];
+
+  const sentences = yield sentencesParser;
   
   return {
-    entries,
+    sentences,
     tags,
   };
 });
 
 /*
-Definition
-    Entries
-    EntriesTagged
+IntegerDotWhitespaceValue(i)
+    i "." ws Value
 */
-const definitionParser = choice([
-  entriesParser.map(entries => ({
-    entries,
-    tags: [],
-  })),
-  entriesTaggedParser,
-]);
-
-/*
-DefinitionListItem(i)
-    i "." ws Definition
-*/
-const definitionsListItemParserFactory = position => coroutine( function* () {
-  yield str(`${position}.`);
+const integerDotWhitespaceValueParserFactory = position => coroutine( function* () {
+  yield char(`${position}`);
+  yield char(".");
   yield whitespaceParser;
-  const definition = yield definitionParser;
+  const value = yield valueParser;
   
   return {
     position,
-    ...definition,
+    ...value,
   };
 });
 
 /*
-WhitespaceDefinitionListItem(i)
-    ws DefinitionListItem(i)
+WhitespaceIntegerDotWhitespaceValue(i)
+    ws IntegerDotWhitespaceValue(i)
 */
 
-const whitespaceAndDefinitionsListItemParserFactory = position => coroutine( function* () {
+const whitespaceIntegerDotWhitespaceValueParserFactory = position => coroutine( function* () {
   yield whitespaceParser;
-  const definitionListItem = yield definitionsListItemParserFactory(position);
+  const value = yield integerDotWhitespaceValueParserFactory(position);
   
-  return definitionListItem;
+  return value;
 });
 
 /*
-DefinitionList
-    DefinitionListItem(1) WhitespaceDefinitionListItem_i=2(i + 1)+
+Values
+    IntegerDotWhitespaceValue(1) WhitespaceIntegerDotWhitespaceValue_i=2(i + 1)+
 */
-const definitionListParser = coroutine( function* () {
-  const item1 = yield definitionsListItemParserFactory(1);
+const valuesParser = coroutine( function* () {
+  const value1 = yield integerDotWhitespaceValueParserFactory(1);
   
-  const item2 = yield whitespaceAndDefinitionsListItemParserFactory(2);
+  const value2 = yield whitespaceIntegerDotWhitespaceValueParserFactory(2);
   
-  const results = [item1, item2];
+  const values = [value1, value2];
   
   for (let i = 3; ; i += 1) {
-    const result = yield possibly( whitespaceAndDefinitionsListItemParserFactory(i));
+    const value = yield possibly( whitespaceIntegerDotWhitespaceValueParserFactory(i));
     
-    if (result === null) {
+    if (value === null) {
       break;
     } else {
-      results.push(result);
+      values.push(value);
     }
   }
   
-  return results;
+  return values;
 })
 
 /*
-Definitions
-    DefinitionList
-    Definition
+Target
+    Values
+    Value
 */
-const definitionsParser = choice([
-  definitionListParser,
-  definitionParser.map(definition => [{
+const targetParser = choice([
+  valuesParser,
+  valueParser.map(value => [{
     position: 1,
-    ...definition,
+    ...value,
   }]),
 ]);
 
-export default definitionsParser;
+export default targetParser;
