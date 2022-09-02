@@ -10,44 +10,34 @@ import { whitespaceParser } from "./chars.ts";
 
 /*
 Tags
-    "{" Categories "}"
+    "{" Tag CommaWhitespaceTag* "}"
 */
 const tagsParser = coroutine( function* () {
   yield char("{");
-  const categories = yield categoriesParser;
+  const tag = yield tagParser;
+  const tags = yield many( commaWhitespaceTagParser);
   yield char("}");
   
-  return categories;
-});
-
-/*
-Categories
-    Category CommaWhitespaceCategory*
-*/
-const categoriesParser = coroutine( function* () {
-  const category = yield categoryParser;
-  const categories = yield many( commaWhitespaceCategoryParser);
-  
   return [
-    category,
-    ...categories,
+    tag,
+    ...tags,
   ];
 });
 
 /*
-CommaWhitespaceCategory
-    "," ws Category
+CommaWhitespaceTag
+    "," ws Tag
 */
-const commaWhitespaceCategoryParser = coroutine( function* () {
+const commaWhitespaceTagParser = coroutine( function* () {
   yield char(",");
   yield whitespaceParser;
-  const category = yield categoryParser;
+  const tag = yield tagParser;
   
-  return category;
+  return tag;
 });
 
 /*
-Category
+Tag
     "biol."
     "bot."
     "chem."
@@ -97,7 +87,7 @@ Category
     "va."
     "vulg."
 */
-const categoryParser = choice([
+const tagParser = choice([
   str("biol."),
   str("bot."),
   str("chem."),
