@@ -9,9 +9,9 @@ import {
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
-import keyParser from "./key.ts";
+import sourceParser from "./source.ts";
 import referenceParser from "./reference.ts";
-import definitionsParser from "./definitions.ts";
+import targetParser from "./target.ts";
 
 const parser = coroutine(function* () {
   yield startOfInput;
@@ -48,27 +48,27 @@ const newlineLineParser = coroutine(function* () {
 
 /*
 Line
-    Key ws Value
+    Source ws TargetOrReference
 */
 const lineParser = coroutine(function* () {
-  const key = yield keyParser;
+  const source = yield sourceParser;
   yield whitespaceParser;
-  const value = yield valueParser;
+  const targetOrReference = yield targetOrReferenceParser;
   
   return {
-    key,
-    value,
+    source,
+    targetOrReference,
   };
 });
 
 /*
-Value
+TargetOrReference
     Reference
-    Definitions
+    Target
 */
-const valueParser = choice([
+const targetOrReferenceParser = choice([
   referenceParser,
-  definitionsParser,
+  targetParser,
 ]);
 
 export default parser;
