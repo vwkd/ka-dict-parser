@@ -49,10 +49,10 @@ const valueParser = coroutine( function* () {
     whitespaceParser
   ]).map(a => a[1]))) ?? [];
 
-  const sentences = yield sentencesParser;
+  const value = yield sentencesParser;
   
   return {
-    sentences,
+    value,
     tags,
   };
 });
@@ -61,14 +61,14 @@ const valueParser = coroutine( function* () {
 IntegerDotWhitespaceValue(i)
     i "." ws Value
 */
-const integerDotWhitespaceValueParserFactory = position => coroutine( function* () {
-  yield char(`${position}`);
+const integerDotWhitespaceValueParserFactory = meaning => coroutine( function* () {
+  yield char(`${meaning}`);
   yield char(".");
   yield whitespaceParser;
   const value = yield valueParser;
   
   return {
-    position,
+    meaning,
     ...value,
   };
 });
@@ -78,9 +78,9 @@ WhitespaceIntegerDotWhitespaceValue(i)
     ws IntegerDotWhitespaceValue(i)
 */
 
-const whitespaceIntegerDotWhitespaceValueParserFactory = position => coroutine( function* () {
+const whitespaceIntegerDotWhitespaceValueParserFactory = meaning => coroutine( function* () {
   yield whitespaceParser;
-  const value = yield integerDotWhitespaceValueParserFactory(position);
+  const value = yield integerDotWhitespaceValueParserFactory(meaning);
   
   return value;
 });
@@ -117,7 +117,7 @@ Target
 const targetParser = choice([
   valuesParser,
   valueParser.map(value => [{
-    position: 1,
+    meaning: 1,
     ...value,
   }]),
 ]);
