@@ -152,10 +152,11 @@ coroutine( function* () {
 
 /*
 // todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
-WordsDe
+// todo: sentence might contain WordKa ❗️
+Sentence
     WordDe WhitespaceWordDe*
 */
-const wordsDeParser = coroutine( function* () {
+const sentenceDeParser = coroutine( function* () {
   const first = yield wordDeParser;
   const rest = yield many( whitespaceWordDeParser);
   
@@ -165,4 +166,4 @@ const wordsDeParser = coroutine( function* () {
   ].join("");
 });
 
-export default wordsDeParser;
+export default sentenceDeParser;
