@@ -25,7 +25,6 @@ const parser = coroutine(function* () {
 Text
     Line NewlineLine*
 */
-// TODO: use startOfInput and endOfInput?
 const textParser = coroutine(function* () {
   const line = yield lineParser;
   const lines = yield many( newlineLineParser);
