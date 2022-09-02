@@ -22,9 +22,9 @@ const typeParser = choice([
     str("s."),
     whitespaceParser,
     str("Bed."),
-  ]).map(a => "meaning"),
-  str("s.").map(s => "direct"),
-  str("id.").map(s => "identical"),
+  ]).map(a => "MEANING"),
+  str("s.").map(s => "DIRECT"),
+  str("id.").map(s => "IDENTICAL"),
 ]);
 
 /*
