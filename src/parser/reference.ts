@@ -3,97 +3,49 @@ import {
   coroutine,
   choice,
   char,
+  possibly,
+  sequenceOf,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import keyParser from "./key.ts";
+import sourceParser from "./source.ts";
 import tagsParser from "./tags.ts";
 
 /*
-ReferenceDirect
-    "s." ws Key
+Type
+    "s." ws "Bed."
+    "s." 
+    "id."
 */
-const referenceDirectParser = coroutine( function* () {
-  yield str("s.");
-  yield whitespaceParser;
-  const key = yield keyParser;
-  
-  return {
-    kind: "direct",
-    key,
-  };
-});
-
-/*
-ReferenceMeaning
-    "s." ws "Bed." ws Key
-*/
-const referenceMeaningParser = coroutine( function* () {
-  yield str("s.");
-  yield whitespaceParser;
-  yield str("Bed.");
-  yield whitespaceParser;
-  const key = yield keyParser;
-  
-  return {
-    kind: "meaning",
-    key,
-  };
-});
-
-/*
-ReferenceIdentical
-    "id." ws Key
-*/
-const referenceIdenticalParser = coroutine( function* () {
-  yield str("id.");
-  yield whitespaceParser;
-  const key = yield keyParser;
-  
-  return {
-    kind: "identical",
-    key,
-  };
-});
-
-/*
-ReferenceValue
-    ReferenceDirect
-    ReferenceMeaning
-    ReferenceIdentical
-*/
-const referenceValueParser = choice([
-  referenceDirectParser,
-  referenceMeaningParser,
-  referenceIdenticalParser
+const typeParser = choice([
+  sequenceOf([
+    str("s."),
+    whitespaceParser,
+    str("Bed."),
+  ]).map(a => "meaning"),
+  str("s.").map(s => "direct"),
+  str("id.").map(s => "identical"),
 ]);
-
-/*
-ReferenceValueTagged
-    Tags ws ReferenceValue
-*/
-const referenceValueTaggedParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
-  const reference = yield referenceValueParser;
-  
-  return {
-    ...reference,
-    tags,
-  };
-});
 
 /*
 Reference
-    ReferenceValue
-    ReferenceValueTagged
+    (Tags ws)? Type ws Source
 */
-const referenceParser = choice([
-  referenceValueParser.map(reference => ({
-    ...reference,
-    tags: [],
-  })),
-  referenceValueTaggedParser
-]);
+const referenceParser = coroutine( function* () {
+  const tags = (yield possibly( sequenceOf([
+    tagsParser,
+    whitespaceParser
+  ]).map(a => a[1]))) ?? [];
+  
+  const type_ = yield typeParser;
+  yield whitespaceParser;
+  const source = yield sourceParser;
+  
+  return {
+    source,
+    type: type_,
+    tags,
+  };
+});
 
 export default referenceParser;
