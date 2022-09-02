@@ -9,4 +9,7 @@ export {
   many1,
   startOfInput,
   endOfInput,
+  withData,
+  setData,
+  getData,
 } from "https://cdn.skypack.dev/arcsecond";
