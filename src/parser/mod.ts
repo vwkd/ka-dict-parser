@@ -1,8 +1,6 @@
 import {
-  str,
   coroutine,
   choice,
-  char,
   many,
   startOfInput,
   endOfInput,
