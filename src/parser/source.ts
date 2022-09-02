@@ -115,17 +115,11 @@ const wordKaParser = choice([
 ]);
 
 /*
-Index
-    WordKa
+WordKaMeaning
+    WordKa SuperscriptNumber
 */
-const indexParser = wordKaParser;
-
-/*
-IndexVariant
-    Index SuperscriptNumber
-*/
-const indexVariantParser = coroutine( function* () {
-  const index = yield indexParser;
+const wordKaMeaningParser = coroutine( function* () {
+  const index = yield wordKaParser;
   const superscriptNumber = yield superscriptNumberParser;
   const variant = VARIANT[superscriptNumber];
   
@@ -136,16 +130,16 @@ const indexVariantParser = coroutine( function* () {
 });
 
 /*
-Key
-    IndexVariant
-    Index
+Source
+    WordKaMeaning
+    WordKa
 */
-const keyParser = choice([
-  indexVariantParser,
-  indexParser.map(index => ({
+const sourceParser = choice([
+  wordKaMeaningParser,
+  wordKaParser.map(index => ({
     variant: 1,
     index,
   })),
 ]);
 
-export default keyParser;
+export default sourceParser;
