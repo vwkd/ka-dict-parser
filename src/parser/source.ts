@@ -1,5 +1,4 @@
 import {
-  str,
   coroutine,
   choice,
   char,
