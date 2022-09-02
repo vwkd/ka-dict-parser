@@ -4,6 +4,7 @@ import {
   choice,
   char,
   possibly,
+  sequenceOf,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -16,14 +17,14 @@ Type
     "s." 
     "id."
 */
-const typeParser = choice ([
+const typeParser = choice([
   sequenceOf([
     str("s."),
     whitespaceParser,
     str("Bed."),
   ]).map(a => "meaning"),
   str("s.").map(s => "direct"),
-  str("id.").map(s => "identical");
+  str("id.").map(s => "identical"),
 ]);
 
 /*
