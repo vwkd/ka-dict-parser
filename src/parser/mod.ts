@@ -53,17 +53,12 @@ const lineParser = coroutine(function* () {
   yield whitespaceParser;
   const targetOrReference = yield targetOrReferenceParser;
   
-  if (Array.isArray(targetOrReference)) {
-    return {
-      source,
-      target: targetOrReference,
-    };
-  } else {
-    return {
-      source,
-      reference: targetOrReference,
-    };
-  }
+  const isTarget = Array.isArray(targetOrReference);
+  
+  return {
+    source,
+    ...(isTarget ? { target: targetOrReference } : { reference: targetOrReference }),
+  };
 });
 
 /*
