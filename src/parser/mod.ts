@@ -56,13 +56,10 @@ const lineParser = coroutine(function* () {
   yield whitespaceParser;
   const targetOrReference = yield targetOrReferenceParser;
   
-  let { lineNumber } = yield getData;
-  
-  const id = lineNumber;
-  
-  lineNumber += 1;
-  
-  yield setData({ lineNumber });
+  const state = yield getData;
+  const id = state.lineNumber;
+  state.lineNumber += 1;
+  yield setData(state);
   
   const isTarget = Array.isArray(targetOrReference);
   
