@@ -34,7 +34,7 @@ const superscriptNumberParser = choice([
   char("⁹"),
 ]);
 
-const VARIANT = {
+const MEANING = {
   "¹": 1,
   "²": 2,
   "³": 3,
@@ -119,13 +119,13 @@ WordKaMeaning
     WordKa SuperscriptNumber
 */
 const wordKaMeaningParser = coroutine( function* () {
-  const index = yield wordKaParser;
+  const value = yield wordKaParser;
   const superscriptNumber = yield superscriptNumberParser;
-  const variant = VARIANT[superscriptNumber];
+  const meaning = MEANING[superscriptNumber];
   
   return {
-    variant,
-    index,
+    meaning,
+    value,
   };
 });
 
@@ -136,9 +136,9 @@ Source
 */
 const sourceParser = choice([
   wordKaMeaningParser,
-  wordKaParser.map(index => ({
-    variant: 1,
-    index,
+  wordKaParser.map(value => ({
+    meaning: 1,
+    value,
   })),
 ]);
 
