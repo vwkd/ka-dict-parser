@@ -12,12 +12,12 @@ import sourceParser from "./source.ts";
 import tagsParser from "./tags.ts";
 
 /*
-Type
+Kind
     "s." ws "Bed."
     "s." 
     "id."
 */
-const typeParser = choice([
+const kindParser = choice([
   sequenceOf([
     str("s."),
     whitespaceParser,
@@ -29,7 +29,7 @@ const typeParser = choice([
 
 /*
 Reference
-    (Tags ws)? Type ws Source
+    (Tags ws)? Kind ws Source
 */
 const referenceParser = coroutine( function* () {
   const tags = (yield possibly( sequenceOf([
@@ -37,13 +37,13 @@ const referenceParser = coroutine( function* () {
     whitespaceParser
   ]).map(a => a[1]))) ?? [];
   
-  const type_ = yield typeParser;
+  const kind = yield kindParser;
   yield whitespaceParser;
   const source = yield sourceParser;
   
   return {
     source,
-    type: type_,
+    kind,
     tags,
   };
 });
