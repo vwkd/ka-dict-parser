@@ -10,7 +10,7 @@ function transform(input: EntryType[]) {
   return p(input);
 }
 
-// beware: use position in list as id
+// use line number as id
 function addId(input: EntryType[]) {
   return input.map((e, i) => {
     e.id = i;￼
