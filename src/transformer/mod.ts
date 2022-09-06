@@ -12,24 +12,29 @@ function transform(input: EntryType[]) {
   return p(input);
 }
 
-// use line number as id
-function addId(input: EntryType[]) {
-  return input.map((e, i) => {
+/* Add entry.id
+ * uses line number as id (position in entries array)
+*/
+function addId(entries: EntryType[]) {
+  return entries.map((e, i) => {
     e.id = i;￼
     
     return e;
   });
 }
-// beware: assumes entries have unique source, no duplicates!
-function addReferenceId(input: EntryType[]) {
-  return input.map(e => {
+
+/* Add entry.reference?.id
+ * beware: assumes entries have unique source, no duplicates!
+*/
+function addReferenceId(entries: EntryType[]) {
+  return entries.map(e => {
     const reference = e.reference
     
     if (reference) {
     
       const source = reference.source;
       
-      const eReference = input.find(f => equal(f.source, source));
+      const eReference = entries.find(f => equal(f.source, source));
       
       if (!eReference) {
         throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
