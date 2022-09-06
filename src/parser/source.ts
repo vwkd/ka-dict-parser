@@ -123,8 +123,8 @@ const wordKaMeaningParser = coroutine( function* () {
   const meaning = MEANING[superscriptNumber];
   
   return {
-    meaning,
     value,
+    meaning,
   };
 });
 
@@ -136,8 +136,8 @@ Source
 const sourceParser = choice([
   wordKaMeaningParser,
   wordKaParser.map(value => ({
-    meaning: 1,
     value,
+    meaning: 1,
   })),
 ]);
 
