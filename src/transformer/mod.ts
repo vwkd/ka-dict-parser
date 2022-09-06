@@ -52,7 +52,7 @@ function addReferenceId(entries: EntryType[]) {
 */
 function renameReferenceKind(entries: EntryType[]) {
   const KIND = {
-    "s.": "SEE",
+    "s.": "DIRECT",
     "s. Bed.": "MEANING",
     "id.": "IDENTICAL",
   };
