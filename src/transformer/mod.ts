@@ -5,6 +5,7 @@ export default function transform(entries: EntryType[]) {
   const p = pipe(
     addId,
     addReferenceId,
+    renameReferenceKind,
   );
   
   return p(entries);
@@ -39,6 +40,28 @@ function addReferenceId(entries: EntryType[]) {
         id,
         ...e.reference,
       };
+    }
+    
+    return e;
+  });
+}
+
+/* Rename reference kind
+* expand word and make uppercase
+*/
+function renameReferenceKind(entries: EntryType[]) {
+  const KIND = {
+    "s.": "DIRECT",
+    "s. Bed.": "MEANING",
+    "id.": "IDENTICAL",
+  };
+  
+  return entries.map(e => {
+    const reference = e.reference
+    
+    if (reference) {
+      const kind = reference.kind;
+      reference.kind = KIND[kind];
     }
     
     return e;
