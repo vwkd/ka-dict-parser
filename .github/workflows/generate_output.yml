@@ -22,7 +22,7 @@ jobs:
           deno-version: v1.x
           
       - name: Run Deno
-        run: deno run --allow-read --allow-write src/mod.ts
+        run: deno task generate
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
