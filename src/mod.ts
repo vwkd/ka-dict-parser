@@ -18,7 +18,8 @@ const input = `ადგილ umstellen, translozieren
 ასკინკილავ auf einem Bein hüpfen
 ენამზე Bed. s. ენამჭევრ
 ენამჭევრ redegewandt sein
-ვაზირ {va.} Bed. s. ვეზირ`;
+ლაქავ beflecken, beklecksen
+ლაქიან Bed. s. ლაქავ`;
 
 const result = parser.fork(input,
   (error, _) => {
