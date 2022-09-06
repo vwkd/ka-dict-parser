@@ -71,15 +71,23 @@ function renameReferenceKind(entries: EntryType[]) {
 
 /* Rename tags
 * remove trailing period and make uppercase
+* note: assumes all tags have trailing period
 */
 function renameTags(entries: EntryType[]) {
+  function newTags(tags) {
+    return tags.map(t => t.slice(0, -1).toUpperCase());
+  }
+
   return entries.map(e => {
-    const content = e.target ?? e.reference;
-    const tags = content.tags;
-    
-    content.tags = tags.map(t => {
-      return tag.slice(0, -1).toUpperCase();
-    });
+    if (e.target) {
+      e.target.forEach(target => {
+        const tags = target.tags;
+        target.tags = newTags(tags);
+      });
+    } else {
+      const tags = e.reference.tags;
+      e.reference.tags = newTags(tags);
+    } 
     
     return e;
   });
