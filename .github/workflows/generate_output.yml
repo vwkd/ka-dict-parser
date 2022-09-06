@@ -1,10 +1,7 @@
 name: Generate output
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+  workflow_dispatch
       
 jobs:
   generateOutput:
