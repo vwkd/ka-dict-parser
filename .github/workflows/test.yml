@@ -1,4 +1,4 @@
-name: Test
+name: Generate output
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
       - main
       
 jobs:
-  test:
+  generateOutput:
   
     runs-on: ubuntu-latest
     timeout-minutes: 1
@@ -25,4 +25,12 @@ jobs:
           deno-version: v1.x
           
       - name: Run Deno
-        run: deno run --no-check src/mod.ts
+        run: deno run --allow-read --allow-write src/mod.ts
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: generate output
+          title: Generate output
+          body: Generate output
+          branch: output
