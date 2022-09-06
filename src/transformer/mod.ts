@@ -16,11 +16,7 @@ export default function transform(entries: EntryType[]) {
  * uses line number as id (position in entries array)
 */
 function addId(entries: EntryType[]) {
-  return entries.map((e, i) => {
-    e.id = i;
-    
-    return e;
-  });
+  return entries.map((e, id) => ({ id, ...e,}));
 }
 
 /* Add entry.reference?.id
@@ -34,13 +30,17 @@ function addReferenceId(entries: EntryType[]) {
     
       const source = reference.source;
       
-      const eReference = entries.find(f => equal(f.source, source));
+      const eRef = entries.find(f => equal(f.source, source));
       
-      if (!eReference) {
+      if (!eRef) {
         throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
       }
       
-      e.reference.id = eReference.id;
+      const id = eRef.id;
+      e.reference = {
+        id,
+        ...e.reference,
+      };
     }
     
     return e;
