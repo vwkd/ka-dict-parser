@@ -47,14 +47,17 @@ function addReferenceId(entries: EntryType[]) {
   });
 }
 
-function renameReferenceKind(input: EntryType[]) {
+/* Rename reference kind
+* expand word and make uppercase
+*/
+function renameReferenceKind(entries: EntryType[]) {
   const KIND = {
     "s.": "SEE",
     "s. Bed.": "MEANING",
     "id.": "IDENTICAL",
   };
   
-  return input.map(e => {
+  return entries.map(e => {
     const reference = e.reference
     
     if (reference) {
