@@ -5,6 +5,7 @@ function transform(input: EntryType[]) {
   const p = pipe(
     addId,
     addReferenceId,
+    renameReferenceKind,
   );
   
   return p(input);
@@ -34,6 +35,25 @@ function addReferenceId(input: EntryType[]) {
       }
       
       e.reference.id = eReference.id;
+    }
+    
+    return e;
+  });
+}
+
+function renameReferenceKind(input: EntryType[]) {
+  const KIND = {
+    "s.": "SEE",
+    "s. Bed.": "MEANING",
+    "id.": "IDENTICAL",
+  };
+  
+  return input.map(e => {
+    const reference = e.reference
+    
+    if (reference) {
+      const kind = reference.kind;
+      reference.kind = KIND[kind];
     }
     
     return e;
