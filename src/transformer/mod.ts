@@ -1,5 +1,5 @@
-import { deepEquals } from "../deps.ts";
-import type { EntryType } from "../parser/types.ts";
+import { equal } from "../deps.ts";
+import type { EntryType } from "../types.ts";
 
 function transform(entries: EntryType[]) {
   const p = pipe(
