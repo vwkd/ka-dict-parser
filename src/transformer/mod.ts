@@ -1,7 +1,7 @@
 import { deepEquals } from "../deps.ts";
 import type { EntryType } from "../parser/types.ts";
 
-function transform(input: EntryType[]) {
+function transform(entries: EntryType[]) {
   const p = pipe(
     addId,
     addReferenceId,
@@ -9,7 +9,7 @@ function transform(input: EntryType[]) {
     renameTags,
   );
   
-  return p(input);
+  return p(entries);
 }
 
 /* Add entry.id
