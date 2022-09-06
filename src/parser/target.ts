@@ -64,11 +64,12 @@ const integerDotWhitespaceValueParserFactory = meaning => coroutine( function* (
   yield char(`${meaning}`);
   yield char(".");
   yield whitespaceParser;
-  const value = yield valueParser;
+  const { value, tags } = yield valueParser;
   
   return {
+    value,
     meaning,
-    ...value,
+    tags,
   };
 });
 
@@ -115,9 +116,10 @@ Target
 */
 const targetParser = choice([
   valuesParser,
-  valueParser.map(value => [{
+  valueParser.map(({ value, tags }) => [{
+    value,
     meaning: 1,
-    ...value,
+    tags,
   }]),
 ]);
 
