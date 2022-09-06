@@ -69,10 +69,11 @@ function renameReferenceKind(entries: EntryType[]) {
   });
 }
 
-/* Remove trailing period and make uppercase
+/* Rename tags
+* remove trailing period and make uppercase
 */
-function renameTags(input: EntryType[]) {
-  return input.map(e => {
+function renameTags(entries: EntryType[]) {
+  return entries.map(e => {
     const content = e.target ?? e.reference;
     const tags = content.tags;
     
