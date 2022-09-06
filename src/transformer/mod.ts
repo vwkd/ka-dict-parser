@@ -1,7 +1,7 @@
 import { equal } from "../deps.ts";
 import type { EntryType } from "../types.ts";
 
-function transform(entries: EntryType[]) {
+export default function transform(entries: EntryType[]) {
   const p = pipe(
     addId,
     addReferenceId,
