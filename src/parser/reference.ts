@@ -13,15 +13,15 @@ import tagsParser from "./tags.ts";
 
 /*
 Kind
-    "s." ws "Bed."
+    "Bed." ws "s."
     "s." 
     "id."
 */
 const kindParser = choice([
   sequenceOf([
-    str("s."),
-    whitespaceParser,
     str("Bed."),
+    whitespaceParser,
+    str("s."),
   ]).map(a => a.join("")),
   str("s."),
   str("id."),
