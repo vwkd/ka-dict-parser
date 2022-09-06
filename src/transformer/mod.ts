@@ -6,6 +6,7 @@ export default function transform(entries: EntryType[]) {
     addId,
     addReferenceId,
     renameReferenceKind,
+    renameTags,
   );
   
   return p(entries);
@@ -63,6 +64,30 @@ function renameReferenceKind(entries: EntryType[]) {
       const kind = reference.kind;
       reference.kind = KIND[kind];
     }
+    
+    return e;
+  });
+}
+
+/* Rename tags
+* remove trailing period and make uppercase
+* note: assumes all tags have trailing period
+*/
+function renameTags(entries: EntryType[]) {
+  function newTags(tags) {
+    return tags.map(t => t.slice(0, -1).toUpperCase());
+  }
+
+  return entries.map(e => {
+    if (e.target) {
+      e.target.forEach(target => {
+        const tags = target.tags;
+        target.tags = newTags(tags);
+      });
+    } else {
+      const tags = e.reference.tags;
+      e.reference.tags = newTags(tags);
+    } 
     
     return e;
   });
