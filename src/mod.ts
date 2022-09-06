@@ -22,4 +22,4 @@ const result = parser.fork(input,
   }
 );
 
-await Deno.writeTextFile(result, "out/vz.json");
+await Deno.writeTextFile("out/vz.json", result);
