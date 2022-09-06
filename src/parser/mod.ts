@@ -4,9 +4,6 @@ import {
   many,
   startOfInput,
   endOfInput,
-  withData,
-  setData,
-  getData,  
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
@@ -16,7 +13,7 @@ import targetParser from "./target.ts";
 
 const parser = coroutine(function* () {
   yield startOfInput;
-  const text = yield textParser({ lineNumber: 1});
+  const text = yield textParser;
   yield endOfInput;
   
   return text;
@@ -26,7 +23,7 @@ const parser = coroutine(function* () {
 Text
     Line NewlineLine*
 */
-const textParser = withData( coroutine(function* () {
+const textParser = coroutine(function* () {
   const line = yield lineParser;
   const lines = yield many( newlineLineParser);
   
@@ -34,7 +31,7 @@ const textParser = withData( coroutine(function* () {
     line,
     ...lines,
   ];
-}));
+});
 
 /*
 NewlineLine
@@ -56,15 +53,9 @@ const lineParser = coroutine(function* () {
   yield whitespaceParser;
   const targetOrReference = yield targetOrReferenceParser;
   
-  const state = yield getData;
-  const id = state.lineNumber;
-  state.lineNumber += 1;
-  yield setData(state);
-  
   const isTarget = Array.isArray(targetOrReference);
   
   return {
-    id,
     source,
     ...(isTarget ? { target: targetOrReference } : { reference: targetOrReference }),
   };
