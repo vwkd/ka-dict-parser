@@ -163,7 +163,7 @@ const sentenceDeParser = coroutine( function* () {
   return [
     first,
     ...rest,
-  ].join("");
+  ].join(" ");
 });
 
 export default sentenceDeParser;
