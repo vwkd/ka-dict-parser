@@ -17,7 +17,7 @@ function transform(entries: EntryType[]) {
 */
 function addId(entries: EntryType[]) {
   return entries.map((e, i) => {
-    e.id = i;￼
+    e.id = i;
     
     return e;
   });
