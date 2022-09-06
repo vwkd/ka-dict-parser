@@ -6,6 +6,7 @@ function transform(input: EntryType[]) {
     addId,
     addReferenceId,
     renameReferenceKind,
+    renameTags,
   );
   
   return p(input);
@@ -55,6 +56,21 @@ function renameReferenceKind(input: EntryType[]) {
       const kind = reference.kind;
       reference.kind = KIND[kind];
     }
+    
+    return e;
+  });
+}
+
+/* Remove trailing period and make uppercase
+*/
+function renameTags(input: EntryType[]) {
+  return input.map(e => {
+    const content = e.target ?? e.reference;
+    const tags = content.tags;
+    
+    content.tags = tags.map(t => {
+      return tag.slice(0, -1).toUpperCase();
+    });
     
     return e;
   });
