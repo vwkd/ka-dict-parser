@@ -4,9 +4,11 @@ import transformer from "./transformer/mod.ts";
 const input = await Deno.readTextFile("./vz.txt");
 
 const result = parser.fork(input,
-  (error, _) => {
+  (error, parsingState) => {
     console.error("Parse error:", error);
-    throw error;
+    console.error("Parse target:", parsingState.data);
+    // throw error;
+    return parsingState.result
   },
   (result, _) => {
     console.log("Parse success:", result.slice(0,5));
