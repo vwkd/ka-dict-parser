@@ -72,6 +72,7 @@ function renameReferenceKind(entries: EntryType[]) {
 
 /* Rename tags
 * remove trailing period and make uppercase
+* note: saves database to keep short and expand only on client, also GraphQL server only allows _a-zA-Z
 * note: assumes all tags have trailing period
 */
 function renameTags(entries: EntryType[]) {
