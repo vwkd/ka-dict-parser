@@ -1118,7 +1118,6 @@
 ლუსკ {psch.} triefnass werden
 ლუქ versiegeln
 ლღ id. ლღვ
-ლღვ s. ლხ bzw. ლხვ
 ლხენ s. ლხინ
 ლხვ s. ლხ
 მაბეზღარ ein Angeber sein
@@ -1739,7 +1738,6 @@
 რიალ sich aufgeregt durcheinander bewegen, herumwirbeln
 რივ s. რენ
 რიკა id. რიკავ
-რიკავ რიკაობა spielen
 რინდ verstummen, erstarren
 რიოშ fälschen
 რიჟრაჟ dämmern, tagen
@@ -1849,7 +1847,6 @@
 სათუთ 1. sich zieren 2. hätscheln
 სალ stark werden
 სალა id. სალავ
-სალავ სალაობა spielen
 სალბუნ Balsam auf die Wunde träufeln
 სალთავ sich von einer Last befreien
 სალმუნ s. სალბუნ
@@ -2220,7 +2217,6 @@
 ფვლ s. ფლ¹
 ფთქვენ s. ფრთქვენ
 ფთქვინ s. ფრთქვინ
-ფთქრიალ s. ფრთქიალ bzw. ფრთხიალ
 ფთხ s. ფრთხ
 ფთხვინ {imer., gur.} s. ფრთხვინ
 ფთხილ s. ფრთხილ
@@ -2263,7 +2259,6 @@
 ფორ {imer., gur.} schimmeln
 ფორთხ kriechen
 ფორთხალ s. ფართხალ
-ფორთხიალ 1. {khar.} s. ფართხალ 2. {imer.} s. ფორთხ
 ფორიალ flattern
 ფორხ stolpern
 ფორხილ stolpern
@@ -2522,7 +2517,6 @@
 ქუცმაც zerkleinern, zerstückeln
 ქუცქუც {imer.} umschmeicheln
 ქუხ donnern
-ქშევ einen Vogel mit dem Ruf "ksch!" verscheuchen
 ქშენ schnaufen, keuchen, schnauben
 ქშერ {psch.} opfern
 ქში s. ქშევ
@@ -2672,7 +2666,6 @@
 ღურჭუმელავ s. ყურყუმელან
 ღუღნ {khar.} s. ღურღნ
 ღძ id. ღძვ
-ღძვ s. ღრძ bzw. ღრძვ
 ღწვ s. ღვწ
 ღწი s. ღწევ
 ყ¹ s. ყოფ¹
@@ -2944,7 +2937,6 @@
 ჩივლ s. ჩივილ
 ჩიკ s. ჩეკ¹
 ჩილიკა id. ჩილიკავ
-ჩილიკავ ჩილიკაობა spielen
 ჩინ s. ჩენ
 ჩინდრიკ {imer.} Bed. s. ჩაქჩაქ
 ჩინჩ¹ 1. feilschen 2. zaudern
@@ -2961,7 +2953,6 @@
 ჩიფჩიფ mit zahnlosem Mund lispeln
 ჩიჩმაგურ {khar.} herumwirtschaften
 ჩიხ in die Enge treiben
-ჩიხირთმავ als ჩიხირთმა zubereiten
 ჩიხრიხ 1. {imer.} Baumwolle entkernen 2. {psch.} etwas durchführen
 ჩლატუნ Bed. s. ფრატუნ
 ჩლექ 1. die Kindersprache nachahmen 2. lispeln
@@ -3058,7 +3049,6 @@
 ცაცან s. ციცინ
 ცაცქან s. ციცინ
 ცაცხან anschreien
-ცახ aus Maulbeerblättern einen "Spinnwald" aufstellen
 ცახცახ schlottern, zittern
 ცბ s. ცბუნ
 ცბიერ Hinterlistigkeit an den Tag legen
@@ -3657,7 +3647,6 @@
 ხე s. ხევ¹
 ხედ 1. sehen, schauen 2. einsehen 3. sich besser fühlen 4. nachahmen
 ხევ¹ zerreißen, abreißen
-ხევისბერ die Würde eines ხევისბერი innehaben
 ხეიბრ verkrüppeln
 ხელ³ die Augen öffnen
 ხელ⁴ s. ხლ¹
@@ -3765,7 +3754,6 @@
 ხოტონიკ schnöden
 ხოშკაკლ in Schlossen hageln
 ხოხ 1. kriechen, auf dem Bauche rutschen 2. schleppen
-ხოხბ als ჩახოხბილი zubereiten
 ხოხინ {va.} jucken
 ხოხნ grasen, alles abfressen
 ხოხოლავ aufhäufen
@@ -3816,7 +3804,7 @@
 ხუნხვლ s. ხანხნლ
 ხუნხლ id. ხუნხვლ
 ხუროთმოძღვრ Architekt sein
-ხურხ. id. ხურხვ.
+ხურხ id. ხურხვ
 ხუსხუს trippeln
 ხუტ ans Herz drücken
 ხუფ mit einem Deckel versehen, zudecken
