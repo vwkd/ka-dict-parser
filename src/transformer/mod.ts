@@ -7,6 +7,7 @@ export default function transform(entries: EntryType[]) {
     addReferenceId,
     renameReferenceKind,
     renameTags,
+    sortTags,
     removeOld,
   );
   
@@ -89,6 +90,21 @@ function renameTags(entries: EntryType[]) {
     } else {
       const tags = e.reference.tags;
       e.reference.tags = newTags(tags);
+    } 
+    
+    return e;
+  });
+}
+
+/* Sort tags alphabetically
+*/
+function sortTags(entries: EntryType[]) {
+
+  return entries.map(e => {
+    if (e.target) {
+      e.target.forEach(target => target.tags.sort());
+    } else {
+      e.reference.tags.sort();
     } 
     
     return e;
