@@ -33,10 +33,10 @@ function addReferenceId(entries: EntryType[]) {
       const eRef = entries.find(f => equal(f.source, source));
       
       if (!eRef) {
-        throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+        // throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
       }
       
-      const id = eRef.id;
+      const id = eRef?.id ?? 999;
       e.reference = {
         id,
         ...e.reference,
