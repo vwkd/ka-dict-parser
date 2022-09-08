@@ -75,7 +75,7 @@ function renameReferenceKind(entries: EntryType[]) {
 */
 function renameTags(entries: EntryType[]) {
   function newTags(tags) {
-    return tags.map(t => t.slice(0, -1).toUpperCase());
+    return tags.map(t => t.slice(0, -1).toUpperCase().replace("-","_"));
   }
 
   return entries.map(e => {
