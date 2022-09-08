@@ -7,6 +7,7 @@ export default function transform(entries: EntryType[]) {
     addReferenceId,
     renameReferenceKind,
     renameTags,
+    removeOld,
   );
   
   return p(entries);
@@ -91,6 +92,28 @@ function renameTags(entries: EntryType[]) {
     
     return e;
   });
+}
+
+/* Remove old entries or values
+ * beware: if numbered may end up with missing number in sequence!
+*/
+function removeOld(entries: EntryType[]) {
+  return entries.map(e => {
+  
+    if (e.target) {
+      e.target = e.target.filter(({ tags }) => !tags.includes("VA"));
+      if (e.target.length == 0) {
+        return null;
+      }
+    } else {
+      const { tags } = e.reference;
+      if (tags.includes("VA")) {
+        return null;
+      }
+    }
+    
+    return e;
+  }).filter(e => e != null);
 }
 
 const pipe = (...fns) => (x) => fns.reduce((res, fn) => fn(res), x);
