@@ -8,15 +8,16 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import tagsParser from "./tags.ts";
+import tagsWhitespaceParser from "./tags.ts";
 import sentenceParser from "./sentence.ts";
+import referenceParser from "./reference.ts";
 
 /*
-CommaWhitespaceSentence
-    "," ws Sentence
+SemicolonWhitespaceSentence
+    ";" ws Sentence
 */
-const commaWhitespaceSentenceParser = coroutine( function* () {
-  yield char(",");
+const semicolonWhitespaceSentenceParser = coroutine( function* () {
+  yield char(";");
   yield whitespaceParser;
   const sentence = yield sentenceParser;
   
@@ -26,29 +27,37 @@ const commaWhitespaceSentenceParser = coroutine( function* () {
 /*
 // todo: assumes sentences if and only if separated by comma, not yet true ❗️
 Sentences
-    SentenceDe CommaWhitespaceSentenceDe*
+    Sentence SemicolonWhitespaceSentence*
 */
 const sentencesParser = coroutine( function* () {
   const sentence = yield sentenceParser;
-  const sentences = yield many( commaWhitespaceSentenceParser);
+  const sentences = yield many( semicolonWhitespaceSentenceParser);
   
-  return [
-    sentence,
-    ...sentences,
-  ];
+  return {
+    value: [
+      sentence,
+      ...sentences,
+    ],
+  };
 });
 
 /*
+ReferenceOrSentences
+    Reference
+    Sentences
+*/
+const referenceOrSentencesParser = choice([
+  referenceParser,
+  sentencesParser,
+]);
+
+/*
 Value
-    (Tags ws)? Sentences
+    TagsWhitespace? ReferenceOrSentences
 */
 const valueParser = coroutine( function* () {
-  const tags = (yield possibly( sequenceOf([
-    tagsParser,
-    whitespaceParser
-  ]).map(a => a[0]))) ?? [];
-
-  const value = yield sentencesParser;
+  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
+  const value = yield referenceOrSentencesParser;
   
   return {
     value,
