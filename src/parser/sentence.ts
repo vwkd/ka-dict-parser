@@ -5,6 +5,7 @@ import {
   sequenceOf,
   many,
   many1,
+  possibly,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -139,11 +140,12 @@ const wordDeParser = choice([
 ]);
 
 /*
-WhitespaceWordDe
-    ws WordDe
+CommaWhitespaceWordDe
+    ","? ws WordDe
 */
-const whitespaceWordDeParser =
+const commaWhitespaceWordDeParser =
 coroutine( function* () {
+  yield possibly( char(","));
   yield whitespaceParser;
   const word = yield wordDeParser;
 
@@ -151,14 +153,14 @@ coroutine( function* () {
 });
 
 /*
-// todo: assume expanded all shorthands, has no (), od., /, ;, not yet true ❗️
+// todo: assume expanded all shorthands, has no (), od., /, not yet true ❗️
 // todo: sentence might contain WordKa ❗️
 Sentence
-    WordDe WhitespaceWordDe*
+    WordDe CommaWhitespaceWordDe*
 */
 const sentenceDeParser = coroutine( function* () {
   const first = yield wordDeParser;
-  const rest = yield many( whitespaceWordDeParser);
+  const rest = yield many( commaWhitespaceWordDeParser);
   
   return [
     first,

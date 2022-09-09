@@ -9,8 +9,7 @@ import {
 
 import { whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
-import tagsParser from "./tags.ts";
-
+    
 /*
 Kind
     "Bed." ws "s."
@@ -29,14 +28,9 @@ const kindParser = choice([
 
 /*
 Reference
-    (Tags ws)? Kind ws Source
+    Kind ws Source
 */
 const referenceParser = coroutine( function* () {
-  const tags = (yield possibly( sequenceOf([
-    tagsParser,
-    whitespaceParser
-  ]).map(a => a[0]))) ?? [];
-  
   const kind = yield kindParser;
   yield whitespaceParser;
   const source = yield sourceParser;
@@ -44,7 +38,6 @@ const referenceParser = coroutine( function* () {
   return {
     source,
     kind,
-    tags,
   };
 });
 
