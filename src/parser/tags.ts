@@ -9,6 +9,17 @@ import {
 import { whitespaceParser } from "./chars.ts";
 
 /*
+TagsWhitespace
+    Tags ws
+*/
+const tagsWhitespaceParser = coroutine( function* () {
+  const tags = yield tagsParser;
+  yield whitespaceParser;
+  
+  return tags;
+});
+
+/*
 Tags
     "{" Tag CommaWhitespaceTag* "}"
 */
@@ -138,4 +149,4 @@ const tagParser = choice([
   str("vulg."),
 ]);
 
-export default tagsParser;
+export default tagsWhitespaceParser;

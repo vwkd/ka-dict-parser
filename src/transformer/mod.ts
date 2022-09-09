@@ -21,32 +21,30 @@ function addId(entries: EntryType[]) {
   return entries.map((e, id) => ({ id, ...e,}));
 }
 
-/* Add entry.reference?.id
+/* Add reference id
  * beware: assumes entries have unique source, no duplicates!
 */
 function addReferenceId(entries: EntryType[]) {
-  return entries.map(e => {
-    const reference = e.reference
-    
-    if (reference) {
-    
-      const source = reference.source;
-      
-      const eRef = entries.find(f => equal(f.source, source));
-      
-      if (!eRef) {
-        throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+  entries.forEach(e => {
+    e.target.forEach(target => {
+      // checks if reference
+      if (target.value.source) {
+        const eRef = entries.find(f => equal(f.source, target.value.source));
+        
+        if (!eRef) {
+          throw new Error(`Couldn't find referenced entry '${Object.values(value.source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+        }
+        const id = eRef.id;
+        
+        target.value = {
+          id,
+          ...target.value,
+        };
       }
-      
-      const id = eRef.id;
-      e.reference = {
-        id,
-        ...e.reference,
-      };
-    }
-    
-    return e;
+    });
   });
+  
+  return entries;
 }
 
 /* Rename reference kind
@@ -59,16 +57,16 @@ function renameReferenceKind(entries: EntryType[]) {
     "id.": "IDENTICAL",
   };
   
-  return entries.map(e => {
-    const reference = e.reference
-    
-    if (reference) {
-      const kind = reference.kind;
-      reference.kind = KIND[kind];
-    }
-    
-    return e;
+  entries.forEach(e => {
+    e.target.forEach(target => {
+      // checks if reference
+      if (target.value.kind) {
+        target.value.kind = KIND[target.value.kind];
+      }
+    });
   });
+  
+  return entries;
 }
 
 /* Rename tags
@@ -78,37 +76,29 @@ function renameReferenceKind(entries: EntryType[]) {
 */
 function renameTags(entries: EntryType[]) {
   function newTags(tags) {
-    return tags.map(t => t.slice(0, -1).toUpperCase().replace("-","_"));
+    return tags.map(tag => tag.slice(0, -1).toUpperCase().replace("-","_"));
   }
 
-  return entries.map(e => {
-    if (e.target) {
-      e.target.forEach(target => {
-        const tags = target.tags;
-        target.tags = newTags(tags);
-      });
-    } else {
-      const tags = e.reference.tags;
-      e.reference.tags = newTags(tags);
-    } 
-    
-    return e;
+  entries.forEach(e => {
+    e.target.forEach(target => {
+      target.tags = newTags(target.tags);
+    });
   });
+  
+  return entries;
 }
 
 /* Sort tags alphabetically
 */
 function sortTags(entries: EntryType[]) {
 
-  return entries.map(e => {
-    if (e.target) {
-      e.target.forEach(target => target.tags.sort());
-    } else {
-      e.reference.tags.sort();
-    } 
-    
-    return e;
+  entries.forEach(e => {
+    e.target.forEach(target => {
+      target.tags.sort();
+    });
   });
+  
+  return entries;
 }
 
 /* Remove old entries or values
