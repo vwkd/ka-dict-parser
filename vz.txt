@@ -223,6 +223,7 @@
 ბოროტ böse sein
 ბორძიკ 1. stolpern 2. stammeln
 ბოტ zotteln, watscheln
+ბოტიალ kopflos hin und her laufen
 ბოყინ rülpsen
 ბოშ lockern
 ბოძ überreichen
@@ -562,6 +563,7 @@
 დუმ s. დუმილ
 დუმილ schweigen
 დურგლ tischlern
+დურთ {umg.} sich auf und davon machen, verduften
 დუღ s. დუღილ
 დუღაბ mit Mörtel übergießen
 დუღილ 1. kochen, sieden, brodeln 2. gären, fermentieren
@@ -845,6 +847,7 @@
 კალ¹ 1. oxidieren lassen 2. verzinnen
 კალ² s. კლ¹
 კალატოზ ein Maurer sein
+კალთავ 1. {imer., chew.} die beim Dreschen in der Tenne verstreuten Ähren und Körner mit einer Holzschaufel zusammennehmen 2. aufschürzen
 კალიბრ kalibrieren
 კამათ debattieren, diskutieren
 კამკამ 1. glänzen, leuchten, schimmern 2. blitzblank putzen, reinigen
@@ -965,10 +968,12 @@
 კონსერვ konservieren, einmachen
 კონსპექტ kurz zusammenfassen
 კონტრაქტ {nz.} kontrahieren
+კოპ ein Kopftuch umbinden und vorn zuknüpfen
 კოპწია id. კოპწიავ
 კოპწიავ kokettieren
 კოჟიჟ s. კოჟრ
 კორიკ {khar.} wackeln
+კოტ sich unruhig hin und her bewegen
 კოტავ {imer., gur.} aufstreifen, aufkrempeln
 კოტრიალ purzeln, kugeln, rollen
 კოქს {tech.} verkoken
@@ -1407,6 +1412,7 @@
 მჭიდრო id. მჭიდროვ
 მხე id. მხევ
 მხედართმთავრ Oberbefehlshaber sein, befehligen
+მხევ {imer., gur., ratsch.} hungrig und esslustig sein
 მხვ s. მხ
 მხი {imer., gur., ratsch.} s. მხენ
 მხილ¹ s. მხელ
@@ -1649,6 +1655,7 @@
 პუტუნ {imer., gur.} flüstern, murmeln
 პუწკ {imer., gur.} sich zieren
 პყრ id. პყარ
+პწკარ sich in Reih und Glied aufstellen
 პწკენ kneifen
 პწკინ s. პწკენ
 ჟაპუნ Bed. s. ზაპუნ
@@ -1860,6 +1867,7 @@
 სანთლ id. სანთვლ
 სანს id. სანსვ
 სანსალ Bed. s. ლასლას
+სანსვ herausstehlen und auffressen
 საპალნ beladen, bepacken
 საპნ id. საპვნ
 საპყრ id. საპყარ
@@ -1897,6 +1905,7 @@
 სახვრ¹ s. სახრ¹
 სახვრ² s. სახრ²
 სახიერ verkörpern, darstellen
+სახლკარ 1. Haus und Hof geben 2. sich ansiedeln
 სახლკარიან eine Hausstatt gründen
 სახრ² verprügeln
 სახსოვრ zum Andenken schenken
@@ -2021,6 +2030,8 @@
 ტარო id. ტაროვ
 ტარტალ Bed. s. ტარტარ
 ტარტარ plappern
+ტატ auf den Arm nehmen und herzen
+ტატყან {umg.} laut und unschön reden, quatschen
 ტე¹ id. ტევ¹
 ტე² id. ტევ²
 ტეტკ erbleichen lassen
@@ -2078,6 +2089,7 @@
 ტორ mit der Tatze einen Hieb versetzen
 ტორტვლ {desp.} Blödsinn reden
 ტორტლ id. ტორტვლ
+ტორღიალ jemandem auf Schritt und Tritt folgen
 ტოტიან Äste treiben, sich verzweigen
 ტოტნ jemanden verhauen
 ტოქ rivalisieren
@@ -2087,6 +2099,7 @@
 ტროკ Lust verspüren
 ტრუ id. ტრუვ
 ტრუვ Bed. s. ტროვ
+ტრუნ den Atem anhalten und sich nicht regen
 ტრუს sengen
 ტრუხუნ grunzen
 ტრფ innig lieben, verehren
@@ -2174,6 +2187,7 @@
 ფარდ in Einklang bringen, vergleichen
 ფარდაგ mit Teppichen belegen
 ფარეშ dienen
+ფართიფურთ geschäftig hin und her laufen
 ფართო id. ფართოვ
 ფართოვ verbreitern, erweitern
 ფართქალ flattern
@@ -2193,8 +2207,10 @@
 ფაღარათ Durchfall haben
 ფაშ s. ფაშვ
 ფაშრ id. ფაშვრ
+ფაცაფუც geschäftig hin und her laufen
 ფაციფუც Bed. s. ფაცაფუც
 ფაციც die Augen aufsperren
+ფაცურ geschäftig hin und her laufen
 ფახ¹ einschüchtern
 ფახ² blinzeln
 ფახაფუხ großtun
@@ -2259,7 +2275,9 @@
 ფორ {imer., gur.} schimmeln
 ფორთხ kriechen
 ფორთხალ s. ფართხალ
+ფორთხიალ 1. {khar.} s. ფართხალ 2. {imer.} s. ფორთხ
 ფორიალ flattern
+ფორფოტ {khar.} geschäftig hin und her laufen
 ფორხ stolpern
 ფორხილ stolpern
 ფოფვრ s. ფოფრ
@@ -2313,6 +2331,7 @@
 ფურჩქნ id. ფურჩქვნ
 ფურჩხნ {gur., imer., letsch.} einbrocken
 ფურცლ id. ფურცვლ
+ფუსფუს geschäftig hin und her laufen
 ფუტკვრ {imer.} s. ფუტკრ
 ფუტკრ {imer.} einäschern
 ფუტურო id. ფუტუროვ
@@ -2392,6 +2411,7 @@
 ქან s. ქანან
 ქანა id. ქანავ
 ქანც entkräften, ermüden
+ქანძურა {psch.} schaukeln, sich hin und her schwingen
 ქანჯალ 1. {imer., gur.} jemanden kräftig schütteln 2. {imer., gur.} verrückt werden
 ქარ¹ dummes Zeug reden
 ქარ² s. ქარვ¹
@@ -2536,11 +2556,13 @@
 ქცი³ s. ქცენ³
 ღ¹ öffnen
 ღადრ id. ღადვრ
+ღადღად² 1. {gur., imer.} viel und laut reden 2. {gur., imer.} laut und fließend lesen
 ღავღავ 1. mit kurzen Tönen bellen 2. schimpfen, lärmen
 ღალ¹ s. ღლ
 ღალ² {imer., gur.} mit dem bösen Blick behexen
 ღალატ verraten
 ღალატიან treulos verlassen
+ღანტალ sich mühsam erheben und sich schleppen
 ღანღალ sich schleppen
 ღაჟღაჟ rot leuchten
 ღარ rillen, durchfurchen
@@ -2567,6 +2589,7 @@
 ღვედ biegen
 ღვთისნიერ zu einem barmherzigen Menschen machen
 ღვი id. ღვივ
+ღვინ ausgären und zu Wein werden
 ღვინიან einen Schwips bekommen
 ღვლარჭნ krümmen
 ღვლეპ s. ყვლეფ
@@ -2588,8 +2611,12 @@
 ღირღიტ² knarren
 ღირღნ s. ღრღნ
 ღიტინ¹ kitzeln
+ღიტინ² {imer.} herumgehen und betteln
 ღიღინ halblaut singen
+ღიცღიც {khar.} Zoten reißen und dabei unflätig lachen
 ღიჭინ s. ღიჯინ
+ღიჯინ lästig bitten und betteln
+ღიჯღიჯ {khar., khis.} sinnloses Zeug reden und dabei lachen
 ღლ ermüden
 ღლაბუც {imer., gur., letsch.} schlechte Scherze machen
 ღლე id. ღლევ
@@ -2617,10 +2644,12 @@
 ღობ 1. umzäunen 2. {gur., imer.} flechten
 ღონიერ kräftigen, stärken
 ღონივრ s. ღონიერ
+ღონისძი auf Mittel und Wege sinnen
 ღონღიალ sich schleppen
 ღონღილ sich schleppen
 ღორ¹ ein Vielfrass werden
 ღორ² {va.} betrügen, irreführen
+ღორღალ 1. {khar.} lärmen und schreien 2. {khar.} umherschweifen
 ღორღნ s. ლოღნ
 ღორძინ eine Wiedergeburt erfahren
 ღოღიალ sich schleppen
@@ -2677,6 +2706,7 @@
 ყავ² s. ყოფ¹
 ყავ³ s. ყოფნ¹
 ყავრ schindeln
+ყავყავ {umg.} laut und unaufhörlich grobe Reden führen
 ყაზახ {va.} das Räuberhandwerk betreiben
 ყათვრ schwer beladen
 ყათრ id. ყათვრ
@@ -2741,9 +2771,12 @@
 ყიჟინ laut, gellend schreien
 ყირავ auf den Kopf stellen, stürzen, kippen
 ყირჭ verleiden
+ყიჭინ 1. {imer.} lästig bitten und betteln 2. {imer.} mit Worten streiten
 ყიჭყიჭ kehlig sprechen
 ყლანწ {imer.} s. ყლურწ
 ყლაპ schlucken
+ყლურწ gierig und schnell trinken
+ყლურჭ gierig und schnell trinken
 ყმ jemandes Untertan sein
 ყმედ {va.} verhungern
 ყმენდ {kach.} gierig essen
@@ -2824,6 +2857,7 @@
 შვნ s. შნ
 შვნი s. შვნევ
 შვრ² s. შრ
+შვრინ {psch.} ruhig und hörbar atmen
 შთ¹ {va.} ersticken, erwürgen, erdrosseln
 შთ² s. შთენ
 შთვ {va.} s. შთ¹
@@ -2853,6 +2887,7 @@
 შოვ s. შოვნ
 შოთ s. შოტ
 შოლტ¹ s. შოლტან
+შოლტ² groß und schlank werden
 შოლტა id. შოლტავ
 შოლტავ geißeln, peitschen
 შორეულ sich entfernen
@@ -3040,6 +3075,7 @@
 ცალ³ s. ცლ²
 ცალიერ s. ცარიელ
 ცალცალკევ einzeln auseinandergehen
+ცამტვერ in Schutt und Asche legen
 ცან s. ცნ
 ცანცალ s. ცუნცულ
 ცარ² s. ცრ³
@@ -3107,6 +3143,9 @@
 ციცინ liebevoll ansehen
 ციცქინ liebevoll ansehen
 ცმევ s. ცვ³
+ცმუკ sich unruhig hin und her bewegen, zappeln
+ცმუტ sich unruhig hin und her bewegen
+ცმუტურ {imer.} sich unruhig hin und her bewegen
 ცნაურ bekannt vorkommen
 ცნობ bekanntgeben, mitteilen
 ცოდ id. ცოდვ
@@ -3395,6 +3434,7 @@
 წრახნ 1. fest zusammendrehen 2. krampfhaft zusammenziehen
 წრთვენ s. წვრთნნ
 წრთვნ id. წრთვენ
+წრიალ sich rastlos hin und her bewegen
 წრინტ zwischen den Zähnen ausspucken
 წრიპინ piepsen, quieken
 წრიტ s. წრეტ
@@ -3713,6 +3753,7 @@
 ხიზვნ s. ხიზნ
 ხიზმუზიან Bed. s. ხაზმუზიან
 ხითხით kichern
+ხიკ {imer.} zusammensammeln und mitnehmen
 ხიკნ {imer.} ganz leeren, alles mitnehmen
 ხილ¹ s. ხელ³
 ხილ³ die ersten Früchte kosten
