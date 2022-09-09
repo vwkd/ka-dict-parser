@@ -8,7 +8,6 @@ import {
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
-import referenceParser from "./reference.ts";
 import targetParser from "./target.ts";
 
 const parser = coroutine(function* () {
@@ -46,29 +45,17 @@ const newlineLineParser = coroutine(function* () {
 
 /*
 Line
-    Source ws TargetOrReference
+    Source ws Target
 */
 const lineParser = coroutine(function* () {
   const source = yield sourceParser;
   yield whitespaceParser;
-  const targetOrReference = yield targetOrReferenceParser;
-  
-  const isTarget = Array.isArray(targetOrReference);
+  const target = yield targetParser;
   
   return {
     source,
-    ...(isTarget ? { target: targetOrReference } : { reference: targetOrReference }),
+    target,
   };
 });
-
-/*
-TargetOrReference
-    Reference
-    Target
-*/
-const targetOrReferenceParser = choice([
-  referenceParser,
-  targetParser,
-]);
 
 export default parser;
