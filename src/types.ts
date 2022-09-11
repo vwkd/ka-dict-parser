@@ -1,3 +1,5 @@
+export type IdType = number;
+
 export type MeaningType = number;
 
 // todo: add more
