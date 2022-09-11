@@ -34,11 +34,10 @@ const sentencesParser = coroutine( function* () {
   const sentence = yield sentenceParser;
   const sentences = yield many( semicolonWhitespaceSentenceParser);
   
+  const value = [sentence, ...sentences];
+  
   return {
-    value: [
-      sentence,
-      ...sentences,
-    ],
+    value,
   };
 });
 

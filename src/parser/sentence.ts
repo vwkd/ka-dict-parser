@@ -8,28 +8,27 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import { wordDeParser } from "./word.ts";
+import { wordParser } from "./word.ts";
 
 /*
-CommaWhitespaceWordDe
-    ","? ws WordDe
+CommaWhitespaceWord
+    ","? ws Word
 */
-const commaWhitespaceWordDeParser =
+const commaWhitespaceWordParser =
 sequenceOf([
   possibly( char(",")),
   whitespaceParser,
-  wordDeParser,
+  wordParser,
 ]).map(a => a.filter(e => e != null).join(""));
 
 /*
 // todo: assume expanded all shorthands, has no (), od., /, not yet true ❗️
-// todo: sentence might contain WordKa ❗️
 Sentence
-    WordDe CommaWhitespaceWordDe*
+    Word CommaWhitespaceWord*
 */
 const sentenceDeParser = coroutine( function* () {
-  const first = yield wordDeParser;
-  const rest = yield many( commaWhitespaceWordDeParser);
+  const first = yield wordParser;
+  const rest = yield many( commaWhitespaceWordParser);
   
   return [
     first,

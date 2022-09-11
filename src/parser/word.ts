@@ -197,8 +197,18 @@ WordDe
     WordDeSmall
     WordDeHyphen
 */
-export const wordDeParser = choice([
+const wordDeParser = choice([
   wordDeBigParser,
   wordDeSmallParser,
   wordDeHyphenParser,
+]);
+
+/*
+Word
+    WordDe
+    WordKa
+*/
+export const wordParser = choice([
+  wordDeParser,
+  wordKaParser,
 ]);
