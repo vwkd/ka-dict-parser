@@ -156,12 +156,12 @@ WordDeBig
     CharDeBig CharDeSmall+
 */
 const wordDeBigParser = coroutine( function* () {
-  const first = yield charDeBigParser;
-  const rest = yield many1( charDeSmallParser);
+  const char = yield charDeBigParser;
+  const chars = yield many1( charDeSmallParser);
 
   return [
-    first,
-    ...rest,
+    char,
+    ...chars,
   ].join("");
 });
 
@@ -171,12 +171,12 @@ WordDeSmall
     CharDeSmall{2,}
 */
 const wordDeSmallParser = coroutine( function* () {
-  const first = yield charDeSmallParser;
-  const rest = yield many1( charDeSmallParser);
+  const char = yield charDeSmallParser;
+  const chars = yield many1( charDeSmallParser);
 
   return [
-    first,
-    ...rest,
+    char,
+    ...chars,
   ].join("");
 });
 
