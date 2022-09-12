@@ -3,8 +3,11 @@ import {
   choice,
   char,
   sequenceOf,
+  many,
   many1,
 } from "../deps.ts";
+
+import { whitespaceParser } from "./chars.ts";
 
 /*
 CharKa

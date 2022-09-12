@@ -31,10 +31,12 @@ const sentenceDeParser = coroutine( function* () {
   const words = yield wordsParser;
   const wordsList = yield many( commaWhitespaceWordsParser);
   
-  return [
-    words,
-    ...wordsList,
-  ];
+  return {
+    value: [
+      words,
+      ...wordsList,
+    ],
+  };
 });
 
 export default sentenceDeParser;
