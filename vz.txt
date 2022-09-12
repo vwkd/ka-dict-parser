@@ -688,7 +688,6 @@
 ზარხოშ einen Schwips bekommen
 ზაფრ an Gelbsucht erkranken; sich grämen
 ზაფხულ 1. übersommern 2. Frühling werden
-ზაყ {psch.} schwerfällig, behäbig gehen
 ზახ {va.} s. ზახილ
 ზახილ {va.} schreien, rufen, lärmen
 ზდ s. ზრდ
@@ -1343,14 +1342,11 @@
 მეცადინ id. მეცადინე
 მეცენატ ein Mäzen sein
 მეცნიერ 1. sich einbilden ein Gelehrter zu sein 2. ein Wissenschaftler sein
-მეცხვარე ein Schafhirt, Schafzüchter sein
 მეწისქვილ id. მეწისქვილე
 მეწისქვილე Müller sein
-მეწყვრ einen Bergrutsch, Erdrutsch verursachen
 მეწყრ id. მეწყვრ
 მეჭეჭ sich mit Warzen bedecken
 მეჭურჭლე Töpfer sein
-მეჯლის ein Festmahl, Gastmahl geben
 მზაკვრ hinterlistig sein
 მზარეულ Koch sein, kochen
 მზახლ sich verschwägern
@@ -1381,7 +1377,6 @@
 მთხვივ s. მთხვენ²
 მიზვნ zielen, ins Auge fassen
 მიზნ id. მიზვნ
-მინ eine Glasscheibe, Fensterscheibe einsetzen
 მის {imer., gur.} sich etwas aneignen; zu eigen geben
 მისნ wahrsagen, weissagen
 მიჯნ id. მიჯვნ
@@ -1937,6 +1932,7 @@
 რივ s. რენ
 რითმ in Verse bringen; reimen
 რიკა id. რიკავ
+რიკავ რიკაობა spielen
 რიკრიკ zwitschern; plätschern; klappern
 რინ {va.} retten; meiden
 რინდ verstummen, erstarren
@@ -2058,6 +2054,7 @@
 საკუთრ 1. sich etwas zu eigen machen; zu eigen geben 2. in privaten Besitz kommen
 სალ stark werden
 სალა id. სალავ
+სალავ სალაობა spielen
 სალბუნ Balsam auf die Wunde träufeln
 სალთავ sich von einer Last befreien
 სალმუნ s. სალბუნ
@@ -2278,7 +2275,6 @@
 ტკბარუნ etwas Süßes kosten
 ტკენ schmerzen
 ტკეპნ feststampfen, festtreten
-ტკეჩ mit Fachwerk, Riegelwerk versehen
 ტკეც 1. feststampfen, festtreten 2. jemanden durchwalken
 ტკვერ zerbeißen, zernagen
 ტკვირ s. ტკვერ
@@ -2796,7 +2792,6 @@
 ქურდ stehlen
 ქურდბაცაც stibitzen
 ქურთნ abrinden
-ქურქულ {gur.} absichtlich, bewusst stöhnen
 ქურჩლ id. ქურჩვლ
 ქურჯ id. ქურჯნ
 ქუსლ id. ქუსვლ
@@ -3058,7 +3053,6 @@
 ყინჩავ 1. {imer.} sich spreizen 2. {gur., khar.} sich recken
 ყინჭვრ {psch.} schlachten
 ყინჭრ id. ყინჭვრ
-ყიჟინ laut, gellend schreien
 ყირავ auf den Kopf stellen, stürzen, kippen
 ყირჭ verleiden
 ყიყინ quaken; schnattern
@@ -3242,7 +3236,6 @@
 შხვართ {imer., gur.} sich anmutig ausstrecken
 შხი id. შხივ
 შხივ s. შხივილ
-შხივილ 1. ein schwirrendes, sausendes Geräusch machen, rauschen 2. zischen, brutzeln
 შხივლ s. შხივილ
 შხლართ sich der Länge nach ausstrecken; der Länge nach hinstürzen
 შხუ s. შხუილ
@@ -3269,7 +3262,6 @@
 ჩაქჩაქ trotten, zuckeln
 ჩაღ anfachen, schüren
 ჩაჩანაკ altersschwach werden
-ჩახჩან {umg.} in lautem, unangenehmem Ton reden
 ჩეკ² 1. zuspitzen 2. zerstechen
 ჩემულ s. ჩემ
 ჩენჩ¹ aushülsen
@@ -3293,6 +3285,7 @@
 ჩივლ s. ჩივილ
 ჩიკ s. ჩეკ¹
 ჩილიკა id. ჩილიკავ
+ჩილიკავ ჩილიკაობა spielen
 ჩინ s. ჩენ
 ჩინდრიკ {imer.} Bed. s. ჩაქჩაქ
 ჩინჩ¹ 1. feilschen 2. zaudern
@@ -3310,6 +3303,7 @@
 ჩიფჩიფ mit zahnlosem Mund lispeln
 ჩიჩმაგურ {khar.} herumwirtschaften
 ჩიხ in die Enge treiben
+ჩიხირთმავ als ჩიხირთმა zubereiten
 ჩიხრიხ 1. {imer.} Baumwolle entkernen 2. {psch.} etwas durchführen
 ჩლატუნ Bed. s. ფრატუნ
 ჩლექ 1. die Kindersprache nachahmen 2. lispeln
@@ -3666,6 +3660,7 @@
 წარმოვ stattfinden; durchführen, tätigen
 წაღმართ das Richtige tun; tätig sein
 წაწან sich nicht wo hingetrauen
+წაწლ {psch.} წაწლობა betreiben; jemandes წაწალი werden
 წახნაგ facettieren
 წბ {va.} s. წბოლ
 წბერ {ratsch., letsch.} Trester pressen
@@ -3743,7 +3738,6 @@
 წიხლ id. წიხვლ
 წკა id. წკავ
 წკავ s. წკავილ
-წკავილი mit hoher, dünner Stimme bellen
 წკავლ s. წკავილ
 წკავწკავ bäffen, kläffen
 წკანწკარ s. წანწკარ
@@ -4030,7 +4024,6 @@
 ხავლ s. ხავილ
 ხავრ {mthiul.} eine Wunde anschwellen lassen
 ხავსიან Bed. s. ხავს
-ხავხავ mit schwacher, heiserer Stimme sprechen
 ხაზმუზიან {umg.} kränkeln
 ხათრ jemandem Achtung entgegenbringen; Scheu empfinden, sich genieren
 ხაიათ {va.} kraftlos werden
@@ -4093,6 +4086,7 @@
 ხევ¹ zerreißen, abreißen
 ხევ² zurückweichen; zurückdrängen
 ხევ³ steif werden; erstarren
+ხევისბერ die Würde eines ხევისბერი innehaben
 ხეიბრ verkrüppeln
 ხეირ 1. einen Gewinn haben; Gewinn bringen 2. gedeihen
 ხელ² 1. rasen, toben; verrückt werden 2. anspornen
@@ -4212,6 +4206,7 @@
 ხოშკაკლ in Schlossen hageln
 ხოჭ {moch.} anhäufen; erwerben
 ხოხ 1. kriechen, auf dem Bauche rutschen 2. schleppen
+ხოხბ als ჩახოხბილი zubereiten
 ხოხინ {va.} jucken
 ხოხნ grasen, alles abfressen
 ხოხოლავ aufhäufen
@@ -4233,7 +4228,6 @@
 ხრიწინ röcheln
 ხროვ aufhaufen
 ხროტინ röcheln
-ხროხინ {imer.} mit lauter, tiefer Stimme sprechen
 ხრუტუნ 1. schnurren 2. grunzen
 ხრუშ finster dreinschauen
 ხრჩ id. ხრჩვ
@@ -4346,7 +4340,6 @@
 ჯიღჯიღ Bed. s. ჯიყჯიყ
 ჯიშ entarten; aussterben lassen
 ჯიჯგნ zerfleischen
-ჯიჯინ unaufhörlich, lästig reden; näseln
 ჯლეხ {va.} die Sporen geben
 ჯლიყინ undeutlich sprechen
 ჯლიხ {va.} s. ჯლეხ
