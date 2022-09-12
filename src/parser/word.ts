@@ -7,43 +7,6 @@ import {
 } from "../deps.ts";
 
 /*
-// todo: maybe more?
-SuperscriptNumber
-    "¹"
-    "²"
-    "³"
-    "⁴"
-    "⁵"
-    "⁶"
-    "⁷"
-    "⁸"
-    "⁹"
-*/
-const superscriptNumberParser = choice([
-  char("¹"),
-  char("²"),
-  char("³"),
-  char("⁴"),
-  char("⁵"),
-  char("⁶"),
-  char("⁷"),
-  char("⁸"),
-  char("⁹"),
-]);
-
-const MEANING = {
-  "¹": 1,
-  "²": 2,
-  "³": 3,
-  "⁴": 4,
-  "⁵": 5,
-  "⁶": 6,
-  "⁷": 7,
-  "⁸": 8,
-  "⁹": 9,
-}
-
-/*
 CharKa
     UNICODE_GEORGIAN_CHARACTER
 */
