@@ -18,8 +18,12 @@ export interface ReferenceType {
   kind: KindType;
 }
 
+export interface FieldType {
+  value: string[]
+}
+
 export interface DefinitionType {
-  value: string[];
+  value: FieldType[];
 }
 
 export type ValueType = ReferenceType | DefinitionType;
