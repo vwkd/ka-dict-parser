@@ -245,7 +245,32 @@ Word
     WordDe
     WordKa
 */
-export const wordParser = choice([
+const wordParser = choice([
   wordDeParser,
   wordKaParser,
 ]);
+
+/*
+WhitespaceWord
+    ws Word
+*/
+const whitespaceWordParser = coroutine( function* () {
+  yield whitespaceParser;
+  const word = yield wordParser;
+  
+  return word;
+});
+
+/*
+Words
+    Word WhitespaceWord*
+*/
+export const wordsParser = coroutine( function* () {
+  const word = yield wordParser;
+  const words = yield many( whitespaceWordParser);
+  
+  return [
+    word,
+    ...words,
+  ].join(" ");
+});
