@@ -16,6 +16,7 @@ export interface ReferenceType {
   id: IdType;
   source: SourceType;
   kind: KindType;
+  tags: TagType[];
 }
 
 export interface FieldType {
@@ -24,6 +25,7 @@ export interface FieldType {
 
 export interface DefinitionType {
   value: FieldType[];
+  tags: TagType[];
 }
 
 export type ValueType = ReferenceType | DefinitionType;
@@ -31,7 +33,6 @@ export type ValueType = ReferenceType | DefinitionType;
 export interface TargetType {
   value: ValueType;
   meaning: MeaningType;
-  tags: TagType[];
 }
 
 export interface EntryType {
