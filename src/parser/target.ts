@@ -12,27 +12,37 @@ import sentenceParser from "./sentence.ts";
 import referenceParser from "./reference.ts";
 
 /*
-SemicolonWhitespaceSentence
-    ";" ws Sentence
+Definition
+    Reference
+    Sentence
 */
-const semicolonWhitespaceSentenceParser = coroutine( function* () {
+const definitionParser = choice([
+  referenceParser,
+  sentenceParser,
+]);
+
+/*
+SemicolonWhitespaceDefinition
+    ";" ws Definition
+*/
+const semicolonWhitespaceDefinitionParser = coroutine( function* () {
   yield char(";");
   yield whitespaceParser;
-  const sentence = yield sentenceParser;
+  const definition = yield definitionParser;
   
-  return sentence;
+  return definition;
 });
 
 /*
 // todo: assumes sentences if and only if separated by comma, not yet true ❗️
-Sentences
-    Sentence SemicolonWhitespaceSentence*
+Definitions
+    Definition SemicolonWhitespaceDefinition*
 */
-const sentencesParser = coroutine( function* () {
-  const sentence = yield sentenceParser;
-  const sentences = yield many( semicolonWhitespaceSentenceParser);
+const definitionsParser = coroutine( function* () {
+  const definition = yield definitionParser;
+  const definitions = yield many( semicolonWhitespaceDefinitionParser);
   
-  const value = [sentence, ...sentences];
+  const value = [definition, ...definitions];
   
   return {
     value,
@@ -41,13 +51,9 @@ const sentencesParser = coroutine( function* () {
 
 /*
 Value
-    Reference
-    Sentences
+    Definitions
 */
-const valueParser = choice([
-  referenceParser,
-  sentencesParser,
-]);
+const valueParser = definitionsParser;
 
 /*
 IntegerDotWhitespaceValue(i)
