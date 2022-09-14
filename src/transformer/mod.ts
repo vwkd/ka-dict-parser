@@ -25,22 +25,22 @@ function addId(entries: EntryType[]) {
  * beware: assumes entries have unique source, no duplicates!
 */
 function addReferenceId(entries: EntryType[]) {
+
   entries.forEach(e => {
-    e.target.forEach(target => {
-      // checks if reference
-      if (target.value.source) {
-        const eRef = entries.find(f => equal(f.source, target.value.source));
-        
-        if (!eRef) {
-          throw new Error(`Couldn't find referenced entry '${Object.values(value.source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
+        // checks if reference
+        if (value.source) {
+          const eRef = entries.find(f => equal(f.source, value.source));
+          
+          if (!eRef) {
+            throw new Error(`Couldn't find referenced entry '${Object.values(value.source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+          }
+          const id = eRef.id;
+          
+          value.id = id;
         }
-        const id = eRef.id;
-        
-        target.value = {
-          id,
-          ...target.value,
-        };
-      }
+      });
     });
   });
   
@@ -58,11 +58,13 @@ function renameReferenceKind(entries: EntryType[]) {
   };
   
   entries.forEach(e => {
-    e.target.forEach(target => {
-      // checks if reference
-      if (target.value.kind) {
-        target.value.kind = KIND[target.value.kind];
-      }
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
+        // checks if reference
+        if (value.kind) {
+          value.kind = KIND[value.kind];
+        }
+      });
     });
   });
   
@@ -81,7 +83,9 @@ function renameTags(entries: EntryType[]) {
 
   entries.forEach(e => {
     e.target.forEach(({ value }) => {
-      value.tags = newTags(value.tags);
+      value.forEach(value => {
+        value.tags = newTags(value.tags);
+      });
     });
   });
   
@@ -94,7 +98,9 @@ function sortTags(entries: EntryType[]) {
 
   entries.forEach(e => {
     e.target.forEach(({ value }) => {
-      value.tags.sort();
+      value.forEach(value => {
+        value.tags.sort();
+      });
     });
   });
   
@@ -107,7 +113,15 @@ function sortTags(entries: EntryType[]) {
 function removeOld(entries: EntryType[]) {
   return entries.map(e => {
   
-    e.target = e.target.filter(({ value }) => !value.tags.includes("VA"));
+    e.target = e.target.map(t => {
+      t.value = t.value.filter(({ tags }) => !tags.includes("VA"));
+        
+      if (t.value.length == 0) {
+        return null;
+      }
+    
+      return t;
+    }).filter(t => t != null);
     
     if (e.target.length == 0) {
       return null;
