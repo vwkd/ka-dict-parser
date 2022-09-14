@@ -20,18 +20,14 @@ export interface ReferenceType {
 }
 
 export interface FieldType {
-  value: string[]
-}
-
-export interface DefinitionType {
-  value: FieldType[];
+  value: string[];
   tags: TagType[];
 }
 
-export type ValueType = ReferenceType | DefinitionType;
+export type DefinitionType = ReferenceType | FieldType;
 
 export interface TargetType {
-  value: ValueType;
+  value: DefinitionType[];
   meaning: MeaningType;
 }
 
