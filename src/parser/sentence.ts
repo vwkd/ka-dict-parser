@@ -9,6 +9,7 @@ import {
 
 import { whitespaceParser } from "./chars.ts";
 import { wordsParser } from "./word.ts";
+import tagsWhitespaceParser from "./tags.ts";
 
 /*
 CommaWhitespaceWords
@@ -25,17 +26,18 @@ const commaWhitespaceWordsParser = coroutine( function* () {
 /*
 // todo: assume expanded all shorthands, has no (), od., /, not yet true ❗️
 Sentence
-    Words CommaWhitespaceWords*
+    TagsWhitespace? Words CommaWhitespaceWords*
 */
 const sentenceDeParser = coroutine( function* () {
+  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
   const words = yield wordsParser;
   const wordsList = yield many( commaWhitespaceWordsParser);
   
+  const value = [words, ...wordsList];
+
   return {
-    value: [
-      words,
-      ...wordsList,
-    ],
+    value,
+    tags,
   };
 });
 

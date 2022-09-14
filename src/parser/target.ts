@@ -8,7 +8,6 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import tagsWhitespaceParser from "./tags.ts";
 import sentenceParser from "./sentence.ts";
 import referenceParser from "./reference.ts";
 
@@ -41,28 +40,14 @@ const sentencesParser = coroutine( function* () {
 });
 
 /*
-ReferenceOrSentences
+Value
     Reference
     Sentences
 */
-const referenceOrSentencesParser = choice([
+const valueParser = choice([
   referenceParser,
   sentencesParser,
 ]);
-
-/*
-Value
-    TagsWhitespace? ReferenceOrSentences
-*/
-const valueParser = coroutine( function* () {
-  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
-  const value = yield referenceOrSentencesParser;
-  
-  return {
-    value,
-    tags,
-  };
-});
 
 /*
 IntegerDotWhitespaceValue(i)
@@ -72,12 +57,11 @@ const integerDotWhitespaceValueParserFactory = meaning => coroutine( function* (
   yield char(`${meaning}`);
   yield char(".");
   yield whitespaceParser;
-  const { value, tags } = yield valueParser;
+  const value = yield valueParser;
   
   return {
     value,
     meaning,
-    tags,
   };
 });
 
@@ -124,10 +108,9 @@ Target
 */
 const targetParser = choice([
   valuesParser,
-  valueParser.map(({ value, tags }) => [{
+  valueParser.map(value => [{
     value,
     meaning: 1,
-    tags,
   }]),
 ]);
 
