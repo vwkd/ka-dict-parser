@@ -80,8 +80,8 @@ function renameTags(entries: EntryType[]) {
   }
 
   entries.forEach(e => {
-    e.target.forEach(target => {
-      target.tags = newTags(target.tags);
+    e.target.forEach(({ value }) => {
+      value.tags = newTags(value.tags);
     });
   });
   
@@ -93,8 +93,8 @@ function renameTags(entries: EntryType[]) {
 function sortTags(entries: EntryType[]) {
 
   entries.forEach(e => {
-    e.target.forEach(target => {
-      target.tags.sort();
+    e.target.forEach(({ value }) => {
+      value.tags.sort();
     });
   });
   
@@ -107,16 +107,10 @@ function sortTags(entries: EntryType[]) {
 function removeOld(entries: EntryType[]) {
   return entries.map(e => {
   
-    if (e.target) {
-      e.target = e.target.filter(({ tags }) => !tags.includes("VA"));
-      if (e.target.length == 0) {
-        return null;
-      }
-    } else {
-      const { tags } = e.reference;
-      if (tags.includes("VA")) {
-        return null;
-      }
+    e.target = e.target.filter(({ value }) => !value.tags.includes("VA"));
+    
+    if (e.target.length == 0) {
+      return null;
     }
     
     return e;
