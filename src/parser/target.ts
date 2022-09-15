@@ -12,110 +12,110 @@ import sentenceParser from "./sentence.ts";
 import referenceParser from "./reference.ts";
 
 /*
-Definition
+Value
     Reference
     Sentence
 */
-const definitionParser = choice([
+const valueParser = choice([
   referenceParser,
   sentenceParser,
 ]);
 
 /*
-SemicolonWhitespaceDefinition
-    ";" ws Definition
+SemicolonWhitespaceValue
+    ";" ws Value
 */
-const semicolonWhitespaceDefinitionParser = coroutine( function* () {
+const semicolonWhitespaceValueParser = coroutine( function* () {
   yield char(";");
   yield whitespaceParser;
-  const definition = yield definitionParser;
-  
-  return definition;
-});
-
-/*
-// todo: assumes sentences if and only if separated by comma, not yet true ❗️
-Definitions
-    Definition SemicolonWhitespaceDefinition*
-*/
-const definitionsParser = coroutine( function* () {
-  const definition = yield definitionParser;
-  const definitions = yield many( semicolonWhitespaceDefinitionParser);
-  
-  const value = [definition, ...definitions];
-  
-  return {
-    value,
-  };
-});
-
-/*
-Value
-    Definitions
-*/
-const valueParser = definitionsParser;
-
-/*
-IntegerDotWhitespaceValue(i)
-    i "." ws Value
-*/
-const integerDotWhitespaceValueParserFactory = meaning => coroutine( function* () {
-  yield char(`${meaning}`);
-  yield char(".");
-  yield whitespaceParser;
   const value = yield valueParser;
-  
-  return {
-    value,
-    meaning,
-  };
-});
-
-/*
-WhitespaceIntegerDotWhitespaceValue(i)
-    ws IntegerDotWhitespaceValue(i)
-*/
-
-const whitespaceIntegerDotWhitespaceValueParserFactory = meaning => coroutine( function* () {
-  yield whitespaceParser;
-  const value = yield integerDotWhitespaceValueParserFactory(meaning);
   
   return value;
 });
 
 /*
+// todo: assumes sentences if and only if separated by comma, not yet true ❗️
 Values
-    IntegerDotWhitespaceValue(1) WhitespaceIntegerDotWhitespaceValue_i=2(i + 1)+
+    Value SemicolonWhitespaceValue*
 */
 const valuesParser = coroutine( function* () {
-  const value1 = yield integerDotWhitespaceValueParserFactory(1);
+  const value = yield valueParser;
+  const values = yield many( semicolonWhitespaceValueParser);
   
-  const value2 = yield whitespaceIntegerDotWhitespaceValueParserFactory(2);
+  const vals = [value, ...values];
   
-  const values = [value1, value2];
+  return {
+    value: vals,
+  };
+});
+
+/*
+Definition
+    Values
+*/
+const definitionParser = valuesParser;
+
+/*
+IntegerDotWhitespaceDefinition(i)
+    i "." ws Definition
+*/
+const integerDotWhitespaceDefinitionParserFactory = meaning => coroutine( function* () {
+  yield char(`${meaning}`);
+  yield char(".");
+  yield whitespaceParser;
+  const definition = yield definitionParser;
+  
+  return {
+    definition,
+    meaning,
+  };
+});
+
+/*
+WhitespaceIntegerDotWhitespaceDefinition(i)
+    ws IntegerDotWhitespaceDefinition(i)
+*/
+
+const whitespaceIntegerDotWhitespaceDefinitionParserFactory = meaning => coroutine( function* () {
+  yield whitespaceParser;
+  const definition = yield integerDotWhitespaceDefinitionParserFactory(meaning);
+  
+  return definition;
+});
+
+/*
+Definitions
+    IntegerDotWhitespaceDefinition(1) WhitespaceIntegerDotWhitespaceDefinition_i=2(i + 1)+
+*/
+const definitionsParser = coroutine( function* () {
+  const definition1 = yield integerDotWhitespaceDefinitionParserFactory(1);
+  
+  const definition2 = yield whitespaceIntegerDotWhitespaceDefinitionParserFactory(2);
+  
+  const definitions = [definition1, definition2];
   
   for (let i = 3; ; i += 1) {
-    const value = yield possibly( whitespaceIntegerDotWhitespaceValueParserFactory(i));
+    const definition = yield possibly( whitespaceIntegerDotWhitespaceDefinitionParserFactory(i));
     
-    if (value === null) {
+    if (definition === null) {
       break;
     } else {
-      values.push(value);
+      definitions.push(definition);
     }
   }
   
-  return values;
+  return definitions;
 })
 
 /*
 Target
-    Values
-    Value
+    Definitions
+    Definition
 */
 const targetParser = choice([
-  valuesParser,
-  valueParser.map(value => [{
-    value,
+  definitionsParser,
+  definitionParser.map(definition => [{
+    definition,
     meaning: 1,
   }]),
 ]);

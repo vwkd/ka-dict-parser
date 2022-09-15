@@ -27,11 +27,11 @@ export interface FieldType {
 export type ValueType = ReferenceType | FieldType;
 
 export interface DefinitionType {
-  value: ValueType;
+  value: ValueType[];
 }
 
 export interface TargetType {
-  value: DefinitionType[];
+  definition: DefinitionType;
   meaning: MeaningType;
 }
 

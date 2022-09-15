@@ -27,20 +27,20 @@ function addId(entries: EntryType[]) {
 function addReferenceId(entries: EntryType[]) {
 
   entries.forEach(e => {
-    e.target.forEach(({ value }) => {
-      value.forEach(definition => {
+    e.target.forEach(({ definition }) => {
+      definition.value.forEach(value => {
         // checks if reference
-        if (definition.value.source) {
-          const eRef = entries.find(f => equal(f.source, definition.value.source));
+        if (value.source) {
+          const eRef = entries.find(f => equal(f.source, value.source));
           
           if (!eRef) {
-            // throw new Error(`Couldn't find referenced entry '${Object.values(source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+            // throw new Error(`Couldn't find referenced entry '${Object.yalues(source).join("^")}' at entry '${Object.yalues(e.source).join("^")}'.`);
           }
           const id = eRef?.id ?? "000";
           
-          definition.value = {
+          value.value = {
             id,
-            ...definition.value,
+            ...value.value,
           };
         }
       });
@@ -61,8 +61,8 @@ function renameReferenceKind(entries: EntryType[]) {
   };
   
   entries.forEach(e => {
-    e.target.forEach(({ value }) => {
-      value.forEach(({ value }) => {
+    e.target.forEach(({ definition }) => {
+      definition.value.forEach(value => {
         // checks if reference
         if (value.kind) {
           value.kind = KIND[value.kind];
@@ -85,8 +85,8 @@ function renameTags(entries: EntryType[]) {
   }
 
   entries.forEach(e => {
-    e.target.forEach(({ value }) => {
-      value.forEach(({ value }) => {
+    e.target.forEach(({ definition }) => {
+      definition.value.forEach(value => {
         value.tags = newTags(value.tags);
       });
     });
@@ -100,8 +100,8 @@ function renameTags(entries: EntryType[]) {
 function sortTags(entries: EntryType[]) {
 
   entries.forEach(e => {
-    e.target.forEach(({ value }) => {
-      value.forEach(({ value }) => {
+    e.target.forEach(({ definition }) => {
+      definition.value.forEach(value => {
         value.tags.sort();
       });
     });
@@ -110,16 +110,16 @@ function sortTags(entries: EntryType[]) {
   return entries;
 }
 
-/* Remove old entries or values
+/* Remove old entries or yalues
  * beware: if numbered may end up with missing number in sequence!
 */
 function removeOld(entries: EntryType[]) {
   return entries.map(e => {
   
     e.target = e.target.map(t => {
-      t.value = t.value. filter(({ value }) => !value.tags.includes("VA"));
+      t.definition.value = t.definition.value.filter(({ tags }) => !tags.includes("VA"));
         
-      if (t.value.length == 0) {
+      if (t.definition.value.length == 0) {
         return null;
       }
     
