@@ -189,12 +189,20 @@ const wordDeParser = choice([
 // note: allow only single hyphen in word
 WordKaHyphen
     CharsKa "-" CharsKa
+    CharsKa "-" WordDeBig
 */
-const wordKaHyphenParser = sequenceOf([
-  charsKaParser,
-  char("-"),
-  charsKaParser,
-]).map(a => a.join(""));
+const wordKaHyphenParser = choice([
+  sequenceOf([
+    charsKaParser,
+    char("-"),
+    charsKaParser,
+  ]).map(a => a.join("")),
+  sequenceOf([
+    charsKaParser,
+    char("-"),
+    wordDeBigParser,
+  ]).map(a => a.join("")),
+]);
 
 /*
 WordKa
