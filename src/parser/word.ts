@@ -86,11 +86,11 @@ const charDeSmallParser = choice([
 ]);
 
 /*
-CharKa
+CharKaSmall
     UNICODE_GEORGIAN_CHARACTER
 */
 // beware: not complete Unicode block!
-const charKaParser = choice([
+const charKaSmallParser = choice([
   char("ა"),
   char("ბ"),
   char("გ"),
@@ -127,10 +127,10 @@ const charKaParser = choice([
 ]);
 
 /*
-CharsKa
-    CharKa+
+WordKaSmall
+    CharKaSmall+
 */
-const charsKaParser = many1( charKaParser).map(a => a.join(""));
+const wordKaSmallParser = many1( charKaSmallParser).map(a => a.join(""));
 
 /*
 // note: require at least two letters
@@ -188,17 +188,17 @@ const wordDeParser = choice([
 /*
 // note: allow only single hyphen in word
 WordKaHyphen
-    CharsKa "-" CharsKa
-    CharsKa "-" WordDeBig
+    WordKaSmall "-" WordKaSmall
+    WordKaSmall "-" WordDeBig
 */
 const wordKaHyphenParser = choice([
   sequenceOf([
-    charsKaParser,
+    wordKaSmallParser,
     char("-"),
-    charsKaParser,
+    wordKaSmallParser,
   ]).map(a => a.join("")),
   sequenceOf([
-    charsKaParser,
+    wordKaSmallParser,
     char("-"),
     wordDeBigParser,
   ]).map(a => a.join("")),
@@ -207,11 +207,11 @@ const wordKaHyphenParser = choice([
 /*
 WordKa
     WordKaHyphen
-    CharsKa
+    WordKaSmall
 */
 export const wordKaParser = choice([
   wordKaHyphenParser,
-  charsKaParser
+  wordKaSmallParser
 ]);
 
 /*
