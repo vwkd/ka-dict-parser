@@ -38,10 +38,7 @@ function addReferenceId(entries: EntryType[]) {
           }
           const id = eRef?.id ?? "000";
           
-          value.value = {
-            id,
-            ...value.value,
-          };
+          value.id = id;
         }
       });
     });
