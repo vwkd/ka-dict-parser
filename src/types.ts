@@ -24,14 +24,10 @@ export interface FieldType {
   tags: TagType[];
 }
 
-export type ValueType = ReferenceType | FieldType;
-
-export interface DefinitionType {
-  value: ValueType[];
-}
+export type DefinitionType = ReferenceType | FieldType;
 
 export interface TargetType {
-  definition: DefinitionType;
+  value: DefinitionType[];
   meaning: MeaningType;
 }
 

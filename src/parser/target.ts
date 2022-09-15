@@ -34,26 +34,18 @@ const semicolonWhitespaceValueParser = coroutine( function* () {
 });
 
 /*
-// todo: assumes sentences if and only if separated by comma, not yet true ❗️
-Values
+Definition
     Value SemicolonWhitespaceValue*
 */
-const valuesParser = coroutine( function* () {
+const definitionParser = coroutine( function* () {
   const value = yield valueParser;
   const values = yield many( semicolonWhitespaceValueParser);
   
-  const vals = [value, ...values];
-  
-  return {
-    value: vals,
-  };
+  return [
+    value,
+    ...values
+  ];
 });
-
-/*
-Definition
-    Values
-*/
-const definitionParser = valuesParser;
 
 /*
 IntegerDotWhitespaceDefinition(i)
@@ -66,7 +58,7 @@ const integerDotWhitespaceDefinitionParserFactory = meaning => coroutine( functi
   const definition = yield definitionParser;
   
   return {
-    definition,
+    value: definition,
     meaning,
   };
 });
@@ -115,7 +107,7 @@ Target
 const targetParser = choice([
   definitionsParser,
   definitionParser.map(definition => [{
-    definition,
+    value: definition,
     meaning: 1,
   }]),
 ]);
