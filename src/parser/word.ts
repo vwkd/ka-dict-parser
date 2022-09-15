@@ -10,74 +10,6 @@ import {
 import { whitespaceParser } from "./chars.ts";
 
 /*
-CharKa
-    UNICODE_GEORGIAN_CHARACTER
-*/
-// beware: not complete Unicode block!
-const charKaParser = choice([
-  char("ა"),
-  char("ბ"),
-  char("გ"),
-  char("დ"),
-  char("ე"),
-  char("ვ"),
-  char("ზ"),
-  char("თ"),
-  char("ი"),
-  char("კ"),
-  char("ლ"),
-  char("მ"),
-  char("ნ"),
-  char("ო"),
-  char("პ"),
-  char("ჟ"),
-  char("რ"),
-  char("ს"),
-  char("ტ"),
-  char("უ"),
-  char("ფ"),
-  char("ქ"),
-  char("ღ"),
-  char("ყ"),
-  char("შ"),
-  char("ჩ"),
-  char("ც"),
-  char("ძ"),
-  char("წ"),
-  char("ჭ"),
-  char("ხ"),
-  char("ჯ"),
-  char("ჰ"),
-]);
-
-/*
-CharsKa
-    CharKa+
-*/
-const charsKaParser = many1( charKaParser).map(a => a.join(""));
-
-/*
-// note: allow only single hyphen in word
-WordKaHyphen
-    CharsKa "-" CharsKa
-*/
-const wordKaHyphenParser = sequenceOf([
-  charsKaParser,
-  char("-"),
-  charsKaParser,
-]).map(a => a.join(""));
-
-/*
-WordKa
-    WordKaHyphen
-    CharsKa
-*/
-export const wordKaParser = choice([
-  wordKaHyphenParser,
-  charsKaParser
-]);
-
-/*
 CharDeBig
     UNICODE_GERMAN_BIG_CHARACTER
 */
@@ -154,6 +86,53 @@ const charDeSmallParser = choice([
 ]);
 
 /*
+CharKa
+    UNICODE_GEORGIAN_CHARACTER
+*/
+// beware: not complete Unicode block!
+const charKaParser = choice([
+  char("ა"),
+  char("ბ"),
+  char("გ"),
+  char("დ"),
+  char("ე"),
+  char("ვ"),
+  char("ზ"),
+  char("თ"),
+  char("ი"),
+  char("კ"),
+  char("ლ"),
+  char("მ"),
+  char("ნ"),
+  char("ო"),
+  char("პ"),
+  char("ჟ"),
+  char("რ"),
+  char("ს"),
+  char("ტ"),
+  char("უ"),
+  char("ფ"),
+  char("ქ"),
+  char("ღ"),
+  char("ყ"),
+  char("შ"),
+  char("ჩ"),
+  char("ც"),
+  char("ძ"),
+  char("წ"),
+  char("ჭ"),
+  char("ხ"),
+  char("ჯ"),
+  char("ჰ"),
+]);
+
+/*
+CharsKa
+    CharKa+
+*/
+const charsKaParser = many1( charKaParser).map(a => a.join(""));
+
+/*
 // note: require at least two letters
 WordDeBig
     CharDeBig CharDeSmall+
@@ -204,6 +183,27 @@ const wordDeParser = choice([
   wordDeBigParser,
   wordDeSmallParser,
   wordDeHyphenParser,
+]);
+
+/*
+// note: allow only single hyphen in word
+WordKaHyphen
+    CharsKa "-" CharsKa
+*/
+const wordKaHyphenParser = sequenceOf([
+  charsKaParser,
+  char("-"),
+  charsKaParser,
+]).map(a => a.join(""));
+
+/*
+WordKa
+    WordKaHyphen
+    CharsKa
+*/
+export const wordKaParser = choice([
+  wordKaHyphenParser,
+  charsKaParser
 ]);
 
 /*
