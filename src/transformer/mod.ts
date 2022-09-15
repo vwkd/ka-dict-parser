@@ -27,8 +27,8 @@ function addId(entries: EntryType[]) {
 function addReferenceId(entries: EntryType[]) {
 
   entries.forEach(e => {
-    e.target.forEach(({ definition }) => {
-      definition.value.forEach(value => {
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
         // checks if reference
         if (value.source) {
           const eRef = entries.find(f => equal(f.source, value.source));
@@ -58,8 +58,8 @@ function renameReferenceKind(entries: EntryType[]) {
   };
   
   entries.forEach(e => {
-    e.target.forEach(({ definition }) => {
-      definition.value.forEach(value => {
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
         // checks if reference
         if (value.kind) {
           value.kind = KIND[value.kind];
@@ -82,8 +82,8 @@ function renameTags(entries: EntryType[]) {
   }
 
   entries.forEach(e => {
-    e.target.forEach(({ definition }) => {
-      definition.value.forEach(value => {
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
         value.tags = newTags(value.tags);
       });
     });
@@ -97,8 +97,8 @@ function renameTags(entries: EntryType[]) {
 function sortTags(entries: EntryType[]) {
 
   entries.forEach(e => {
-    e.target.forEach(({ definition }) => {
-      definition.value.forEach(value => {
+    e.target.forEach(({ value }) => {
+      value.forEach(value => {
         value.tags.sort();
       });
     });
@@ -114,9 +114,9 @@ function removeOld(entries: EntryType[]) {
   return entries.map(e => {
   
     e.target = e.target.map(t => {
-      t.definition.value = t.definition.value.filter(({ tags }) => !tags.includes("VA"));
+      t.value = t.value.filter(({ tags }) => !tags.includes("VA"));
         
-      if (t.definition.value.length == 0) {
+      if (t.value.length == 0) {
         return null;
       }
     
