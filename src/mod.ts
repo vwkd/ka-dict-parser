@@ -16,7 +16,7 @@ const parseResult = parser.fork(input,
   }
 );
 
-const result = parseResult; //transformer(parseResult);
+const result = transformer(parseResult);
 console.log("Transform success");
 
 await Deno.writeTextFile("out/vz.json", JSON.stringify(result, null, 2));
