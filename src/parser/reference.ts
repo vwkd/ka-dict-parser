@@ -5,6 +5,7 @@ import {
   char,
   possibly,
   sequenceOf,
+  digits,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -28,17 +29,33 @@ const kindParser = choice([
 ]);
 
 /*
+WhitespaceMeaning
+    ws "(Pkt." ws Digit ")"
+*/
+const whitespaceMeaningParser = coroutine( function* () {
+  yield whitespaceParser;
+  yield str("(Pkt.");
+  yield whitespaceParser;
+  const meaning = yield digits;
+  yield char(")");
+
+  return meaning;
+});
+
+/*
 Reference
-    TagsWhitespace? Kind ws Source
+    TagsWhitespace? Kind ws Source WhitespaceMeaning?
 */
 const referenceParser = coroutine( function* () {
   const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
   const kind = yield kindParser;
   yield whitespaceParser;
   const source = yield sourceParser;
+  const meaning = (yield possibly( whitespaceMeaningParser)) ?? 1;
 
   return {
     source,
+    meaning,
     kind,
     tags,
   };
