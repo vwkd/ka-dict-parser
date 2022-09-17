@@ -19,6 +19,7 @@ export type DefinitionType = ReferenceType | FieldType;
 export interface ReferenceType {
   id: IdType;
   source: SourceType;
+  meaning?: MeaningType;
   kind: KindType;
   tags: TagType[];
 }
