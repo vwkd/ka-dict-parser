@@ -8,6 +8,7 @@ const parseResult = parser.fork(input,
   (error, parsingState) => {
     console.error("Parse error:", error);
     console.error("Parse target:", parsingState.data);
+    console.log(parsingState.result.at(-1));
     // throw error;
     return parsingState.result
   },
