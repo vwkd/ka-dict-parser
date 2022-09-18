@@ -5,6 +5,7 @@ import {
   sequenceOf,
   possibly,
   many,
+  str,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -52,8 +53,7 @@ IntegerDotWhitespaceDefinition(i)
     i "." ws Definition
 */
 const integerDotWhitespaceDefinitionParserFactory = meaning => coroutine( function* () {
-  yield char(`${meaning}`);
-  yield char(".");
+  yield str(`${meaning}.`);
   yield whitespaceParser;
   const definition = yield definitionParser;
   
