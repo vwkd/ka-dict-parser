@@ -8,17 +8,17 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import sentenceParser from "./sentence.ts";
+import fieldParser from "./sentence.ts";
 import referenceParser from "./reference.ts";
 
 /*
 Value
     Reference
-    Sentence
+    Field
 */
 const valueParser = choice([
   referenceParser,
-  sentenceParser,
+  fieldParser,
 ]);
 
 /*

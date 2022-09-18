@@ -24,16 +24,82 @@ const commaWhitespaceWordsParser = coroutine( function* () {
 });
 
 /*
-// todo: assume expanded all shorthands, has no (), od., /, not yet true ❗️
-Sentence
-    TagsWhitespace? Words CommaWhitespaceWords*
+Categories
+    "z.B. "? Words CommaWhitespaceWords*
 */
-const sentenceDeParser = coroutine( function* () {
-  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
-  const words = yield wordsParser;
-  const wordsList = yield many( commaWhitespaceWordsParser);
+const categoriesParser = coroutine( function* () {
+  yield possibly( str("z.B. "));
+  const category = yield wordsParser;
+  const categoryList = yield many( commaWhitedpaceWordsParser);
   
-  const value = [words, ...wordsList];
+  return [
+    category,
+    ...categoryList
+  ];
+});
+
+/*
+Category
+    "(" Categories ")"
+*/
+const categoryParser = coroutine( function* () {
+  yield char("(");
+  const categories = yield categoriesParser;
+  yield char(")");
+  
+  return categories;
+});
+
+/*
+WhitespaceCategory
+    ws Category
+*/
+const whitespaceCategoryParser = coroutine( function* () {
+  yield whitespaceParser;
+  const category = yield categoryParser;
+  
+  return category;
+});
+
+/*
+CommaWhitespaceWordsWhitespaceCategory
+    CommaWhitespaceWords WhitespaceCategory?
+*/
+const commaWhitespaceWordsWhitespaceCategoryParser = coroutine( function* () {
+  const value = yield commaWhitespaceWordsParser;
+  const category = (yield possibly( whitespaceCategoryParser)) ?? [];
+
+  return {
+      value,
+      category,
+    };
+});
+
+/*
+Sentence
+    Words WhitespaceCategory? CommaWhitespaceWordsWhitespaceCategory*
+*/
+const sentenceParser = coroutine( function* () {
+  const value = yield wordsParser;
+  const category = (yield possibly( whitespaceCategoryParser)) ?? [];
+  const valueList = yield many( commaWhitespaceWordsWhitespaceCategoryParser);
+
+  return [
+    {
+      value,
+      category,
+    },
+    ...valueList,
+  ];
+});
+
+/*
+Field
+    TagsWhitespace? Sentence
+*/
+const fieldParser = coroutine( function* () {
+  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
+  const value = yield sentenceParser;
 
   return {
     value,
@@ -41,4 +107,4 @@ const sentenceDeParser = coroutine( function* () {
   };
 });
 
-export default sentenceDeParser;
+export default fieldParser;
