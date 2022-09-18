@@ -1,7 +1,8 @@
 import parser from "./parser/mod.ts"
 import transformer from "./transformer/mod.ts";
 
-const input = await Deno.readTextFile("./vz.txt");
+const res = await fetch("https://raw.githubusercontent.com/vwkd/ka-dict-verbs/main/vz/vz.txt");
+const input = await res.text();
 
 const parseResult = parser.fork(input,
   (error, parsingState) => {
@@ -19,4 +20,4 @@ const parseResult = parser.fork(input,
 const result = transformer(parseResult);
 console.log("Transform success");
 
-await Deno.writeTextFile("out/vz.json", JSON.stringify(result, null, 2));
+await Deno.writeTextFile("vz.json", JSON.stringify(result, null, 2));
