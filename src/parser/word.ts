@@ -127,18 +127,14 @@ const charKaSmallParser = choice([
 ]);
 
 /*
-// note: require at least two letters
+// note: allow one letter
 WordKaSmall
-    CharKaSmall{2,}
+    CharKaSmall+
 */
 const wordKaSmallParser = coroutine( function* () {
-  const char = yield charKaSmallParser;
   const chars = yield many1( charKaSmallParser);
 
-  return [
-    char,
-    ...chars,
-  ].join("");
+  return chars.join("");
 });
 
 /*
