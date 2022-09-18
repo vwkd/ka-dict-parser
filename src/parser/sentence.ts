@@ -1,8 +1,6 @@
 import {
   coroutine,
-  choice,
   char,
-  sequenceOf,
   many,
   possibly,
 } from "../deps.ts";
@@ -24,10 +22,10 @@ const commaWhitespaceWordsParser = coroutine( function* () {
 });
 
 /*
-Categories
+CategoryList
     "z.B. "? Words CommaWhitespaceWords*
 */
-const categoriesParser = coroutine( function* () {
+const categoryListParser = coroutine( function* () {
   yield possibly( str("z.B. "));
   const category = yield wordsParser;
   const categoryList = yield many( commaWhitedpaceWordsParser);
@@ -40,14 +38,14 @@ const categoriesParser = coroutine( function* () {
 
 /*
 Category
-    "(" Categories ")"
+    "(" CategoryList ")"
 */
 const categoryParser = coroutine( function* () {
   yield char("(");
-  const categories = yield categoriesParser;
+  const categoryList = yield categoryListParser;
   yield char(")");
   
-  return categories;
+  return categoryList;
 });
 
 /*
@@ -62,44 +60,52 @@ const whitespaceCategoryParser = coroutine( function* () {
 });
 
 /*
-CommaWhitespaceWordsWhitespaceCategory
-    CommaWhitespaceWords WhitespaceCategory?
+Element
+    Words WhitespaceCategory?
 */
-const commaWhitespaceWordsWhitespaceCategoryParser = coroutine( function* () {
-  const value = yield commaWhitespaceWordsParser;
+const elementParser = coroutine( function* () {
+  const value = yield wordsParser;
   const category = (yield possibly( whitespaceCategoryParser)) ?? [];
 
   return {
-      value,
-      category,
-    };
+    value,
+    category,
+  };
 });
 
 /*
-Sentence
-    Words WhitespaceCategory? CommaWhitespaceWordsWhitespaceCategory*
+CommaWhitespaceElement
+    "," ws Element
 */
-const sentenceParser = coroutine( function* () {
-  const value = yield wordsParser;
-  const category = (yield possibly( whitespaceCategoryParser)) ?? [];
-  const valueList = yield many( commaWhitespaceWordsWhitespaceCategoryParser);
+const commaWhitespaceElementParser = coroutine( function* () {
+  yield char(",");
+  yield whitespaceParser;
+  const element = yield elementParser;
+  
+  return element;
+});
+
+/*
+Elements
+    Element CommaWhitespaceElement*
+*/
+const elementsParser = coroutine( function* () {
+  const element = yield elementParser;
+  const elementList = yield many( commaWhitespaceElementParser);
 
   return [
-    {
-      value,
-      category,
-    },
-    ...valueList,
+    element,
+    ...elementList,
   ];
 });
 
 /*
 Field
-    TagsWhitespace? Sentence
+    TagsWhitespace? Elements
 */
 const fieldParser = coroutine( function* () {
   const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
-  const value = yield sentenceParser;
+  const value = yield elementsParser;
 
   return {
     value,
