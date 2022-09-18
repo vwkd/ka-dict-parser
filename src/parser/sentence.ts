@@ -24,10 +24,9 @@ const commaWhitespaceWordsParser = coroutine( function* () {
 
 /*
 CategoryList
-    "z.B. "? Words CommaWhitespaceWords*
+    Words CommaWhitespaceWords*
 */
 const categoryListParser = coroutine( function* () {
-  yield possibly( str("z.B. "));
   const category = yield wordsParser;
   const categoryList = yield many( commaWhitespaceWordsParser);
   

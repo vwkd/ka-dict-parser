@@ -32,8 +32,8 @@ export interface FieldType {
 }
 
 export interface ElementType {
-  value: string[];
-  categories: string[];
+  value: string;
+  category: string[];
 }
 
 export type TagType = "BIOL" | "BOT" | "CHEM" | "CHEW" | "DESP" | "ELEKTR" | "ETHN" | "FIG" | "GR" | "GUR" | "HIST" | "HV" | "IMER" | "ING" | "IRO" | "JUR" | "KACH" | "KHAR" | "KHIS" | "LANDW" | "LETSCH" | "MATH" | "MED" | "MIL" | "MOCH" | "MORAL" | "MTHIUL" | "MUS" | "NEG" | "NZ" | "O_IMER" | "PHOTOGR" | "PHYS" | "POET" | "POL" | "PSCH" | "RATSCH" | "RL" | "SPO" | "TECH" | "THUSCH" | "TYP" | "U_IMER" | "U_RATSCH" | "UMG" | "UNK" | "VA" | "VULG";
