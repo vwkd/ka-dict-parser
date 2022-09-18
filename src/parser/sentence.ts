@@ -3,6 +3,7 @@ import {
   char,
   many,
   possibly,
+  str,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -28,7 +29,7 @@ CategoryList
 const categoryListParser = coroutine( function* () {
   yield possibly( str("z.B. "));
   const category = yield wordsParser;
-  const categoryList = yield many( commaWhitedpaceWordsParser);
+  const categoryList = yield many( commaWhitespaceWordsParser);
   
   return [
     category,
