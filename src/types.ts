@@ -6,12 +6,12 @@ export interface EntryType {
 
 export interface SourceType {
   value: string;
-  meaning: MeaningType;
+  meaning?: MeaningType;
 }
 
 export interface TargetType {
   value: DefinitionType[];
-  meaning: MeaningType;
+  meaning?: MeaningType;
 }
 
 export type DefinitionType = ReferenceType | FieldType;

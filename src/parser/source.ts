@@ -43,7 +43,6 @@ const sourceParser = choice([
   wordKaMeaningParser,
   wordKaParser.map(value => ({
     value,
-    meaning: 1,
   })),
 ]);
 
