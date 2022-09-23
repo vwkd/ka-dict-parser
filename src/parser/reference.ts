@@ -51,7 +51,7 @@ const referenceParser = coroutine( function* () {
   const kind = yield kindParser;
   yield whitespaceParser;
   const source = yield sourceParser;
-  const meaning = (yield possibly( whitespaceMeaningParser)) ?? 1;
+  const meaning = (yield possibly( whitespaceMeaningParser)) ?? undefined;
 
   return {
     source,
