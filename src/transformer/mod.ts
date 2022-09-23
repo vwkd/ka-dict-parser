@@ -18,7 +18,12 @@ export default function transform(entries: EntryType[]) {
  * uses line number as id (position in entries array)
 */
 function addId(entries: EntryType[]) {
-  return entries.map((e, id) => ({ id, ...e,}));
+
+  entries.forEach((e, i) => {
+    e.id = i;
+  });
+  
+  return entries;
 }
 
 /* Add reference id
