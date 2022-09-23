@@ -9,7 +9,7 @@ import {
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
-import fieldParser from "./sentence.ts";
+import fieldParser from "./field.ts";
 import referenceParser from "./reference.ts";
 
 /*
