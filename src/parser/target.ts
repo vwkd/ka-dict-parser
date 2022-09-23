@@ -108,7 +108,6 @@ const targetParser = choice([
   definitionsParser,
   definitionParser.map(definition => [{
     value: definition,
-    meaning: 1,
   }]),
 ]);
 
