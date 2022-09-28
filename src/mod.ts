@@ -15,7 +15,7 @@ function parse(data) {
 }
 
 // recover from error, continue with next line
-// beware: always errors first on newline before problematic line because of variable line repetition and endOfInput requirement, then errors within first line because truncated input starts at problematic line, then repeats
+// beware: an error always happens twice, first on the newline before the problematic line because of variable line repetition and endOfInput requirement, then within the first line because the truncated input starts at the problematic line
 // beware: recursive!
 function handleError(error, parsingState) {
   
@@ -23,7 +23,7 @@ function handleError(error, parsingState) {
   
   const indexNewlineAfter = inputAfter.indexOf(10, indexFailure);
   
-  // error on some newline
+  // error on newline
   if (indexNewlineAfter == indexFailure) {
   
     const resultBefore = parsingState.result;
