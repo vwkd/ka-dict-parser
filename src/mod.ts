@@ -13,6 +13,8 @@ let inputAfter = input;
 const parseResult = parser.fork(input, handleError, handleSuccess);
 
 function handleError(error, parsingState) {
+  // TODO: first error is on newline before problematic line due to trying to bail out into endOfInput
+  
   console.error("Parse error:", error);
   console.error("Parse target:", parsingState.data);
   
@@ -22,10 +24,18 @@ function handleError(error, parsingState) {
   
   const indexFailure = parsingState.index;
   
-  // continue with next line
-  const indexContinue = inputAfter.indexOf(10, indexFailure) + 1;
+  // beware: doesn't work when indexFailure is exactly on newline
+  const indexNewlineBefore = inputAfter.lastIndexOf(10, indexFailure);
+  const indexNewlineBeforeBounded = indexNewlineBefore != -1 ? indexNewlineBefore : 0;
+  const indexNewlineAfter = inputAfter.indexOf(10, indexFailure);
+  const indexNewlineAfterBounded = indexNewlineAfter != -1 ? indexNewlineAfter : Infinity;
   
-  inputAfter = inputAfter.slice(indexContinue);
+  // todo: for some reason doesn't need `indexNewlineBeforeBounded + 1`
+  const line = inputAfter.slice(indexNewlineBeforeBounded, indexNewlineAfterBounded);
+  console.log("Can't parse line:", decoder.decode(line));
+  
+  // continue with next line
+  inputAfter = inputAfter.slice(indexNewlineAfterBounded + 1);
 
   return [
     ...resultBefore,
