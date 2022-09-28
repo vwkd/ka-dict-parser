@@ -4,19 +4,34 @@ import transformer from "./transformer/mod.ts";
 const res = await fetch("https://raw.githubusercontent.com/vwkd/ka-dict-verbs/main/vz/vz.txt");
 const input = await res.text();
 
+let inputRest = input;
+
 const parseResult = parser.fork(input, handleError, handleSuccess);
 
 function handleError(error, parsingState) {
   console.error("Parse error:", error);
   console.error("Parse target:", parsingState.data);
-  console.log(parsingState.result.at(-1));
+  
+  // if breaks within first line return only part of object without array
+  const resultBefore = Array.isArray(parsingState.result) ? parsingState.result : [];
+  console.log("Parse result:", resultBefore);
+  
+  const indexFailure = parsingState.index;
+  
+  // continue with next line
+  const indexContinue = inputRest.indexOf("\n", indexFailure) + 1;
+  
+  inputRest = inputRest.slice(indexContinue);
 
-  return parsingState.result;
+  return [
+    ...resultBefore,
+    // beware: recursive!
+    ...parser.fork(inputRest, handleError, handleSuccess)
+  ];
 }
 
 function handleSuccess(result, _) {
-  console.log("Parse success");
-  console.log(result.at(-1));
+  console.log("Parse end");
   
   return result;
 }
