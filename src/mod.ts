@@ -8,7 +8,7 @@ const res = await fetch("https://raw.githubusercontent.com/vwkd/ka-dict-verbs/ma
 const inputStr = await res.text();
 const input = encoder.encode(inputStr);
 
-let inputRest = input;
+let inputAfter = input;
 
 function parse(data) {
   return parser.fork(data, handleError, handleSuccess);
@@ -20,13 +20,13 @@ function handleError(error, parsingState) {
   const indexFailure = parsingState.index;
   
   // beware: doesn't work when indexFailure is exactly on newline
-  const indexNewlineBefore = inputRest.lastIndexOf(10, indexFailure);
+  const indexNewlineBefore = inputAfter.lastIndexOf(10, indexFailure);
   const indexNewlineBeforeBounded = indexNewlineBefore != -1 ? indexNewlineBefore : 0;
-  const indexNewlineAfter = inputRest.indexOf(10, indexFailure);
+  const indexNewlineAfter = inputAfter.indexOf(10, indexFailure);
   const indexNewlineAfterBounded = indexNewlineAfter != -1 ? indexNewlineAfter : Infinity;
   
   // todo: for some reason doesn't need `indexNewlineBeforeBounded + 1`
-  const line = inputRest.slice(indexNewlineBeforeBounded, indexNewlineAfterBounded);
+  const line = inputAfter.slice(indexNewlineBeforeBounded, indexNewlineAfterBounded);
   console.log("Can't parse line:", decoder.decode(line));
   
   console.error("Parse error:", error);
@@ -37,12 +37,12 @@ function handleError(error, parsingState) {
   console.log("Parse result:", resultBefore);
   
   // continue with next line
-  inputRest = inputRest.slice(indexNewlineAfterBounded + 1);
+  inputAfter = inputAfter.slice(indexNewlineAfterBounded + 1);
 
   return [
     ...resultBefore,
     // beware: recursive!
-    ...parse(inputRest),
+    ...parse(inputAfter),
   ];
 }
 
