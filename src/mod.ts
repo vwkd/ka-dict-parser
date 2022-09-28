@@ -1,8 +1,12 @@
 import parser from "./parser/mod.ts"
 import transformer from "./transformer/mod.ts";
 
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 const res = await fetch("https://raw.githubusercontent.com/vwkd/ka-dict-verbs/main/vz/vz.txt");
-const input = await res.text();
+const inputStr = await res.text();
+const input = encoder.encode(inputStr);
 
 let inputAfter = input;
 
@@ -19,7 +23,7 @@ function handleError(error, parsingState) {
   const indexFailure = parsingState.index;
   
   // continue with next line
-  const indexContinue = inputAfter.indexOf("\n", indexFailure) + 1;
+  const indexContinue = inputAfter.indexOf(10, indexFailure) + 1;
   
   inputAfter = inputAfter.slice(indexContinue);
 
