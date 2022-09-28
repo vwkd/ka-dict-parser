@@ -1,27 +1,14 @@
-import parser from "./parser/mod.ts"
-import transformer from "./transformer/mod.ts";
+import { str } from "./deps.ts";
 
-const res = await fetch("https://raw.githubusercontent.com/vwkd/ka-dict-verbs/main/vz/vz.txt");
-const input = await res.text();
+const parser = str("აბ");
 
-const parseResult = parser.fork(input, handleError, handleSuccess);
+parser.fork("აბ", handleError, handleSuccess);
+parser.fork("ბბ", handleError, handleSuccess);
 
 function handleError(error, parsingState) {
-  console.error("Parse error:", error);
-  console.error("Parse target:", parsingState.data);
-  console.log(parsingState.result.at(-1));
-
-  return parsingState.result;
+  console.error("Parse error:", parsingState);
 }
 
 function handleSuccess(result, _) {
-  console.log("Parse success");
-  console.log(result.at(-1));
-  
-  return result;
+  console.log("Parse success:", result);
 }
-
-const result = transformer(parseResult);
-console.log("Transform success");
-
-await Deno.writeTextFile("vz.json", JSON.stringify(result, null, 2));
