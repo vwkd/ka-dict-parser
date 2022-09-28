@@ -39,7 +39,11 @@ function handleError(error, parsingState) {
   } else {
     const line = inputAfter.slice(0, indexNewlineAfter);
     console.log("Can't parse line:", decoder.decode(line));
-    console.error("Parse error:", error);
+    
+    const lineBefore = inputAfter.slice(0, indexFailure);
+    const indexFailureCodePoint = decoder.decode(lineBefore).length;
+    console.error(error.replace(/\d+/, indexFailureCodePoint));
+    
     console.error("Parse target:", parsingState.data);
     
     inputAfter = inputAfter.slice(indexNewlineAfter + 1);
