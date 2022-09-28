@@ -10,7 +10,9 @@ const input = encoder.encode(inputStr);
 
 let inputAfter = input;
 
-const parseResult = parser.fork(input, handleError, handleSuccess);
+function parse(data) {
+  return parser.fork(data, handleError, handleSuccess);
+}
 
 function handleError(error, parsingState) {
   // TODO: first error is on newline before problematic line due to trying to bail out into endOfInput
@@ -40,7 +42,7 @@ function handleError(error, parsingState) {
   return [
     ...resultBefore,
     // beware: recursive!
-    ...parser.fork(inputAfter, handleError, handleSuccess)
+    ...parse(inputAfter),
   ];
 }
 
@@ -49,6 +51,8 @@ function handleSuccess(result, _) {
   
   return result;
 }
+
+const parseResult = parse(input);
 
 const result = transformer(parseResult);
 console.log("Transform success");
