@@ -14,36 +14,39 @@ function parse(data) {
   return parser.fork(data, handleError, handleSuccess);
 }
 
+// recover from error, continue with next line
+// beware: an error always happens twice, first on the newline before the problematic line because of variable line repetition and endOfInput requirement, then within the first line because the truncated input starts at the problematic line
+// beware: recursive!
 function handleError(error, parsingState) {
-  // TODO: first error is on newline before problematic line due to trying to bail out into endOfInput
   
   const indexFailure = parsingState.index;
   
-  // beware: doesn't work when indexFailure is exactly on newline
-  const indexNewlineBefore = inputAfter.lastIndexOf(10, indexFailure);
-  const indexNewlineBeforeBounded = indexNewlineBefore != -1 ? indexNewlineBefore : 0;
   const indexNewlineAfter = inputAfter.indexOf(10, indexFailure);
-  const indexNewlineAfterBounded = indexNewlineAfter != -1 ? indexNewlineAfter : Infinity;
   
-  // todo: for some reason doesn't need `indexNewlineBeforeBounded + 1`
-  const line = inputAfter.slice(indexNewlineBeforeBounded, indexNewlineAfterBounded);
-  console.log("Can't parse line:", decoder.decode(line));
+  // error on newline
+  if (indexNewlineAfter == indexFailure) {
   
-  console.error("Parse error:", error);
-  console.error("Parse target:", parsingState.data);
+    const resultBefore = parsingState.result;
+    
+    inputAfter = inputAfter.slice(indexNewlineAfter + 1);
   
-  // if breaks within first line return only part of object without array
-  const resultBefore = Array.isArray(parsingState.result) ? parsingState.result : [];
-  console.log("Parse result:", resultBefore);
-  
-  // continue with next line
-  inputAfter = inputAfter.slice(indexNewlineAfterBounded + 1);
-
-  return [
-    ...resultBefore,
-    // beware: recursive!
-    ...parse(inputAfter),
-  ];
+    return [
+      ...resultBefore,
+      ...parse(inputAfter),
+    ];
+    
+  // error within first line
+  } else {
+    const line = inputAfter.slice(0, indexNewlineAfter);
+    console.log("Can't parse line:", decoder.decode(line));
+    console.error("Parse error:", error);
+    console.error("Parse target:", parsingState.data);
+    
+    inputAfter = inputAfter.slice(indexNewlineAfter + 1);
+    
+    // note: don't use resultBefore since might be partial object if error doesn't happen to be at end of line
+    return parse(inputAfter);
+  }
 }
 
 function handleSuccess(result, _) {
