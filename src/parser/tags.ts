@@ -4,6 +4,7 @@ import {
   choice,
   char,
   sepBy1,
+  between,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -114,13 +115,7 @@ const tagParser = choice([
 Tags
     "{" Tag ("," ws Tag)* "}"
 */
-const tagsParser = coroutine( function* () {
-  yield char("{");
-  const tags = yield sepBy1( str(", ")) (tagParser);
-  yield char("}");
-  
-  return tags;
-});
+const tagsParser = between( char("{")) ( char("}")) ( sepBy1( str(", ")) (tagParser));
 
 /*
 TagsWhitespace
