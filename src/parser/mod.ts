@@ -4,6 +4,9 @@ import {
   sepBy1,
   startOfInput,
   endOfInput,
+  many,
+  anyCharExcept,
+  skip,
 } from "../deps.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
@@ -23,6 +26,11 @@ const lineParser = coroutine(function* () {
     source,
     target,
   };
+}).errorChain(({error}) => {
+  console.error("Error in line", error)
+  
+  // skip current line, match anything until next newline without adding line to result
+  return skip (many( anyCharExcept( newlineParser)));
 });
 
 /*
