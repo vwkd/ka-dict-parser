@@ -5,6 +5,7 @@ import {
   sepBy1,
   possibly,
   str,
+  between,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -23,9 +24,7 @@ Category
 */
 const categoryParser = coroutine( function* () {
   yield whitespaceParser
-  yield char("(");
-  const categoryList = yield categoryListParser;
-  yield char(")");
+  const categoryList = yield between( char("(")) ( char(")")) ( categoryListParser);
   
   return categoryList;
 });
