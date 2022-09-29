@@ -4,7 +4,7 @@ import {
   char,
   sequenceOf,
   possibly,
-  many,
+  sepBy1,
   str,
 } from "../deps.ts";
 
@@ -23,30 +23,10 @@ const valueParser = choice([
 ]);
 
 /*
-SemicolonWhitespaceValue
-    ";" ws Value
-*/
-const semicolonWhitespaceValueParser = coroutine( function* () {
-  yield char(";");
-  yield whitespaceParser;
-  const value = yield valueParser;
-  
-  return value;
-});
-
-/*
 Definition
-    Value SemicolonWhitespaceValue*
+    Value (";" ws Value)*
 */
-const definitionParser = coroutine( function* () {
-  const value = yield valueParser;
-  const values = yield many( semicolonWhitespaceValueParser);
-  
-  return [
-    value,
-    ...values
-  ];
-});
+const definitionParser = sepBy1( str("; ")) (valueParser);
 
 /*
 IntegerDotWhitespaceDefinition(i)
