@@ -1,7 +1,7 @@
 import {
   coroutine,
   choice,
-  many,
+  sepBy1,
   startOfInput,
   endOfInput,
 } from "../deps.ts";
@@ -26,29 +26,10 @@ const lineParser = coroutine(function* () {
 });
 
 /*
-NewlineLine
-    nl Line
-*/
-const newlineLineParser = coroutine(function* () {
-  yield newlineParser;
-  const line = yield lineParser;
-  
-  return line;
-});
-
-/*
 Text
-    Line NewlineLine*
+    Line (nl Line)*
 */
-const textParser = coroutine(function* () {
-  const line = yield lineParser;
-  const lines = yield many( newlineLineParser);
-  
-  return [
-    line,
-    ...lines,
-  ];
-});
+const textParser = sepBy1( newlineParser) (lineParser);
 
 /*
 Parser
