@@ -2,6 +2,7 @@ import {
   coroutine,
   char,
   many,
+  sepBy1,
   possibly,
   str,
 } from "../deps.ts";
@@ -11,30 +12,10 @@ import { wordsParser } from "./word.ts";
 import tagsWhitespaceParser from "./tags.ts";
 
 /*
-CommaWhitespaceWords
-    "," ws Words
-*/
-const commaWhitespaceWordsParser = coroutine( function* () {
-  yield char(",");
-  yield whitespaceParser;
-  const words = yield wordsParser;
-  
-  return words;
-});
-
-/*
 CategoryList
-    Words CommaWhitespaceWords*
+    Words ("," ws Words)*
 */
-const categoryListParser = coroutine( function* () {
-  const category = yield wordsParser;
-  const categoryList = yield many( commaWhitespaceWordsParser);
-  
-  return [
-    category,
-    ...categoryList
-  ];
-});
+const categoryListParser = sepBy1( str(", ")) (wordsParser);
 
 /*
 Category
