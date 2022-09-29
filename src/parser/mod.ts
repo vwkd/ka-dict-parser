@@ -28,7 +28,14 @@ const lineParser = coroutine(function* () {
     target,
   };
 }).errorChain(({error, index}) => {
-  console.error("Error in line", error.replace(/(?<=position )\d+/, inputObj.getPointIndex(index)));
+  const pointIndex = inputObj.getPointIndex(index);
+  const lineNumber = inputObj.getLineNumber(pointIndex);
+  const lineText = inputObj.getLineText(pointIndex);
+  const lineIndex = inputObj.getLineIndex(pointIndex);
+  
+  console.error(`Error in line ${lineNumber}:`, lineText);
+  
+  console.error(error.replace(/(?<=position )\d+/, lineIndex));
   
   // skip current line, match anything until next newline without adding line to result
   return skip (many( anyCharExcept( newlineParser)));
