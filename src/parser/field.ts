@@ -1,7 +1,6 @@
 import {
   coroutine,
   char,
-  many,
   sepBy1,
   possibly,
   str,
@@ -44,30 +43,10 @@ const elementParser = coroutine( function* () {
 });
 
 /*
-CommaWhitespaceElement
-    "," ws Element
-*/
-const commaWhitespaceElementParser = coroutine( function* () {
-  yield char(",");
-  yield whitespaceParser;
-  const element = yield elementParser;
-  
-  return element;
-});
-
-/*
 Elements
-    Element CommaWhitespaceElement*
+    Element ("," ws Element)*
 */
-const elementsParser = coroutine( function* () {
-  const element = yield elementParser;
-  const elementList = yield many( commaWhitespaceElementParser);
-
-  return [
-    element,
-    ...elementList,
-  ];
-});
+const elementsParser = sepBy1( str(", ")) (elementParser);
 
 /*
 Field
