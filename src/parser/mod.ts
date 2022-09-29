@@ -12,6 +12,7 @@ import {
 import { newlineParser, whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
 import targetParser from "./target.ts";
+import { inputObj } from "../deps.ts";
 
 /*
 Line
@@ -26,8 +27,8 @@ const lineParser = coroutine(function* () {
     source,
     target,
   };
-}).errorChain(({error}) => {
-  console.error("Error in line", error)
+}).errorChain(({error, index}) => {
+  console.error("Error in line", error.replace(/\d+/, inputObj.getPointIndex(index)));
   
   // skip current line, match anything until next newline without adding line to result
   return skip (many( anyCharExcept( newlineParser)));
