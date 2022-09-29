@@ -9,29 +9,6 @@ import {
 import { whitespaceParser } from "./chars.ts";
 
 /*
-TagsWhitespace
-    Tags ws
-*/
-const tagsWhitespaceParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
-  
-  return tags;
-});
-
-/*
-Tags
-    "{" Tag ("," ws Tag)* "}"
-*/
-const tagsParser = coroutine( function* () {
-  yield char("{");
-  const tags = yield sepBy1( str(", ")) (tagParser);
-  yield char("}");
-  
-  return tags;
-});
-
-/*
 Tag
     "biol."
     "bot."
@@ -132,5 +109,28 @@ const tagParser = choice([
   str("va."),
   str("vulg."),
 ]);
+
+/*
+Tags
+    "{" Tag ("," ws Tag)* "}"
+*/
+const tagsParser = coroutine( function* () {
+  yield char("{");
+  const tags = yield sepBy1( str(", ")) (tagParser);
+  yield char("}");
+  
+  return tags;
+});
+
+/*
+TagsWhitespace
+    Tags ws
+*/
+const tagsWhitespaceParser = coroutine( function* () {
+  const tags = yield tagsParser;
+  yield whitespaceParser;
+  
+  return tags;
+});
 
 export default tagsWhitespaceParser;
