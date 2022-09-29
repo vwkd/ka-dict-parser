@@ -3,8 +3,8 @@ import {
   choice,
   char,
   sequenceOf,
-  many,
   many1,
+  sepBy1,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -230,26 +230,7 @@ const wordParser = choice([
 ]);
 
 /*
-WhitespaceWord
-    ws Word
-*/
-const whitespaceWordParser = coroutine( function* () {
-  yield whitespaceParser;
-  const word = yield wordParser;
-  
-  return word;
-});
-
-/*
 Words
-    Word WhitespaceWord*
+    Word (ws Word)*
 */
-export const wordsParser = coroutine( function* () {
-  const word = yield wordParser;
-  const words = yield many( whitespaceWordParser);
-  
-  return [
-    word,
-    ...words,
-  ].join(" ");
-});
+export const wordsParser = (sepBy1( whitespaceParser) (wordParser)).map(a => a.join(" "));
