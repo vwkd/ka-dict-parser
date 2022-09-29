@@ -10,12 +10,30 @@ import { newlineParser, whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
 import targetParser from "./target.ts";
 
-const parser = coroutine(function* () {
-  yield startOfInput;
-  const text = yield textParser;
-  yield endOfInput;
+/*
+Line
+    Source ws Target
+*/
+const lineParser = coroutine(function* () {
+  const source = yield sourceParser;
+  yield whitespaceParser;
+  const target = yield targetParser;
   
-  return text;
+  return {
+    source,
+    target,
+  };
+});
+
+/*
+NewlineLine
+    nl Line
+*/
+const newlineLineParser = coroutine(function* () {
+  yield newlineParser;
+  const line = yield lineParser;
+  
+  return line;
 });
 
 /*
@@ -33,29 +51,15 @@ const textParser = coroutine(function* () {
 });
 
 /*
-NewlineLine
-    nl Line
+Parser
+    ^ Text $
 */
-const newlineLineParser = coroutine(function* () {
-  yield newlineParser;
-  const line = yield lineParser;
+const parser = coroutine(function* () {
+  yield startOfInput;
+  const text = yield textParser;
+  yield endOfInput;
   
-  return line;
-});
-
-/*
-Line
-    Source ws Target
-*/
-const lineParser = coroutine(function* () {
-  const source = yield sourceParser;
-  yield whitespaceParser;
-  const target = yield targetParser;
-  
-  return {
-    source,
-    target,
-  };
+  return text;
 });
 
 export default parser;
