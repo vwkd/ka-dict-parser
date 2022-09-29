@@ -6,6 +6,9 @@ import {
   possibly,
   sepBy1,
   str,
+  getData,
+  setData,
+  withData,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -29,13 +32,17 @@ Definition
 const definitionParser = sepBy1( str("; ")) (valueParser);
 
 /*
-IntegerDotWhitespaceDefinition(i)
+DefinitionItem(i)
     i "." ws Definition
 */
-const integerDotWhitespaceDefinitionParserFactory = meaning => coroutine( function* () {
+const definitionItemParser = coroutine( function* () {
+  const meaning = yield getData;
+  
   yield str(`${meaning}.`);
   yield whitespaceParser;
   const definition = yield definitionParser;
+  
+  yield setData(meaning + 1);
   
   return {
     value: definition,
@@ -44,40 +51,19 @@ const integerDotWhitespaceDefinitionParserFactory = meaning => coroutine( functi
 });
 
 /*
-WhitespaceIntegerDotWhitespaceDefinition(i)
-    ws IntegerDotWhitespaceDefinition(i)
-*/
-
-const whitespaceIntegerDotWhitespaceDefinitionParserFactory = meaning => coroutine( function* () {
-  yield whitespaceParser;
-  const definition = yield integerDotWhitespaceDefinitionParserFactory(meaning);
-  
-  return definition;
-});
-
-/*
 Definitions
-    IntegerDotWhitespaceDefinition(1) WhitespaceIntegerDotWhitespaceDefinition_i=2(i + 1)+
+     DefinitionItem(1) ws DefinitionItem(2) (ws DefinitionItem(i))_i=3*
 */
-const definitionsParser = coroutine( function* () {
-  const definition1 = yield integerDotWhitespaceDefinitionParserFactory(1);
+const definitionsParser = withData(coroutine( function* () {
+  const definition1 = yield definitionItemParser;
+  yield whitespaceParser;
+  const definitionRest = yield sepBy1( whitespaceParser) (definitionItemParser);
   
-  const definition2 = yield whitespaceIntegerDotWhitespaceDefinitionParserFactory(2);
-  
-  const definitions = [definition1, definition2];
-  
-  for (let i = 3; ; i += 1) {
-    const definition = yield possibly( whitespaceIntegerDotWhitespaceDefinitionParserFactory(i));
-    
-    if (definition === null) {
-      break;
-    } else {
-      definitions.push(definition);
-    }
-  }
-  
-  return definitions;
-})
+  return [
+    definition1,
+    ...definitionRest,
+  ];
+}));
 
 /*
 Target
@@ -85,7 +71,7 @@ Target
     Definition
 */
 const targetParser = choice([
-  definitionsParser,
+  definitionsParser(1),
   definitionParser.map(definition => [{
     value: definition,
   }]),
