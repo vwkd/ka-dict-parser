@@ -19,9 +19,10 @@ const categoryListParser = sepBy1( str(", ")) (wordsParser);
 
 /*
 Category
-    "(" CategoryList ")"
+    ws "(" CategoryList ")"
 */
 const categoryParser = coroutine( function* () {
+  yield whitespaceParser
   yield char("(");
   const categoryList = yield categoryListParser;
   yield char(")");
@@ -30,23 +31,12 @@ const categoryParser = coroutine( function* () {
 });
 
 /*
-WhitespaceCategory
-    ws Category
-*/
-const whitespaceCategoryParser = coroutine( function* () {
-  yield whitespaceParser;
-  const category = yield categoryParser;
-  
-  return category;
-});
-
-/*
 Element
-    Words WhitespaceCategory?
+    Words Category?
 */
 const elementParser = coroutine( function* () {
   const value = yield wordsParser;
-  const category = (yield possibly( whitespaceCategoryParser)) ?? [];
+  const category = (yield possibly( categoryParser)) ?? [];
 
   return {
     value,
