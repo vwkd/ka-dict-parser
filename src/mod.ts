@@ -4,7 +4,7 @@ import { ByteCodePointConverter } from "./utils.ts";
 import { inputObj } from "./deps.ts";
 
 function handleError(error, parsingState) {
-  console.error("Parse failure:", error.replace(/\d+/, inputObj.getPointIndex(parsingState.index)));
+  console.error("Parse failure:", error.replace(/(?<=position )\d+/, inputObj.getPointIndex(parsingState.index)));
   
   console.error("Parse target:", parsingState.data);
 
