@@ -6,6 +6,7 @@ export {
   char,
   possibly,
   many,
+  sepBy1,
   many1,
   startOfInput,
   endOfInput,
