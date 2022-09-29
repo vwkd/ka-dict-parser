@@ -3,7 +3,7 @@ import {
   coroutine,
   choice,
   char,
-  many,
+  sepBy1,
 } from "../deps.ts";
 
 import { whitespaceParser } from "./chars.ts";
@@ -21,30 +21,14 @@ const tagsWhitespaceParser = coroutine( function* () {
 
 /*
 Tags
-    "{" Tag CommaWhitespaceTag* "}"
+    "{" Tag ("," ws Tag)* "}"
 */
 const tagsParser = coroutine( function* () {
   yield char("{");
-  const tag = yield tagParser;
-  const tags = yield many( commaWhitespaceTagParser);
+  const tags = yield sepBy1( str(", ")) (tagParser);
   yield char("}");
   
-  return [
-    tag,
-    ...tags,
-  ];
-});
-
-/*
-CommaWhitespaceTag
-    "," ws Tag
-*/
-const commaWhitespaceTagParser = coroutine( function* () {
-  yield char(",");
-  yield whitespaceParser;
-  const tag = yield tagParser;
-  
-  return tag;
+  return tags;
 });
 
 /*
