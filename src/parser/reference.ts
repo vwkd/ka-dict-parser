@@ -32,12 +32,12 @@ const kindParser = choice([
 WhitespaceMeaning
     ws "(Pkt." ws Digit ")"
 */
-const whitespaceMeaningParser = coroutine( function* () {
-  yield whitespaceParser;
-  yield str("(Pkt.");
-  yield whitespaceParser;
-  const meaning = yield digits;
-  yield char(")");
+const whitespaceMeaningParser = coroutine( run => {
+  run(whitespaceParser);
+  run(str("(Pkt."));
+  run(whitespaceParser);
+  const meaning = run(digits);
+  run(char(")"));
 
   return meaning;
 });
@@ -46,12 +46,12 @@ const whitespaceMeaningParser = coroutine( function* () {
 Reference
     TagsWhitespace? Kind ws Source WhitespaceMeaning?
 */
-const referenceParser = coroutine( function* () {
-  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
-  const kind = yield kindParser;
-  yield whitespaceParser;
-  const source = yield sourceParser;
-  const meaning = (yield possibly( whitespaceMeaningParser)) ?? undefined;
+const referenceParser = coroutine( run => {
+  const tags = (run(possibly( tagsWhitespaceParser)) ?? []);
+  const kind = run(kindParser);
+  run(whitespaceParser);
+  const source = run(sourceParser);
+  const meaning = (run(possibly( whitespaceMeaningParser)) ?? undefined);
 
   return {
     source,

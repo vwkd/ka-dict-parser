@@ -121,9 +121,9 @@ const tagsParser = between( char("{")) ( char("}")) ( sepBy1( str(", ")) (tagPar
 TagsWhitespace
     Tags ws
 */
-const tagsWhitespaceParser = coroutine( function* () {
-  const tags = yield tagsParser;
-  yield whitespaceParser;
+const tagsWhitespaceParser = coroutine( run => {
+  const tags = run(tagsParser);
+  run(whitespaceParser);
   
   return tags;
 });

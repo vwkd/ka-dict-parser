@@ -35,14 +35,14 @@ const definitionParser = sepBy1( str("; ")) (valueParser);
 DefinitionItem(i)
     i "." ws Definition
 */
-const definitionItemParser = coroutine( function* () {
-  const meaning = yield getData;
+const definitionItemParser = coroutine( run => {
+  const meaning = run(getData);
   
-  yield str(`${meaning}.`);
-  yield whitespaceParser;
-  const definition = yield definitionParser;
+  run(str(`${meaning}.`));
+  run(whitespaceParser);
+  const definition = run(definitionParser);
   
-  yield setData(meaning + 1);
+  run(setData(meaning + 1));
   
   return {
     value: definition,
@@ -54,10 +54,10 @@ const definitionItemParser = coroutine( function* () {
 Definitions
      DefinitionItem(1) ws DefinitionItem(2) (ws DefinitionItem(i))_i=3*
 */
-const definitionsParser = withData(coroutine( function* () {
-  const definition1 = yield definitionItemParser;
-  yield whitespaceParser;
-  const definitionRest = yield sepBy1( whitespaceParser) (definitionItemParser);
+const definitionsParser = withData(coroutine( run => {
+  const definition1 = run(definitionItemParser);
+  run(whitespaceParser);
+  const definitionRest = run(sepBy1( whitespaceParser) (definitionItemParser));
   
   return [
     definition1,
