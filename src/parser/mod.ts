@@ -18,10 +18,10 @@ import { inputObj } from "../deps.ts";
 Line
     Source ws Target
 */
-const lineParser = coroutine(function* () {
-  const source = yield sourceParser;
-  yield whitespaceParser;
-  const target = yield targetParser;
+const lineParser = coroutine(run => {
+  const source = run(sourceParser);
+  run(whitespaceParser);
+  const target = run(targetParser);
   
   return {
     source,
@@ -51,10 +51,10 @@ const textParser = sepBy1( newlineParser) (lineParser);
 Parser
     ^ Text $
 */
-const parser = coroutine(function* () {
-  yield startOfInput;
-  const text = yield textParser;
-  yield endOfInput;
+const parser = coroutine(run => {
+  run(startOfInput);
+  const text = run(textParser);
+  run(endOfInput);
   
   return text;
 });

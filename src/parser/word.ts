@@ -134,8 +134,8 @@ const charKaSmallParser = choice([
 WordKaSmall
     CharKaSmall+
 */
-const wordKaSmallParser = coroutine( function* () {
-  const chars = yield many1( charKaSmallParser);
+const wordKaSmallParser = coroutine( run => {
+  const chars = run(many1( charKaSmallParser));
 
   return chars.join("");
 });
@@ -145,9 +145,9 @@ const wordKaSmallParser = coroutine( function* () {
 WordDeBig
     CharDeBig CharDeSmall+
 */
-const wordDeBigParser = coroutine( function* () {
-  const char = yield charDeBigParser;
-  const chars = yield many1( charDeSmallParser);
+const wordDeBigParser = coroutine( run => {
+  const char = run(charDeBigParser);
+  const chars = run(many1( charDeSmallParser));
 
   return [
     char,
@@ -160,9 +160,9 @@ const wordDeBigParser = coroutine( function* () {
 WordDeSmall
     CharDeSmall{2,}
 */
-const wordDeSmallParser = coroutine( function* () {
-  const char = yield charDeSmallParser;
-  const chars = yield many1( charDeSmallParser);
+const wordDeSmallParser = coroutine( run => {
+  const char = run(charDeSmallParser);
+  const chars = run(many1( charDeSmallParser));
 
   return [
     char,
