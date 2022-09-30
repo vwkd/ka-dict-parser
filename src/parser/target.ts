@@ -29,13 +29,13 @@ const valueParser = choice([
 Definition
     Value (";" ws Value)*
 */
-const definitionParser = sepBy1( str("; ")) (valueParser);
+const definitionParser = sepBy1(str("; ")) (valueParser);
 
 /*
 DefinitionItem(i)
     i "." ws Definition
 */
-const definitionItemParser = coroutine( run => {
+const definitionItemParser = coroutine(run => {
   const meaning = run(getData);
   
   run(str(`${meaning}.`));
@@ -54,10 +54,10 @@ const definitionItemParser = coroutine( run => {
 Definitions
      DefinitionItem(1) ws DefinitionItem(2) (ws DefinitionItem(i))_i=3*
 */
-const definitionsParser = withData(coroutine( run => {
+const definitionsParser = withData(coroutine(run => {
   const definition1 = run(definitionItemParser);
   run(whitespaceParser);
-  const definitionRest = run(sepBy1( whitespaceParser) (definitionItemParser));
+  const definitionRest = run(sepBy1(whitespaceParser) (definitionItemParser));
   
   return [
     definition1,

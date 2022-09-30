@@ -134,8 +134,8 @@ const charKaSmallParser = choice([
 WordKaSmall
     CharKaSmall+
 */
-const wordKaSmallParser = coroutine( run => {
-  const chars = run(many1( charKaSmallParser));
+const wordKaSmallParser = coroutine(run => {
+  const chars = run(many1(charKaSmallParser));
 
   return chars.join("");
 });
@@ -145,9 +145,9 @@ const wordKaSmallParser = coroutine( run => {
 WordDeBig
     CharDeBig CharDeSmall+
 */
-const wordDeBigParser = coroutine( run => {
+const wordDeBigParser = coroutine(run => {
   const char = run(charDeBigParser);
-  const chars = run(many1( charDeSmallParser));
+  const chars = run(many1(charDeSmallParser));
 
   return [
     char,
@@ -160,9 +160,9 @@ const wordDeBigParser = coroutine( run => {
 WordDeSmall
     CharDeSmall{2,}
 */
-const wordDeSmallParser = coroutine( run => {
+const wordDeSmallParser = coroutine(run => {
   const char = run(charDeSmallParser);
-  const chars = run(many1( charDeSmallParser));
+  const chars = run(many1(charDeSmallParser));
 
   return [
     char,
@@ -236,4 +236,4 @@ const wordParser = choice([
 Words
     Word (ws Word)*
 */
-export const wordsParser = (sepBy1Fixed( whitespaceParser) (wordParser)).map(a => a.join(" "));
+export const wordsParser = (sepBy1Fixed(whitespaceParser) (wordParser)).map(a => a.join(" "));
