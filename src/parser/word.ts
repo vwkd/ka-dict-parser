@@ -4,11 +4,8 @@ import {
   char,
   sequenceOf,
   many1,
+  sepBy1,
 } from "../deps.ts";
-
-import {
-  sepBy1Fixed,
-} from "../depsFixed.ts";
 
 import { whitespaceParser } from "./chars.ts";
 
@@ -236,4 +233,4 @@ const wordParser = choice([
 Words
     Word (ws Word)*
 */
-export const wordsParser = (sepBy1Fixed(whitespaceParser) (wordParser)).map(a => a.join(" "));
+export const wordsParser = (sepBy1(whitespaceParser) (wordParser)).map(a => a.join(" "));
