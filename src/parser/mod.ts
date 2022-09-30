@@ -38,14 +38,14 @@ const lineParser = coroutine(run => {
   console.error(error.replace(/(?<=position )\d+/, lineIndex));
   
   // skip current line, match anything until next newline without adding line to result
-  return skip (many( anyCharExcept( newlineParser)));
+  return skip (many(anyCharExcept(newlineParser)));
 });
 
 /*
 Text
     Line (nl Line)*
 */
-const textParser = sepBy1( newlineParser) (lineParser);
+const textParser = sepBy1(newlineParser) (lineParser);
 
 /*
 Parser
