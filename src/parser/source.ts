@@ -22,7 +22,7 @@ const MEANING = {
 WordKaMeaning
     WordKa SuperscriptNumber
 */
-const wordKaMeaningParser = coroutine( run => {
+const wordKaMeaningParser = coroutine(run => {
   const value = run(wordKaParser);
   const superscriptNumber = run(superscriptNumberParser);
   

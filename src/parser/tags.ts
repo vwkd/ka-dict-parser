@@ -115,13 +115,13 @@ const tagParser = choice([
 Tags
     "{" Tag ("," ws Tag)* "}"
 */
-const tagsParser = between( char("{")) ( char("}")) ( sepBy1( str(", ")) (tagParser));
+const tagsParser = between(char("{")) (char("}")) (sepBy1(str(", ")) (tagParser));
 
 /*
 TagsWhitespace
     Tags ws
 */
-const tagsWhitespaceParser = coroutine( run => {
+const tagsWhitespaceParser = coroutine(run => {
   const tags = run(tagsParser);
   run(whitespaceParser);
   

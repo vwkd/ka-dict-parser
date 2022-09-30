@@ -15,15 +15,15 @@ import tagsWhitespaceParser from "./tags.ts";
 CategoryList
     Words ("," ws Words)*
 */
-const categoryListParser = sepBy1( str(", ")) (wordsParser);
+const categoryListParser = sepBy1(str(", ")) (wordsParser);
 
 /*
 Category
     ws "(" CategoryList ")"
 */
-const categoryParser = coroutine( run => {
+const categoryParser = coroutine(run => {
   run(whitespaceParser);
-  const categoryList = run(between( char("(")) ( char(")")) ( categoryListParser));
+  const categoryList = run(between(char("(")) (char(")")) (categoryListParser));
   
   return categoryList;
 });
@@ -32,9 +32,9 @@ const categoryParser = coroutine( run => {
 Element
     Words Category?
 */
-const elementParser = coroutine( run => {
+const elementParser = coroutine(run => {
   const value = run(wordsParser);
-  const category = (run(possibly( categoryParser)) ?? []);
+  const category = (run(possibly(categoryParser)) ?? []);
 
   return {
     value,
@@ -46,14 +46,14 @@ const elementParser = coroutine( run => {
 Elements
     Element ("," ws Element)*
 */
-const elementsParser = sepBy1( str(", ")) (elementParser);
+const elementsParser = sepBy1(str(", ")) (elementParser);
 
 /*
 Field
     TagsWhitespace? Elements
 */
-const fieldParser = coroutine( run => {
-  const tags = (run(possibly( tagsWhitespaceParser)) ?? []);
+const fieldParser = coroutine(run => {
+  const tags = (run(possibly(tagsWhitespaceParser)) ?? []);
   const value = run(elementsParser);
 
   return {
