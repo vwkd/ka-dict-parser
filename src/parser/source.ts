@@ -22,9 +22,9 @@ const MEANING = {
 WordKaMeaning
     WordKa SuperscriptNumber
 */
-const wordKaMeaningParser = coroutine( function* () {
-  const value = yield wordKaParser;
-  const superscriptNumber = yield superscriptNumberParser;
+const wordKaMeaningParser = coroutine( run => {
+  const value = run(wordKaParser);
+  const superscriptNumber = run(superscriptNumberParser);
   
   const meaning = MEANING[superscriptNumber];
   

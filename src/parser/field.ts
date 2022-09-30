@@ -21,9 +21,9 @@ const categoryListParser = sepBy1( str(", ")) (wordsParser);
 Category
     ws "(" CategoryList ")"
 */
-const categoryParser = coroutine( function* () {
-  yield whitespaceParser
-  const categoryList = yield between( char("(")) ( char(")")) ( categoryListParser);
+const categoryParser = coroutine( run => {
+  run(whitespaceParser);
+  const categoryList = run(between( char("(")) ( char(")")) ( categoryListParser));
   
   return categoryList;
 });
@@ -32,9 +32,9 @@ const categoryParser = coroutine( function* () {
 Element
     Words Category?
 */
-const elementParser = coroutine( function* () {
-  const value = yield wordsParser;
-  const category = (yield possibly( categoryParser)) ?? [];
+const elementParser = coroutine( run => {
+  const value = run(wordsParser);
+  const category = (run(possibly( categoryParser)) ?? []);
 
   return {
     value,
@@ -52,9 +52,9 @@ const elementsParser = sepBy1( str(", ")) (elementParser);
 Field
     TagsWhitespace? Elements
 */
-const fieldParser = coroutine( function* () {
-  const tags = (yield possibly( tagsWhitespaceParser)) ?? [];
-  const value = yield elementsParser;
+const fieldParser = coroutine( run => {
+  const tags = (run(possibly( tagsWhitespaceParser)) ?? []);
+  const value = run(elementsParser);
 
   return {
     value,

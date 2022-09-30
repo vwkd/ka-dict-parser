@@ -16,11 +16,11 @@ export {
   getData,
   setData,
   withData,
-} from "https://cdn.skypack.dev/arcsecond@v4.1.0";
+} from "https://cdn.skypack.dev/arcsecond@v5.0.0";
 import {
   sequenceOf,
   many,
-} from "https://cdn.skypack.dev/arcsecond@v4.1.0";
+} from "https://cdn.skypack.dev/arcsecond@v5.0.0";
 export { equal } from "https://deno.land/std@0.154.0/testing/asserts.ts";
 
 // fixed version, see https://github.com/francisrstokes/arcsecond/issues/98
