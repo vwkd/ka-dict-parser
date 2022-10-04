@@ -1,5 +1,6 @@
 import { equal } from "../deps.ts";
 import type { EntryType } from "../types.ts";
+import { pipe } from "../utils.ts";
 
 export default function transform(entries: EntryType[]) {
   const p = pipe(
@@ -135,5 +136,3 @@ function removeOld(entries: EntryType[]) {
     return e;
   }).filter(e => e != null);
 }
-
-const pipe = (...fns) => (x) => fns.reduce((res, fn) => fn(res), x);
