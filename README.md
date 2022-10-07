@@ -1,6 +1,6 @@
 # README
 
-The grammar and parser for [ka-dict-verbs](https://github.com/vwkd/ka-dict-verbs)
+The grammar and parser for [kita-verbs](https://github.com/vwkd/kita-verbs)
 
 
 
