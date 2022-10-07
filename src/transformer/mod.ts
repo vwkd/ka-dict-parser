@@ -4,12 +4,12 @@ import { pipe } from "../utils.ts";
 
 export default function transform(entries: EntryType[]) {
   const p = pipe(
-    addId,
-    addReferenceId,
-    renameReferenceKind,
     renameTags,
     sortTags,
     removeOld,
+    addId,
+    addReferenceId,
+    renameReferenceKind,
   );
   
   return p(entries);
