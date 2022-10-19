@@ -22,6 +22,7 @@ import {
   many,
 } from "https://cdn.skypack.dev/arcsecond@v5.0.0";
 export { equal } from "https://deno.land/std@0.154.0/testing/asserts.ts";
+export { default as uuidByString } from "https://cdn.skypack.dev/uuid-by-string@4.0.0";
 
 // fixed version, see https://github.com/francisrstokes/arcsecond/issues/98
 export const sepBy1 = separator => value => sequenceOf([
