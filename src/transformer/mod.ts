@@ -1,6 +1,9 @@
-import { equal } from "../deps.ts";
+import { equal, uuidByString } from "../deps.ts";
 import type { EntryType } from "../types.ts";
 import { pipe } from "../utils.ts";
+
+// ns:DNS UUID v5 for "kita.ge"
+const namespace = "2004eaab-0273-5206-b642-db704a5e506c";
 
 export default function transform(entries: EntryType[]) {
   const p = pipe(
@@ -16,12 +19,18 @@ export default function transform(entries: EntryType[]) {
 }
 
 /* Add entry.id
- * uses line number as id (position in entries array)
+ * uses source value and meaning as id using UUID v5
 */
 function addId(entries: EntryType[]) {
 
-  entries.forEach((e, i) => {
-    e.id = i;
+  entries.forEach(e => {
+  
+    const data = e.source.value + (e.source.meaning ?? "");
+    
+    const uuid = uuidByString(data, namespace, 5);
+    
+    // only use first 8 chars
+    e.id = uuid.split("-")[0];
   });
   
   return entries;
