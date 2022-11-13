@@ -1,7 +1,4 @@
-import {
-  char,
-  choice,
-} from "$arcsecond";
+import { char, choice } from "$arcsecond";
 
 /*
 nl
