@@ -1,9 +1,6 @@
 import {
   coroutine,
   choice,
-  char,
-  sequenceOf,
-  possibly,
   str,
   getData,
   setData,
