@@ -1,18 +1,18 @@
 import {
   coroutine,
   choice,
-  sepBy1,
   startOfInput,
   endOfInput,
   many,
   anyCharExcept,
   skip,
-} from "../deps.ts";
+} from "$arcsecond";
+import { sepBy1 } from "./utils.ts";
 
 import { newlineParser, whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
 import targetParser from "./target.ts";
-import { inputObj } from "../deps.ts";
+import { inputObj } from "../input.ts";
 
 /*
 Line

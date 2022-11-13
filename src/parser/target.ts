@@ -4,12 +4,12 @@ import {
   char,
   sequenceOf,
   possibly,
-  sepBy1,
   str,
   getData,
   setData,
   withData,
-} from "../deps.ts";
+} from "$arcsecond";
+import { sepBy1 } from "./utils.ts";
 
 import { whitespaceParser } from "./chars.ts";
 import fieldParser from "./field.ts";

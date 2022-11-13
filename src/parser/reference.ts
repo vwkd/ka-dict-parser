@@ -6,7 +6,7 @@ import {
   possibly,
   sequenceOf,
   digits,
-} from "../deps.ts";
+} from "$arcsecond";
 
 import { whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";

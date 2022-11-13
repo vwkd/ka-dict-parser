@@ -3,9 +3,9 @@ import {
   coroutine,
   choice,
   char,
-  sepBy1,
   between,
-} from "../deps.ts";
+} from "$arcsecond";
+import { sepBy1 } from "./utils.ts";
 
 import { whitespaceParser } from "./chars.ts";
 

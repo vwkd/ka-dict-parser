@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "$std/": "https://deno.land/std@0.154.0/",
+    "$arcsecond": "https://cdn.skypack.dev/arcsecond@v5.0.0",
+    "$uuid-by-string": "https://cdn.skypack.dev/uuid-by-string@4.0.0"
+  }
+}

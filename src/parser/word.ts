@@ -4,8 +4,8 @@ import {
   char,
   sequenceOf,
   many1,
-  sepBy1,
-} from "../deps.ts";
+} from "$arcsecond";
+import { sepBy1 } from "./utils.ts";
 
 import { whitespaceParser } from "./chars.ts";
 
