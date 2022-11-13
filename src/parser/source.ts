@@ -1,7 +1,4 @@
-import {
-  coroutine,
-  choice,
-} from "$arcsecond";
+import { choice, coroutine } from "$arcsecond";
 
 import { superscriptNumberParser } from "./chars.ts";
 import { wordKaParser } from "./word.ts";
@@ -16,18 +13,18 @@ const MEANING = {
   "⁷": 7,
   "⁸": 8,
   "⁹": 9,
-}
+};
 
 /*
 WordKaMeaning
     WordKa SuperscriptNumber
 */
-const wordKaMeaningParser = coroutine(run => {
+const wordKaMeaningParser = coroutine((run) => {
   const value = run(wordKaParser);
   const superscriptNumber = run(superscriptNumberParser);
-  
+
   const meaning = MEANING[superscriptNumber];
-  
+
   return {
     value,
     meaning,
@@ -41,7 +38,7 @@ Source
 */
 const sourceParser = choice([
   wordKaMeaningParser,
-  wordKaParser.map(value => ({
+  wordKaParser.map((value) => ({
     value,
   })),
 ]);

@@ -1,11 +1,11 @@
 import {
-  str,
-  coroutine,
-  choice,
   char,
+  choice,
+  coroutine,
+  digits,
   possibly,
   sequenceOf,
-  digits,
+  str,
 } from "$arcsecond";
 
 import { whitespaceParser } from "./chars.ts";
@@ -15,7 +15,7 @@ import tagsWhitespaceParser from "./tags.ts";
 /*
 Kind
     "Bed." ws "s."
-    "s." 
+    "s."
     "id."
 */
 const kindParser = choice([
@@ -23,7 +23,7 @@ const kindParser = choice([
     str("Bed."),
     whitespaceParser,
     str("s."),
-  ]).map(a => a.join("")),
+  ]).map((a) => a.join("")),
   str("s."),
   str("id."),
 ]);
@@ -32,7 +32,7 @@ const kindParser = choice([
 WhitespaceMeaning
     ws "(Pkt." ws Digit ")"
 */
-const whitespaceMeaningParser = coroutine(run => {
+const whitespaceMeaningParser = coroutine((run) => {
   run(whitespaceParser);
   run(str("(Pkt."));
   run(whitespaceParser);
@@ -46,7 +46,7 @@ const whitespaceMeaningParser = coroutine(run => {
 Reference
     TagsWhitespace? Kind ws Source WhitespaceMeaning?
 */
-const referenceParser = coroutine(run => {
+const referenceParser = coroutine((run) => {
   const tags = (run(possibly(tagsWhitespaceParser)) ?? []);
   const kind = run(kindParser);
   run(whitespaceParser);

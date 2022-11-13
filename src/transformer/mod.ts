@@ -16,7 +16,7 @@ export default function transform(entries: EntryType[]) {
     addReferenceId,
     renameReferenceKind,
   );
-  
+
   return p(entries);
 }
 
@@ -24,17 +24,15 @@ export default function transform(entries: EntryType[]) {
  * uses source value and meaning as id using UUID v5
 */
 function addId(entries: EntryType[]) {
-
-  entries.forEach(e => {
-  
+  entries.forEach((e) => {
     const data = e.source.value + (e.source.meaning ?? "");
-    
+
     const uuid = uuidByString(data, namespace, 5);
-    
+
     // only use first 8 chars
     e.id = uuid.split("-")[0];
   });
-  
+
   return entries;
 }
 
@@ -42,25 +40,28 @@ function addId(entries: EntryType[]) {
  * beware: assumes entries have unique source, no duplicates!
 */
 function addReferenceId(entries: EntryType[]) {
-
-  entries.forEach(e => {
+  entries.forEach((e) => {
     e.target.forEach(({ value }) => {
-      value.forEach(value => {
+      value.forEach((value) => {
         // checks if reference
         if (value.source) {
-          const eRef = entries.find(f => equal(f.source, value.source));
-          
+          const eRef = entries.find((f) => equal(f.source, value.source));
+
           if (!eRef) {
-            throw new Error(`Couldn't find referenced entry '${Object.values(value.source).join("^")}' at entry '${Object.values(e.source).join("^")}'.`);
+            throw new Error(
+              `Couldn't find referenced entry '${
+                Object.values(value.source).join("^")
+              }' at entry '${Object.values(e.source).join("^")}'.`,
+            );
           }
           const id = eRef.id;
-          
+
           value.id = id;
         }
       });
     });
   });
-  
+
   return entries;
 }
 
@@ -73,10 +74,10 @@ function renameReferenceKind(entries: EntryType[]) {
     "Bed. s.": "MEANING",
     "id.": "IDENTICAL",
   };
-  
-  entries.forEach(e => {
+
+  entries.forEach((e) => {
     e.target.forEach(({ value }) => {
-      value.forEach(value => {
+      value.forEach((value) => {
         // checks if reference
         if (value.kind) {
           value.kind = KIND[value.kind];
@@ -84,7 +85,7 @@ function renameReferenceKind(entries: EntryType[]) {
       });
     });
   });
-  
+
   return entries;
 }
 
@@ -95,32 +96,31 @@ function renameReferenceKind(entries: EntryType[]) {
 */
 function renameTags(entries: EntryType[]) {
   function newTags(tags) {
-    return tags.map(tag => tag.slice(0, -1).toUpperCase().replace("-","_"));
+    return tags.map((tag) => tag.slice(0, -1).toUpperCase().replace("-", "_"));
   }
 
-  entries.forEach(e => {
+  entries.forEach((e) => {
     e.target.forEach(({ value }) => {
-      value.forEach(value => {
+      value.forEach((value) => {
         value.tags = newTags(value.tags);
       });
     });
   });
-  
+
   return entries;
 }
 
 /* Sort tags alphabetically
 */
 function sortTags(entries: EntryType[]) {
-
-  entries.forEach(e => {
+  entries.forEach((e) => {
     e.target.forEach(({ value }) => {
-      value.forEach(value => {
+      value.forEach((value) => {
         value.tags.sort();
       });
     });
   });
-  
+
   return entries;
 }
 
@@ -128,22 +128,21 @@ function sortTags(entries: EntryType[]) {
  * beware: if numbered may end up with missing number in sequence!
 */
 function removeOld(entries: EntryType[]) {
-  return entries.map(e => {
-  
-    e.target = e.target.map(t => {
+  return entries.map((e) => {
+    e.target = e.target.map((t) => {
       t.value = t.value.filter(({ tags }) => !tags.includes("VA"));
-        
+
       if (t.value.length == 0) {
         return null;
       }
-    
+
       return t;
-    }).filter(t => t != null);
-    
+    }).filter((t) => t != null);
+
     if (e.target.length == 0) {
       return null;
     }
-    
+
     return e;
-  }).filter(e => e != null);
+  }).filter((e) => e != null);
 }
