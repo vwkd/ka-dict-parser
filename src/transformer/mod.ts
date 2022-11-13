@@ -11,10 +11,10 @@ export default function transform(entries: EntryType[]) {
   const p = pipe(
     renameTags,
     sortTags,
-    removeOld,
     addId,
     addReferenceId,
     renameReferenceKind,
+    removeOld,
   );
 
   return p(entries);
@@ -124,8 +124,7 @@ function sortTags(entries: EntryType[]) {
   return entries;
 }
 
-/* Remove old entries or values
- * beware: if numbered may end up with missing number in sequence!
+/* Remove old entries or values and references
 */
 function removeOld(entries: EntryType[]) {
   return entries.map((e) => {
@@ -144,5 +143,34 @@ function removeOld(entries: EntryType[]) {
     }
 
     return e;
-  }).filter((e) => e != null);
+  })
+    .filter((e) => e != null)
+    .map((e) => {
+      e.target = e.target.map((target) => {
+        target.value = target.value.map((value) => {
+          // check if reference
+          if (value.kind) {
+            // check if referenced entry still exists
+            if (!entries.some((f) => f.id == value.id)) {
+              return null;
+            }
+          }
+
+          return value;
+        }).filter((value) => value != null);
+
+        if (target.value.length == 0) {
+          return null;
+        }
+
+        return target;
+      }).filter((target) => target != null);
+
+      if (e.target.length == 0) {
+        return null;
+      }
+
+      return e;
+    })
+    .filter((e) => e != null);
 }
