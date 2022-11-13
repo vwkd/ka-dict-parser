@@ -1,6 +1,5 @@
 import {
   coroutine,
-  choice,
   startOfInput,
   endOfInput,
   many,

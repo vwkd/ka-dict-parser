@@ -1,6 +1,5 @@
 import parser from "./parser/mod.ts"
 import transformer from "./transformer/mod.ts";
-import { ByteCodePointConverter } from "./utils.ts";
 import { inputObj } from "./input.ts";
 
 function handleError(error, parsingState) {

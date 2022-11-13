@@ -3,7 +3,7 @@ import {
   choice,
 } from "$arcsecond";
 
-import { whitespaceParser, superscriptNumberParser } from "./chars.ts";
+import { superscriptNumberParser } from "./chars.ts";
 import { wordKaParser } from "./word.ts";
 
 const MEANING = {
