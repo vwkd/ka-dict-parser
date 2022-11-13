@@ -1,4 +1,6 @@
-import { equal, uuidByString } from "../deps.ts";
+import { equal } from "$std/testing/asserts.ts";
+import uuidByString from "$uuid-by-string";
+
 import type { EntryType } from "../types.ts";
 import { pipe } from "../utils.ts";
 

@@ -1,7 +1,7 @@
 import {
   coroutine,
   choice,
-} from "../deps.ts";
+} from "$arcsecond";
 
 import { whitespaceParser, superscriptNumberParser } from "./chars.ts";
 import { wordKaParser } from "./word.ts";

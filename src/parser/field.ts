@@ -1,11 +1,11 @@
 import {
   coroutine,
   char,
-  sepBy1,
   possibly,
   str,
   between,
-} from "../deps.ts";
+} from "$arcsecond";
+import { sepBy1 } from "./utils.ts";
 
 import { whitespaceParser } from "./chars.ts";
 import { wordsParser } from "./word.ts";

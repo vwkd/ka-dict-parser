@@ -1,7 +1,7 @@
 import {
   char,
   choice,
-} from "../deps.ts";
+} from "$arcsecond";
 
 /*
 nl
