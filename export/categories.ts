@@ -1,4 +1,5 @@
 import vz from "../vz.json" assert { type: "json" };
+import { createId } from "../src/utils.ts";
 
 console.log("Extracting categories into categories.json");
 
@@ -25,7 +26,14 @@ for (const { source, target, id } of vz) {
 const categories = Array
   .from(uniqueCategories)
   .sort()
-  .map((category, id) => ({ id: id + 1, category }));
+  .map((category) => {
+    const id = createId(category);
+
+    return {
+      id,
+      category,
+    };
+  });
 
 await Deno.writeTextFile(
   "categories.json",
