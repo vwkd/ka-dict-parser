@@ -1,11 +1,13 @@
 import { stringify } from "$std/encoding/csv.ts";
 
 import sources from "../sources.json" assert { type: "json" };
+import targets from "../targets.json" assert { type: "json" };
 import tags from "../tags.json" assert { type: "json" };
 import categories from "../categories.json" assert { type: "json" };
 
 const exports = {
   "sources": sources,
+  "targets": targets,
   "tags": tags,
   "categories": categories,
 };
