@@ -6,11 +6,11 @@ import { createId, pipe } from "../utils.ts";
 export default function transform(entries: EntryType[]) {
   const p = pipe(
     renameTags,
-    sortTags,
+    //sortTags,
     addId,
     addReferenceId,
     renameReferenceKind,
-    removeOld,
+    //removeOld,
   );
 
   return p(entries);
@@ -63,9 +63,9 @@ function addReferenceId(entries: EntryType[]) {
 */
 function renameReferenceKind(entries: EntryType[]) {
   const KIND = {
-    "s.": "DIRECT",
-    "Bed. s.": "MEANING",
-    "id.": "IDENTICAL",
+    "s.": 1, // "DIRECT",
+    "Bed. s.": 2, // "MEANING",
+    "id.": 3, // "IDENTICAL",
   };
 
   entries.forEach((e) => {
