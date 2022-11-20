@@ -29,5 +29,7 @@ for (const [name, data] of Object.entries(exports)) {
 
     const columns = Array.from(propertyNames);
 
-    await Deno.writeTextFile(`${name}.csv`, stringify(data, { columns }));
+    const csv = stringify(data, { columns });
+
+    await Deno.writeTextFile(`${name}.csv`, csv.trim());
 }
