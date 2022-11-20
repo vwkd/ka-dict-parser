@@ -5,8 +5,9 @@
     "exportSources": "deno run --allow-write export/sources.ts",
     "exportTargets": "deno run --allow-write export/targets.ts",
     "exportTags": "deno run --allow-write export/tags.ts",
+    "exportReferences": "deno run --allow-write export/references.ts",
     "exportCategories": "deno run --allow-write export/categories.ts",
     "writeCsv": "deno run --allow-write export/csv.ts",
-    "export": "deno task exportSources && deno task exportTargets && deno task exportTags && deno task exportCategories && deno task writeCsv"
+    "export": "deno task exportSources && deno task exportTargets && deno task exportTags && deno task exportReferences && deno task exportCategories && deno task writeCsv"
   }
 }
