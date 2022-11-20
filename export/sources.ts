@@ -1,11 +1,15 @@
 import vz from "../vz.json" assert { type: "json" };
 import { createId } from "../src/utils.ts";
 
+export function sourceId(value, meaning) {
+  const data = value + (meaning ?? "");
+  return createId(data);
+}
+
 console.log("Extracting sources into sources.json");
 
 const sources = vz.map(({ source: { value, meaning } }) => {
-  const data = value + (meaning ?? "");
-  const id = createId(data);
+  const id = sourceId(value, meaning);
 
   return {
     id,
