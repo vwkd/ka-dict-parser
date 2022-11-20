@@ -2,9 +2,10 @@
   "importMap": "./import_map.json",
   "tasks": {
     "generate": "deno run --allow-net --allow-write src/mod.ts",
+    "exportSources": "deno run --allow-write export/sources.ts",
     "exportTags": "deno run --allow-write export/tags.ts",
     "exportCategories": "deno run --allow-write export/categories.ts",
     "writeCsv": "deno run --allow-write export/csv.ts",
-    "export": "deno task exportTags && deno task exportCategories && deno task writeCsv"
+    "export": "deno task exportSources && deno task exportTags && deno task exportCategories && deno task writeCsv"
   }
 }
