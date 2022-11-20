@@ -1,11 +1,7 @@
 import { equal } from "$std/testing/asserts.ts";
-import uuidByString from "$uuid-by-string";
 
 import type { EntryType } from "../types.ts";
-import { pipe } from "../utils.ts";
-
-// ns:DNS UUID v5 for "kita.ge"
-const namespace = "2004eaab-0273-5206-b642-db704a5e506c";
+import { createId, pipe } from "../utils.ts";
 
 export default function transform(entries: EntryType[]) {
   const p = pipe(
@@ -27,10 +23,7 @@ function addId(entries: EntryType[]) {
   entries.forEach((e) => {
     const data = e.source.value + (e.source.meaning ?? "");
 
-    const uuid = uuidByString(data, namespace, 5);
-
-    // only use first 8 chars
-    e.id = uuid.split("-")[0];
+    e.id = createId(data);
   });
 
   return entries;
