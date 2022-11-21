@@ -54,6 +54,11 @@ Tag
     "va."
     "vulg."
 */
+/* Rename tags
+* remove trailing period and make uppercase
+* note: saves database to keep short and expand only on client, also GraphQL server only allows _a-zA-Z
+* note: assumes all tags have trailing period
+*/
 const tagParser = choice([
   str("biol."),
   str("bot."),
@@ -103,7 +108,7 @@ const tagParser = choice([
   str("unk."),
   str("va."),
   str("vulg."),
-]);
+]).map((tag) => tag.slice(0, -1).toUpperCase().replace("-", "_"));
 
 /*
 Tags

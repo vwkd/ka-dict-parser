@@ -18,14 +18,17 @@ Kind
     "s."
     "id."
 */
+/* Rename reference kind
+* expand word and make uppercase
+*/
 const kindParser = choice([
   sequenceOf([
     str("Bed."),
     whitespaceParser,
     str("s."),
-  ]).map((a) => a.join("")),
-  str("s."),
-  str("id."),
+  ]).map(() => "MEANING"),
+  str("s.").map(() => "DIRECT"),
+  str("id.").map(() => "IDENTICAL"),
 ]);
 
 /*

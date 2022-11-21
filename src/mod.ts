@@ -1,5 +1,5 @@
 import parser from "./parser/mod.ts";
-import transformer from "./transformer/mod.ts";
+import exporter from "./exporter/mod.ts";
 import { inputObj } from "./input.ts";
 
 function handleError(error, parsingState) {
@@ -22,9 +22,6 @@ function handleSuccess(result, _) {
   return result;
 }
 
-const parseResult = parser.fork(inputObj.bytes, handleError, handleSuccess);
+const result = parser.fork(inputObj.bytes, handleError, handleSuccess);
 
-const result = transformer(parseResult);
-console.log("Transform success");
-
-await Deno.writeTextFile("vz.json", JSON.stringify(result));
+await exporter(result);

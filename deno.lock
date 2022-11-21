@@ -1,32 +1,17 @@
 {
   "version": "2",
   "remote": {
-    "https://deno.land/std@0.164.0/fmt/colors.ts": "9e36a716611dcd2e4865adea9c4bec916b5c60caad4cdcdc630d4974e6bb8bd4",
-    "https://deno.land/std@0.164.0/testing/_diff.ts": "a23e7fc2b4d8daa3e158fa06856bedf5334ce2a2831e8bf9e509717f455adb2c",
-    "https://deno.land/std@0.164.0/testing/_format.ts": "cd11136e1797791045e639e9f0f4640d5b4166148796cad37e6ef75f7d7f3832",
-    "https://deno.land/std@0.164.0/testing/asserts.ts": "1e340c589853e82e0807629ba31a43c84ebdcdeca910c4a9705715dfdb0f5ce8"
+    "https://deno.land/std@0.164.0/_util/asserts.ts": "d0844e9b62510f89ce1f9878b046f6a57bf88f208a10304aab50efcb48365272",
+    "https://deno.land/std@0.164.0/encoding/csv.ts": "9a9ba119e29101d1461b89bd2a7c20d3f4ea02768167b879e17116cb0f9ad994",
+    "https://deno.land/std@0.164.0/encoding/csv/_io.ts": "81a8c3f19687e9a067b06e26cece1fe8ee63ac2a4b233867e6e5982463349e73",
+    "https://deno.land/std@0.164.0/encoding/csv/_parser.ts": "dd44e1e6758984fb4aa1c34f8fb6e7db6b8eb4a2e1527d73db6d3b073576131e"
   },
   "npm": {
-    "specifiers": {
-      "arcsecond@5.0.0": "arcsecond@5.0.0",
-      "uuid-by-string@4.0.0": "uuid-by-string@4.0.0"
-    },
+    "specifiers": { "arcsecond@5.0.0": "arcsecond@5.0.0" },
     "packages": {
       "arcsecond@5.0.0": {
         "integrity": "sha512-J/fHdyadnsIencRsM6oUSsraCKG+Ni9Udcgr/eusxjTzX3SEQtCUQSpP0YtImFPfIK6DdT1nqwN0ng4FqNmwgA==",
         "dependencies": {}
-      },
-      "js-md5@0.7.3": {
-        "integrity": "sha512-ZC41vPSTLKGwIRjqDh8DfXoCrdQIyBgspJVPXHBGu4nZlAEvG3nf+jO9avM9RmLiGakg7vz974ms99nEV0tmTQ==",
-        "dependencies": {}
-      },
-      "js-sha1@0.6.0": {
-        "integrity": "sha512-01gwBFreYydzmU9BmZxpVk6svJJHrVxEN3IOiGl6VO93bVKYETJ0sIth6DASI6mIFdt7NmfX9UiByRzsYHGU9w==",
-        "dependencies": {}
-      },
-      "uuid-by-string@4.0.0": {
-        "integrity": "sha512-88ZSfcSkN04juiLqSsuyteqlSrXNFdsEPzSv3urnElDXNsZUXQN0smeTnh99x2DE15SCUQNgqKBfro54CuzHNQ==",
-        "dependencies": { "js-md5": "js-md5@0.7.3", "js-sha1": "js-sha1@0.6.0" }
       }
     }
   }
