@@ -90,8 +90,8 @@ export interface SourceRow {
 
 export interface TargetRow {
   id: number;
-  meaning?: number;
   source: number;
+  meaning?: number;
 }
 
 export interface TagRow {
@@ -107,19 +107,24 @@ export interface TagizationRow {
 
 export interface ReferenceRow {
   id: number;
-  source: number;
-  meaning?: number;
-  kind: "DIRECT" | "MEANING" | "IDENTICAL";
   target: number;
-  definitionIndex: number;
+  index: number;
+  source: number;
+  kind: "DIRECT" | "MEANING" | "IDENTICAL";
+  meaning?: number;
+}
+
+export interface FieldRow {
+  id: number;
+  target: number;
+  index: number;
 }
 
 export interface ElementRow {
   id: number;
+  field: number;
+  index: number;
   value: string;
-  target: number;
-  definitionIndex: number;
-  elementIndex: number;
 }
 
 export interface CategoryRow {

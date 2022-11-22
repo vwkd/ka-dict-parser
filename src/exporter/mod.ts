@@ -5,6 +5,7 @@ import type {
   CategoryRow,
   ElementRow,
   EntryType,
+  FieldRow,
   FieldType,
   ReferenceRow,
   ReferenceType,
@@ -19,6 +20,7 @@ const targetsTable: TargetRow[] = [];
 const tagsTable: TagRow[] = [];
 const tagizationTable: TagizationRow[] = [];
 const referencesTable: ReferenceRow[] = [];
+const fieldsTable: FieldRow[] = [];
 const elementsTable: ElementRow[] = [];
 const categoriesTable: CategoryRow[] = [];
 const categorizationTable: CategorizationRow[] = [];
@@ -29,6 +31,7 @@ const exports = {
   "tagsTable": tagsTable,
   "tagizationTable": tagizationTable,
   "referencesTable": referencesTable,
+  "fieldsTable": fieldsTable,
   "elementsTable": elementsTable,
   "categoriesTable": categoriesTable,
   "categorizationTable": categorizationTable,
@@ -89,7 +92,7 @@ export default async function exporter(entries: EntryType[]) {
             meaning: reference.meaning,
             kind: reference.kind,
             target: targetRow.id,
-            definitionIndex: definitionIndex + 1,
+            index: definitionIndex + 1,
           };
           referencesTable.push(referenceRow);
 
@@ -98,15 +101,21 @@ export default async function exporter(entries: EntryType[]) {
           const field = (definition as FieldType);
           // { value, tags }
 
+          const fieldRow = {
+            id: fieldsTable.length + 1,
+            target: targetRow.id,
+            index: definitionIndex + 1,
+          };
+          fieldsTable.push(fieldRow);
+
           for (const [elementIndex, element] of field.value.entries()) {
             // { value, category }
 
             const elementRow = {
               id: elementsTable.length + 1,
               value: element.value,
-              target: targetRow.id,
-              definitionIndex: definitionIndex + 1,
-              elementIndex: elementIndex + 1,
+              field: fieldRow.id,
+              index: elementIndex + 1,
             };
             elementsTable.push(elementRow);
 
