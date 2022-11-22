@@ -25,16 +25,45 @@ const elementsTable: ElementRow[] = [];
 const categoriesTable: CategoryRow[] = [];
 const categorizationTable: CategorizationRow[] = [];
 
+const sourcesTableHeaders = ["id", "value", "meaning"];
+const targetsTableHeaders = ["id", "source", "meaning"];
+const tagsTableHeaders = ["id", "value"];
+const tagizationTableHeaders = ["id", "tag", "target"];
+const referencesTableHeaders = [
+  "id",
+  "target",
+  "index",
+  "source",
+  "kind",
+  "meaning",
+];
+const fieldsTableHeaders = ["id", "target", "index"];
+const elementsTableHeaders = ["id", "field", "index", "value"];
+const categoriesTableHeaders = ["id", "value"];
+const categorizationTableHeaders = ["id", "category", "element"];
+
 const exports = {
-  "sourcesTable": sourcesTable,
-  "targetsTable": targetsTable,
-  "tagsTable": tagsTable,
-  "tagizationTable": tagizationTable,
-  "referencesTable": referencesTable,
-  "fieldsTable": fieldsTable,
-  "elementsTable": elementsTable,
-  "categoriesTable": categoriesTable,
-  "categorizationTable": categorizationTable,
+  "sourcesTable": { rows: sourcesTable, headers: sourcesTableHeaders },
+  "targetsTable": { rows: targetsTable, headers: targetsTableHeaders },
+  "tagsTable": { rows: tagsTable, headers: tagsTableHeaders },
+  "tagizationTable": {
+    rows: tagizationTable,
+    headers: tagizationTableHeaders,
+  },
+  "referencesTable": {
+    rows: referencesTable,
+    headers: referencesTableHeaders,
+  },
+  "fieldsTable": { rows: fieldsTable, headers: fieldsTableHeaders },
+  "elementsTable": { rows: elementsTable, headers: elementsTableHeaders },
+  "categoriesTable": {
+    rows: categoriesTable,
+    headers: categoriesTableHeaders,
+  },
+  "categorizationTable": {
+    rows: categorizationTable,
+    headers: categorizationTableHeaders,
+  },
 };
 
 export default async function exporter(entries: EntryType[]) {
@@ -67,7 +96,6 @@ export default async function exporter(entries: EntryType[]) {
       targetsTable.push(targetRow);
 
       for (const [definitionIndex, definition] of target.value.entries()) {
-
         // reference
         if ((definition as ReferenceType).kind) {
           const reference = (definition as ReferenceType);
@@ -92,7 +120,6 @@ export default async function exporter(entries: EntryType[]) {
             meaning: reference.meaning,
             kind: reference.kind,
             target: targetRow.id,
-            index: definitionIndex + 1,
           };
           referencesTable.push(referenceRow);
 
@@ -164,26 +191,10 @@ export default async function exporter(entries: EntryType[]) {
     }
   }
 
-  for (const [name, data] of Object.entries(exports)) {
+  for (const [name, {rows, headers}] of Object.entries(exports)) {
     console.log(`Exporting ${name}.csv`);
   
-    const propertyNames = new Set();
-  
-    // beware: order not necessarily like object, e.g.
-    // optional property not at end
-    // multiple optional properties depending on order of entries
-    // etc.
-    for (const entry of data) {
-      const propNames = Object.getOwnPropertyNames(entry);
-  
-      for (const propName of propNames) {
-        propertyNames.add(propName);
-      }
-    }
-  
-    const columns = Array.from(propertyNames);
-  
-    const csv = stringify(data, { columns });
+    const csv = stringify(rows, { columns: headers });
   
     await Deno.writeTextFile(`${name}.csv`, csv.trim());
   }

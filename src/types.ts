@@ -84,8 +84,8 @@ export type TagType =
 
 export interface SourceRow {
   id: number;
-  value: string;
   meaning?: number;
+  value: string;
 }
 
 export interface TargetRow {
@@ -108,7 +108,6 @@ export interface TagizationRow {
 export interface ReferenceRow {
   id: number;
   target: number;
-  index: number;
   source: number;
   kind: "DIRECT" | "MEANING" | "IDENTICAL";
   meaning?: number;
