@@ -1,22 +1,32 @@
+type ID = number;
+// greater than zero
+type Integer = number;
+type Text = string;
+
 export interface EntryType {
   source: SourceType;
   target: TargetType[];
 }
 
 export interface SourceType {
-  value: string;
-  meaning?: number;
+  value: Text;
+  meaning?: Integer;
 }
 
 export interface TargetType {
   value: (ReferenceType | FieldType)[];
-  meaning?: number;
+  meaning?: Integer;
 }
+
+type KindType =
+  | "DIRECT"
+  | "MEANING"
+  | "IDENTICAL";
 
 export interface ReferenceType {
   source: SourceType;
-  meaning?: number;
-  kind: "DIRECT" | "MEANING" | "IDENTICAL";
+  meaning?: Integer;
+  kind: KindType;
   tags: TagType[];
 }
 
@@ -26,8 +36,8 @@ export interface FieldType {
 }
 
 export interface ElementType {
-  value: string;
-  category: string[];
+  value: Text;
+  category: Text[];
 }
 
 export type TagType =
@@ -80,65 +90,62 @@ export type TagType =
   | "VA"
   | "VULG";
 
-export interface SourceRow {
-  id: number;
-  meaning?: number;
-  value: string;
+// ======= Tables =======
+
+interface Table {
+  id: ID;
 }
 
-export interface TargetRow {
-  id: number;
-  source: number;
-  meaning?: number;
+export interface SourceRow extends Table {
+  value: Text;
+  meaning?: Integer;
 }
 
-export interface ReferenceRow {
-  id: number;
-  target: number;
-  source: number;
-  kind: "DIRECT" | "MEANING" | "IDENTICAL";
-  meaning?: number;
+export interface TargetRow extends Table {
+  source: ID;
+  meaning?: Integer;
 }
 
-export interface FieldRow {
-  id: number;
-  target: number;
-  index: number;
+export interface ReferenceRow extends Table {
+  target: ID;
+  source: ID;
+  kind: KindType;
 }
 
-export interface ElementRow {
-  id: number;
-  field: number;
-  index: number;
-  value: string;
+export interface FieldRow extends Table {
+  target: ID;
+  index: Integer;
 }
 
-export interface CategoryRow {
-  id: number;
-  value: string;
+export interface ElementRow extends Table {
+  field: ID;
+  index: Integer;
+  value: Text;
 }
 
-export interface CategorizationRow {
-  id: number;
-  category: number;
-  element: number;
+export interface CategoryRow extends Table {
+  // todo: unique
+  value: Text;
 }
 
-export interface TagRow {
-  id: number;
-  value: string;
+export interface CategorizationRow extends Table {
+  category: ID;
+  element: ID;
+}
+
+export interface TagRow extends Table {
+  // todo: unique
+  value: Text;
 }
 
 export type TagizationRow = TagizationReferenceRow | TagizationFieldRow;
 
-interface TagizationReferenceRow {
-  id: number;
-  tag: number;
-  reference: number;
+interface TagizationReferenceRow extends Table {
+  tag: ID;
+  reference: ID;
 }
 
-interface TagizationFieldRow {
-  id: number;
-  tag: number;
-  field: number;
+interface TagizationFieldRow extends Table {
+  tag: ID;
+  field: ID;
 }
