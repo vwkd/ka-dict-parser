@@ -32,10 +32,8 @@ const tagizationTableHeaders = ["id", "tag", "reference", "field"];
 const referencesTableHeaders = [
   "id",
   "target",
-  "index",
   "source",
   "kind",
-  "meaning",
 ];
 const fieldsTableHeaders = ["id", "target", "index"];
 const elementsTableHeaders = ["id", "field", "index", "value"];
@@ -116,10 +114,9 @@ export default async function exporter(entries: EntryType[]) {
 
           const referenceRow = {
             id: referencesTable.length + 1,
-            source: sourceRowReference.id,
-            meaning: reference.meaning,
-            kind: reference.kind,
             target: targetRow.id,
+            source: sourceRowReference.id,
+            kind: reference.kind,
           };
           referencesTable.push(referenceRow);
 
