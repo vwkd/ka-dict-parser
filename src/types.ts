@@ -9,11 +9,9 @@ export interface SourceType {
 }
 
 export interface TargetType {
-  value: DefinitionType[];
+  value: (ReferenceType | FieldType)[];
   meaning?: number;
 }
-
-export type DefinitionType = ReferenceType | FieldType;
 
 export interface ReferenceType {
   source: SourceType;

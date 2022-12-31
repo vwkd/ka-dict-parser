@@ -95,10 +95,10 @@ export default async function exporter(entries: EntryType[]) {
       };
       targetsTable.push(targetRow);
 
-      for (const [definitionIndex, definition] of target.value.entries()) {
+      for (const [fieldOrReferenceIndex, fieldOrReference] of target.value.entries()) {
         // reference
-        if ((definition as ReferenceType).kind) {
-          const reference = (definition as ReferenceType);
+        if ((fieldOrReference as ReferenceType).kind) {
+          const reference = (fieldOrReference as ReferenceType);
           // { source, meaning, kind, tags }
 
           const sourceRowReference = sourcesTable.find((s) =>
@@ -125,13 +125,13 @@ export default async function exporter(entries: EntryType[]) {
 
           // field
         } else {
-          const field = (definition as FieldType);
+          const field = (fieldOrReference as FieldType);
           // { value, tags }
 
           const fieldRow = {
             id: fieldsTable.length + 1,
             target: targetRow.id,
-            index: definitionIndex + 1,
+            index: fieldOrReferenceIndex + 1,
           };
           fieldsTable.push(fieldRow);
 
