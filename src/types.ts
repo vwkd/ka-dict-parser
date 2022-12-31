@@ -138,8 +138,6 @@ export interface TagRow extends Table {
   value: Text;
 }
 
-export type TagizationRow = TagizationReferenceRow | TagizationFieldRow;
-
 export interface TagizationReferenceRow extends Table {
   tag: ID;
   reference: ID;

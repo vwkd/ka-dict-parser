@@ -12,7 +12,6 @@ import type {
   SourceRow,
   TagizationFieldRow,
   TagizationReferenceRow,
-  TagizationRow,
   TagRow,
   TargetRow,
 } from "../types.ts";
@@ -20,7 +19,8 @@ import type {
 const sourcesTable: SourceRow[] = [];
 const targetsTable: TargetRow[] = [];
 const tagsTable: TagRow[] = [];
-const tagizationTable: TagizationRow[] = [];
+const tagizationReferenceTable: TagizationReferenceRow[] = [];
+const tagizationFieldTable: TagizationFieldRow[] = [];
 const referencesTable: ReferenceRow[] = [];
 const fieldsTable: FieldRow[] = [];
 const elementsTable: ElementRow[] = [];
@@ -30,7 +30,8 @@ const categorizationTable: CategorizationRow[] = [];
 const sourcesTableHeaders: Array<keyof SourceRow> = ["id", "value", "meaning"];
 const targetsTableHeaders: Array<keyof TargetRow> = ["id", "source", "meaning"];
 const tagsTableHeaders: Array<keyof TagRow> = ["id", "value"];
-const tagizationTableHeaders: Array<keyof TagizationReferenceRow | keyof TagizationFieldRow> = ["id", "tag", "reference", "field"];
+const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag", "reference"];
+const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag", "field"];
 const referencesTableHeaders: Array<keyof ReferenceRow> = [
   "id",
   "target",
@@ -46,9 +47,13 @@ const exports = {
   "sourcesTable": { rows: sourcesTable, headers: sourcesTableHeaders },
   "targetsTable": { rows: targetsTable, headers: targetsTableHeaders },
   "tagsTable": { rows: tagsTable, headers: tagsTableHeaders },
-  "tagizationTable": {
-    rows: tagizationTable,
-    headers: tagizationTableHeaders,
+  "tagizationReferenceTable": {
+    rows: tagizationReferenceTable,
+    headers: tagizationReferenceTableHeaders,
+  },
+  "tagizationFieldTable": {
+    rows: tagizationFieldTable,
+    headers: tagizationFieldTableHeaders,
   },
   "referencesTable": {
     rows: referencesTable,
@@ -134,11 +139,11 @@ export default async function exporter(entries: EntryType[]) {
             }
   
             const tagizationRow = {
-              id: tagizationTable.length + 1,
+              id: tagizationReferenceTable.length + 1,
               tag: tagRow.id,
               reference: referenceRow.id,
             };
-            tagizationTable.push(tagizationRow);
+            tagizationReferenceTable.push(tagizationRow);
           }
           // field
         } else {
@@ -196,11 +201,11 @@ export default async function exporter(entries: EntryType[]) {
               }
     
               const tagizationRow = {
-                id: tagizationTable.length + 1,
+                id: tagizationFieldTable.length + 1,
                 tag: tagRow.id,
                 field: fieldRow.id,
               };
-              tagizationTable.push(tagizationRow);
+              tagizationFieldTable.push(tagizationRow);
             }
           }
         }
