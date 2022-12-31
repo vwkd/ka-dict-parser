@@ -10,6 +10,8 @@ import type {
   ReferenceRow,
   ReferenceType,
   SourceRow,
+  TagizationFieldRow,
+  TagizationReferenceRow,
   TagizationRow,
   TagRow,
   TargetRow,
@@ -25,20 +27,20 @@ const elementsTable: ElementRow[] = [];
 const categoriesTable: CategoryRow[] = [];
 const categorizationTable: CategorizationRow[] = [];
 
-const sourcesTableHeaders = ["id", "value", "meaning"];
-const targetsTableHeaders = ["id", "source", "meaning"];
-const tagsTableHeaders = ["id", "value"];
-const tagizationTableHeaders = ["id", "tag", "reference", "field"];
-const referencesTableHeaders = [
+const sourcesTableHeaders: Array<keyof SourceRow> = ["id", "value", "meaning"];
+const targetsTableHeaders: Array<keyof TargetRow> = ["id", "source", "meaning"];
+const tagsTableHeaders: Array<keyof TagRow> = ["id", "value"];
+const tagizationTableHeaders: Array<keyof TagizationReferenceRow | keyof TagizationFieldRow> = ["id", "tag", "reference", "field"];
+const referencesTableHeaders: Array<keyof ReferenceRow> = [
   "id",
   "target",
   "source",
   "kind",
 ];
-const fieldsTableHeaders = ["id", "target", "index"];
-const elementsTableHeaders = ["id", "field", "index", "value"];
-const categoriesTableHeaders = ["id", "value"];
-const categorizationTableHeaders = ["id", "category", "element"];
+const fieldsTableHeaders: Array<keyof FieldRow> = ["id", "target", "index"];
+const elementsTableHeaders: Array<keyof ElementRow> = ["id", "field", "index", "value"];
+const categoriesTableHeaders: Array<keyof CategoryRow> = ["id", "value"];
+const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category", "element"];
 
 const exports = {
   "sourcesTable": { rows: sourcesTable, headers: sourcesTableHeaders },
