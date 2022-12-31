@@ -28,7 +28,7 @@ const categorizationTable: CategorizationRow[] = [];
 const sourcesTableHeaders = ["id", "value", "meaning"];
 const targetsTableHeaders = ["id", "source", "meaning"];
 const tagsTableHeaders = ["id", "value"];
-const tagizationTableHeaders = ["id", "tag", "target"];
+const tagizationTableHeaders = ["id", "tag", "reference", "field"];
 const referencesTableHeaders = [
   "id",
   "target",
@@ -123,6 +123,24 @@ export default async function exporter(entries: EntryType[]) {
           };
           referencesTable.push(referenceRow);
 
+          for (const tag of reference.tags) {
+            let tagRow = tagsTable.find((t) => t.value == tag);
+  
+            if (!tagRow) {
+              tagRow = {
+                id: tagsTable.length + 1,
+                value: tag,
+              };
+              tagsTable.push(tagRow);
+            }
+  
+            const tagizationRow = {
+              id: tagizationTable.length + 1,
+              tag: tagRow.id,
+              reference: referenceRow.id,
+            };
+            tagizationTable.push(tagizationRow);
+          }
           // field
         } else {
           const field = (fieldOrReference as FieldType);
@@ -166,26 +184,26 @@ export default async function exporter(entries: EntryType[]) {
               };
               categorizationTable.push(categorizationRow);
             }
+
+            for (const tag of field.tags) {
+              let tagRow = tagsTable.find((t) => t.value == tag);
+    
+              if (!tagRow) {
+                tagRow = {
+                  id: tagsTable.length + 1,
+                  value: tag,
+                };
+                tagsTable.push(tagRow);
+              }
+    
+              const tagizationRow = {
+                id: tagizationTable.length + 1,
+                tag: tagRow.id,
+                field: fieldRow.id,
+              };
+              tagizationTable.push(tagizationRow);
+            }
           }
-        }
-
-        for (const tag of definition.tags) {
-          let tagRow = tagsTable.find((t) => t.value == tag);
-
-          if (!tagRow) {
-            tagRow = {
-              id: tagsTable.length + 1,
-              value: tag,
-            };
-            tagsTable.push(tagRow);
-          }
-
-          const tagizationRow = {
-            id: tagizationTable.length + 1,
-            tag: tagRow.id,
-            target: targetRow.id,
-          };
-          tagizationTable.push(tagizationRow);
         }
       }
     }

@@ -92,17 +92,6 @@ export interface TargetRow {
   meaning?: number;
 }
 
-export interface TagRow {
-  id: number;
-  value: string;
-}
-
-export interface TagizationRow {
-  id: number;
-  tag: number;
-  target: number;
-}
-
 export interface ReferenceRow {
   id: number;
   target: number;
@@ -133,4 +122,23 @@ export interface CategorizationRow {
   id: number;
   category: number;
   element: number;
+}
+
+export interface TagRow {
+  id: number;
+  value: string;
+}
+
+export type TagizationRow = TagizationReferenceRow | TagizationFieldRow;
+
+interface TagizationReferenceRow {
+  id: number;
+  tag: number;
+  reference: number;
+}
+
+interface TagizationFieldRow {
+  id: number;
+  tag: number;
+  field: number;
 }
