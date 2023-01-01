@@ -28,21 +28,21 @@ const categoriesTable: CategoryRow[] = [];
 const categorizationTable: CategorizationRow[] = [];
 
 const sourcesTableHeaders: Array<keyof SourceRow> = ["id", "value", "meaning"];
-const targetsTableHeaders: Array<keyof TargetRow> = ["id", "source", "meaning"];
+const targetsTableHeaders: Array<keyof TargetRow> = ["id", "source_id", "meaning"];
 const tagsTableHeaders: Array<keyof TagRow> = ["id", "value"];
-const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag", "reference"];
-const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag", "field"];
+const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag_id", "reference_id"];
+const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag_id", "field_id"];
 const referencesTableHeaders: Array<keyof ReferenceRow> = [
   "id",
-  "target",
-  "source",
+  "target_id",
+  "source_id",
   "meaning",
   "kind",
 ];
-const fieldsTableHeaders: Array<keyof FieldRow> = ["id", "target", "index"];
-const elementsTableHeaders: Array<keyof ElementRow> = ["id", "field", "index", "value"];
+const fieldsTableHeaders: Array<keyof FieldRow> = ["id", "target_id", "index"];
+const elementsTableHeaders: Array<keyof ElementRow> = ["id", "field_id", "index", "value"];
 const categoriesTableHeaders: Array<keyof CategoryRow> = ["id", "value"];
-const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category", "element"];
+const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category_id", "element_id"];
 
 const exports = {
   "sourcesTable": { rows: sourcesTable, headers: sourcesTableHeaders },
@@ -97,7 +97,7 @@ export default async function exporter(entries: EntryType[]) {
       const targetRow = {
         id: targetsTable.length + 1,
         meaning: target.meaning,
-        source: sourceRow.id,
+        source_id: sourceRow.id,
       };
       targetsTable.push(targetRow);
 
@@ -122,8 +122,8 @@ export default async function exporter(entries: EntryType[]) {
 
           const referenceRow = {
             id: referencesTable.length + 1,
-            target: targetRow.id,
-            source: sourceRowReference.id,
+            target_id: targetRow.id,
+            source_id: sourceRowReference.id,
             meaning: reference.meaning,
             kind: reference.kind,
           };
@@ -142,8 +142,8 @@ export default async function exporter(entries: EntryType[]) {
   
             const tagizationRow = {
               id: tagizationReferenceTable.length + 1,
-              tag: tagRow.id,
-              reference: referenceRow.id,
+              tag_id: tagRow.id,
+              reference_id: referenceRow.id,
             };
             tagizationReferenceTable.push(tagizationRow);
           }
@@ -154,7 +154,7 @@ export default async function exporter(entries: EntryType[]) {
 
           const fieldRow = {
             id: fieldsTable.length + 1,
-            target: targetRow.id,
+            target_id: targetRow.id,
             index: fieldOrReferenceIndex + 1,
           };
           fieldsTable.push(fieldRow);
@@ -165,7 +165,7 @@ export default async function exporter(entries: EntryType[]) {
             const elementRow = {
               id: elementsTable.length + 1,
               value: element.value,
-              field: fieldRow.id,
+              field_id: fieldRow.id,
               index: elementIndex + 1,
             };
             elementsTable.push(elementRow);
@@ -185,8 +185,8 @@ export default async function exporter(entries: EntryType[]) {
 
               const categorizationRow = {
                 id: categorizationTable.length + 1,
-                category: categoryRow.id,
-                element: elementRow.id,
+                category_id: categoryRow.id,
+                element_id: elementRow.id,
               };
               categorizationTable.push(categorizationRow);
             }
@@ -204,8 +204,8 @@ export default async function exporter(entries: EntryType[]) {
     
               const tagizationRow = {
                 id: tagizationFieldTable.length + 1,
-                tag: tagRow.id,
-                field: fieldRow.id,
+                tag_id: tagRow.id,
+                field_id: fieldRow.id,
               };
               tagizationFieldTable.push(tagizationRow);
             }

@@ -102,24 +102,24 @@ export interface SourceRow extends Table {
 }
 
 export interface TargetRow extends Table {
-  source: ID;
+  source_id: ID;
   meaning?: Integer;
 }
 
 export interface ReferenceRow extends Table {
-  target: ID;
-  source: ID;
+  target_id: ID;
+  source_id: ID;
   meaning?: Integer;
   kind: KindType;
 }
 
 export interface FieldRow extends Table {
-  target: ID;
+  target_id: ID;
   index: Integer;
 }
 
 export interface ElementRow extends Table {
-  field: ID;
+  field_id: ID;
   index: Integer;
   value: Text;
 }
@@ -130,8 +130,8 @@ export interface CategoryRow extends Table {
 }
 
 export interface CategorizationRow extends Table {
-  category: ID;
-  element: ID;
+  category_id: ID;
+  element_id: ID;
 }
 
 export interface TagRow extends Table {
@@ -140,11 +140,11 @@ export interface TagRow extends Table {
 }
 
 export interface TagizationReferenceRow extends Table {
-  tag: ID;
-  reference: ID;
+  tag_id: ID;
+  reference_id: ID;
 }
 
 export interface TagizationFieldRow extends Table {
-  tag: ID;
-  field: ID;
+  tag_id: ID;
+  field_id: ID;
 }
