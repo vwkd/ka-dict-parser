@@ -36,6 +36,7 @@ const referencesTableHeaders: Array<keyof ReferenceRow> = [
   "id",
   "target",
   "source",
+  "meaning",
   "kind",
 ];
 const fieldsTableHeaders: Array<keyof FieldRow> = ["id", "target", "index"];
@@ -123,6 +124,7 @@ export default async function exporter(entries: EntryType[]) {
             id: referencesTable.length + 1,
             target: targetRow.id,
             source: sourceRowReference.id,
+            meaning: reference.meaning,
             kind: reference.kind,
           };
           referencesTable.push(referenceRow);

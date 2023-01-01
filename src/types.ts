@@ -109,6 +109,7 @@ export interface TargetRow extends Table {
 export interface ReferenceRow extends Table {
   target: ID;
   source: ID;
+  meaning?: Integer;
   kind: KindType;
 }
 
