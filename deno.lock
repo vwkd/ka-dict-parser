@@ -7,11 +7,26 @@
     "https://deno.land/std@0.164.0/encoding/csv/_parser.ts": "dd44e1e6758984fb4aa1c34f8fb6e7db6b8eb4a2e1527d73db6d3b073576131e"
   },
   "npm": {
-    "specifiers": { "arcsecond@5.0.0": "arcsecond@5.0.0" },
+    "specifiers": {
+      "arcsecond@5.0.0": "arcsecond@5.0.0",
+      "uuid-by-string@4.0.0": "uuid-by-string@4.0.0"
+    },
     "packages": {
       "arcsecond@5.0.0": {
         "integrity": "sha512-J/fHdyadnsIencRsM6oUSsraCKG+Ni9Udcgr/eusxjTzX3SEQtCUQSpP0YtImFPfIK6DdT1nqwN0ng4FqNmwgA==",
         "dependencies": {}
+      },
+      "js-md5@0.7.3": {
+        "integrity": "sha512-ZC41vPSTLKGwIRjqDh8DfXoCrdQIyBgspJVPXHBGu4nZlAEvG3nf+jO9avM9RmLiGakg7vz974ms99nEV0tmTQ==",
+        "dependencies": {}
+      },
+      "js-sha1@0.6.0": {
+        "integrity": "sha512-01gwBFreYydzmU9BmZxpVk6svJJHrVxEN3IOiGl6VO93bVKYETJ0sIth6DASI6mIFdt7NmfX9UiByRzsYHGU9w==",
+        "dependencies": {}
+      },
+      "uuid-by-string@4.0.0": {
+        "integrity": "sha512-88ZSfcSkN04juiLqSsuyteqlSrXNFdsEPzSv3urnElDXNsZUXQN0smeTnh99x2DE15SCUQNgqKBfro54CuzHNQ==",
+        "dependencies": { "js-md5": "js-md5@0.7.3", "js-sha1": "js-sha1@0.6.0" }
       }
     }
   }

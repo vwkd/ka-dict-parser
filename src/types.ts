@@ -1,4 +1,4 @@
-type ID = number;
+type ID = string;
 // greater than zero
 type Integer = number;
 type Text = string;

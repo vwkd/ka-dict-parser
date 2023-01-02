@@ -1,4 +1,5 @@
 import { stringify } from "$std/encoding/csv.ts";
+import { createId } from "./id.ts";
 
 import type {
   CategorizationRow,
@@ -76,7 +77,7 @@ export default async function exporter(entries: EntryType[]) {
   // populate sourcesTable in advance for references
   for (const entry of entries) {
     const sourceRow = {
-      id: sourcesTable.length + 1,
+      id: createId(sourcesTable.length + 1),
       value: entry.source.value,
       meaning: entry.source.meaning,
     };
@@ -95,7 +96,7 @@ export default async function exporter(entries: EntryType[]) {
       // { value, meaning? }
 
       const targetRow = {
-        id: targetsTable.length + 1,
+        id: createId(targetsTable.length + 1),
         meaning: target.meaning,
         source_id: sourceRow.id,
       };
@@ -121,7 +122,7 @@ export default async function exporter(entries: EntryType[]) {
           }
 
           const referenceRow = {
-            id: referencesTable.length + 1,
+            id: createId(referencesTable.length + 1),
             target_id: targetRow.id,
             source_id: sourceRowReference.id,
             meaning: reference.meaning,
@@ -134,14 +135,14 @@ export default async function exporter(entries: EntryType[]) {
   
             if (!tagRow) {
               tagRow = {
-                id: tagsTable.length + 1,
+                id: createId(tagsTable.length + 1),
                 value: tag,
               };
               tagsTable.push(tagRow);
             }
   
             const tagizationRow = {
-              id: tagizationReferenceTable.length + 1,
+              id: createId(tagizationReferenceTable.length + 1),
               tag_id: tagRow.id,
               reference_id: referenceRow.id,
             };
@@ -153,7 +154,7 @@ export default async function exporter(entries: EntryType[]) {
           // { value, tags }
 
           const fieldRow = {
-            id: fieldsTable.length + 1,
+            id: createId(fieldsTable.length + 1),
             target_id: targetRow.id,
             index: fieldOrReferenceIndex + 1,
           };
@@ -163,7 +164,7 @@ export default async function exporter(entries: EntryType[]) {
             // { value, category }
 
             const elementRow = {
-              id: elementsTable.length + 1,
+              id: createId(elementsTable.length + 1),
               value: element.value,
               field_id: fieldRow.id,
               index: elementIndex + 1,
@@ -177,14 +178,14 @@ export default async function exporter(entries: EntryType[]) {
 
               if (!categoryRow) {
                 categoryRow = {
-                  id: categoriesTable.length + 1,
+                  id: createId(categoriesTable.length + 1),
                   value: category,
                 };
                 categoriesTable.push(categoryRow);
               }
 
               const categorizationRow = {
-                id: categorizationTable.length + 1,
+                id: createId(categorizationTable.length + 1),
                 category_id: categoryRow.id,
                 element_id: elementRow.id,
               };
@@ -196,14 +197,14 @@ export default async function exporter(entries: EntryType[]) {
     
               if (!tagRow) {
                 tagRow = {
-                  id: tagsTable.length + 1,
+                  id: createId(tagsTable.length + 1),
                   value: tag,
                 };
                 tagsTable.push(tagRow);
               }
     
               const tagizationRow = {
-                id: tagizationFieldTable.length + 1,
+                id: createId(tagizationFieldTable.length + 1),
                 tag_id: tagRow.id,
                 field_id: fieldRow.id,
               };

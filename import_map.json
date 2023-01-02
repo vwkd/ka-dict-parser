@@ -1,6 +1,7 @@
 {
   "imports": {
     "$std/": "https://deno.land/std@0.164.0/",
-    "$arcsecond": "npm:arcsecond@5.0.0"
+    "$arcsecond": "npm:arcsecond@5.0.0",
+    "$uuid-by-string": "npm:uuid-by-string@4.0.0"
   }
 }
