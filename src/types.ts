@@ -132,6 +132,7 @@ export interface CategoryRow extends Table {
 export interface CategorizationRow extends Table {
   category_id: ID;
   element_id: ID;
+  index: Integer;
 }
 
 export interface TagRow extends Table {
@@ -142,9 +143,11 @@ export interface TagRow extends Table {
 export interface TagizationReferenceRow extends Table {
   tag_id: ID;
   reference_id: ID;
+  index: Integer;
 }
 
 export interface TagizationFieldRow extends Table {
   tag_id: ID;
   field_id: ID;
+  index: Integer;
 }

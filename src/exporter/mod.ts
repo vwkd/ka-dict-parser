@@ -31,8 +31,8 @@ const categorizationTable: CategorizationRow[] = [];
 const sourcesTableHeaders: Array<keyof SourceRow> = ["id", "value", "meaning"];
 const targetsTableHeaders: Array<keyof TargetRow> = ["id", "source_id", "meaning"];
 const tagsTableHeaders: Array<keyof TagRow> = ["id", "value"];
-const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag_id", "reference_id"];
-const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag_id", "field_id"];
+const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag_id", "reference_id", "index"];
+const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag_id", "field_id", "index"];
 const referencesTableHeaders: Array<keyof ReferenceRow> = [
   "id",
   "target_id",
@@ -43,7 +43,7 @@ const referencesTableHeaders: Array<keyof ReferenceRow> = [
 const fieldsTableHeaders: Array<keyof FieldRow> = ["id", "target_id", "index"];
 const elementsTableHeaders: Array<keyof ElementRow> = ["id", "field_id", "index", "value"];
 const categoriesTableHeaders: Array<keyof CategoryRow> = ["id", "value"];
-const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category_id", "element_id"];
+const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category_id", "element_id", "index"];
 
 const exports = {
   "sourcesTable": { rows: sourcesTable, headers: sourcesTableHeaders },
@@ -130,7 +130,7 @@ export default async function exporter(entries: EntryType[]) {
           };
           referencesTable.push(referenceRow);
 
-          for (const tag of reference.tags) {
+          for (const [tagIndex, tag] of reference.tags.entries()) {
             let tagRow = tagsTable.find((t) => t.value == tag);
   
             if (!tagRow) {
@@ -145,6 +145,7 @@ export default async function exporter(entries: EntryType[]) {
               id: createId(tagizationReferenceTable.length + 1),
               tag_id: tagRow.id,
               reference_id: referenceRow.id,
+              index: tagIndex + 1,
             };
             tagizationReferenceTable.push(tagizationRow);
           }
@@ -171,7 +172,7 @@ export default async function exporter(entries: EntryType[]) {
             };
             elementsTable.push(elementRow);
 
-            for (const category of element.category) {
+            for (const [categoryIndex, category] of element.category.entries()) {
               let categoryRow = categoriesTable.find(
                 (c) => c.value == category,
               );
@@ -188,11 +189,12 @@ export default async function exporter(entries: EntryType[]) {
                 id: createId(categorizationTable.length + 1),
                 category_id: categoryRow.id,
                 element_id: elementRow.id,
+                index: categoryIndex + 1,
               };
               categorizationTable.push(categorizationRow);
             }
 
-            for (const tag of field.tags) {
+            for (const [tagIndex, tag] of field.tags.entries()) {
               let tagRow = tagsTable.find((t) => t.value == tag);
     
               if (!tagRow) {
@@ -207,6 +209,7 @@ export default async function exporter(entries: EntryType[]) {
                 id: createId(tagizationFieldTable.length + 1),
                 tag_id: tagRow.id,
                 field_id: fieldRow.id,
+                index: tagIndex + 1,
               };
               tagizationFieldTable.push(tagizationRow);
             }
