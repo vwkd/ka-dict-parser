@@ -2,9 +2,13 @@
   "version": "2",
   "remote": {
     "https://deno.land/std@0.164.0/_util/asserts.ts": "d0844e9b62510f89ce1f9878b046f6a57bf88f208a10304aab50efcb48365272",
+    "https://deno.land/std@0.164.0/dotenv/load.ts": "9adeb1fb395f991f958a06c8b3adafdcbac0056e7a6a35bf9d33eab6347ef63c",
+    "https://deno.land/std@0.164.0/dotenv/mod.ts": "b149416f0daa0361873097495d16adbb321b8bcb594dcc5cdb6bf9639fd173fd",
+    "https://deno.land/std@0.164.0/dotenv/util.ts": "6cc392f087577a26a27f0463f77cc0c31a390aa055917099935b36eb2454592d",
     "https://deno.land/std@0.164.0/encoding/csv.ts": "9a9ba119e29101d1461b89bd2a7c20d3f4ea02768167b879e17116cb0f9ad994",
     "https://deno.land/std@0.164.0/encoding/csv/_io.ts": "81a8c3f19687e9a067b06e26cece1fe8ee63ac2a4b233867e6e5982463349e73",
-    "https://deno.land/std@0.164.0/encoding/csv/_parser.ts": "dd44e1e6758984fb4aa1c34f8fb6e7db6b8eb4a2e1527d73db6d3b073576131e"
+    "https://deno.land/std@0.164.0/encoding/csv/_parser.ts": "dd44e1e6758984fb4aa1c34f8fb6e7db6b8eb4a2e1527d73db6d3b073576131e",
+    "https://raw.githubusercontent.com/vwkd/kita-utils/862f2eeaca43a458a83a7a562725f2f080ee2f12/src/fetch.ts": "9120669f124be0e7ee260db020deb8bdc4751f88b7f620216547e064de712c7a"
   },
   "npm": {
     "specifiers": {
@@ -26,7 +30,10 @@
       },
       "uuid-by-string@4.0.0": {
         "integrity": "sha512-88ZSfcSkN04juiLqSsuyteqlSrXNFdsEPzSv3urnElDXNsZUXQN0smeTnh99x2DE15SCUQNgqKBfro54CuzHNQ==",
-        "dependencies": { "js-md5": "js-md5@0.7.3", "js-sha1": "js-sha1@0.6.0" }
+        "dependencies": {
+          "js-md5": "js-md5@0.7.3",
+          "js-sha1": "js-sha1@0.6.0"
+        }
       }
     }
   }
