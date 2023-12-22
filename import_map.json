@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "$std/": "https://deno.land/std@0.164.0/",
-    "$arcsecond": "npm:arcsecond@5.0.0",
-    "$uuid-by-string": "npm:uuid-by-string@4.0.0",
-    "$utils/": "https://raw.githubusercontent.com/vwkd/kita-utils/862f2eeaca43a458a83a7a562725f2f080ee2f12/src/"
-  }
-}
