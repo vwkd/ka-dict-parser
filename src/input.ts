@@ -1,4 +1,3 @@
-import "$std/dotenv/load.ts";
 import { fetchGithub } from "$utils/fetch.ts";
 import { ByteCodePointConverter } from "./utils.ts";
 

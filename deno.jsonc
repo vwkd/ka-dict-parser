@@ -1,6 +1,6 @@
 {
   "importMap": "./import_map.json",
   "tasks": {
-    "generate": "deno run --allow-net --allow-write --allow-env --allow-read src/mod.ts"
+    "generate": "op run --env-file='./.env' -- deno run --allow-net --allow-write --allow-env --allow-read src/mod.ts"
   }
 }
