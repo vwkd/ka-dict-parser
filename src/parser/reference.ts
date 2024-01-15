@@ -10,7 +10,7 @@ import {
 
 import { whitespaceParser } from "./chars.ts";
 import sourceParser from "./source.ts";
-import tagsWhitespaceParser from "./tags.ts";
+import tagsWhitespaceParser from "./tag.ts";
 
 /*
 Kind
@@ -50,7 +50,7 @@ Reference
     TagsWhitespace? Kind ws Source WhitespaceMeaning?
 */
 const referenceParser = coroutine((run) => {
-  const tags = (run(possibly(tagsWhitespaceParser)) ?? []);
+  const tag = (run(possibly(tagsWhitespaceParser)) ?? []);
   const kind = run(kindParser);
   run(whitespaceParser);
   const source = run(sourceParser);
@@ -60,7 +60,7 @@ const referenceParser = coroutine((run) => {
     source,
     meaning,
     kind,
-    tags,
+    tag,
   };
 });
 

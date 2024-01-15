@@ -3,7 +3,7 @@ import { sepBy1 } from "./utils.ts";
 
 import { whitespaceParser } from "./chars.ts";
 import { wordsParser } from "./word.ts";
-import tagsWhitespaceParser from "./tags.ts";
+import tagsWhitespaceParser from "./tag.ts";
 
 /*
 CategoryList
@@ -47,12 +47,12 @@ Field
     TagsWhitespace? Elements
 */
 const fieldParser = coroutine((run) => {
-  const tags = (run(possibly(tagsWhitespaceParser)) ?? []);
+  const tag = (run(possibly(tagsWhitespaceParser)) ?? []);
   const value = run(elementsParser);
 
   return {
     value,
-    tags,
+    tag,
   };
 });
 

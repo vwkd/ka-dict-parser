@@ -106,7 +106,7 @@ export default async function exporter(entries: EntryType[]) {
         // reference
         if ((fieldOrReference as ReferenceType).kind) {
           const reference = (fieldOrReference as ReferenceType);
-          // { source, meaning, kind, tags }
+          // { source, meaning, kind, tag }
 
           const sourceRowReference = sourcesTable.find((s) =>
             s.value == reference.source.value &&
@@ -130,7 +130,7 @@ export default async function exporter(entries: EntryType[]) {
           };
           referencesTable.push(referenceRow);
 
-          for (const [tagIndex, tag] of reference.tags.entries()) {
+          for (const [tagIndex, tag] of reference.tag.entries()) {
             let tagRow = tagsTable.find((t) => t.value == tag);
   
             if (!tagRow) {
@@ -152,7 +152,7 @@ export default async function exporter(entries: EntryType[]) {
           // field
         } else {
           const field = (fieldOrReference as FieldType);
-          // { value, tags }
+          // { value, tag }
 
           const fieldRow = {
             id: createId(fieldsTable.length + 1),
@@ -194,7 +194,7 @@ export default async function exporter(entries: EntryType[]) {
               categorizationTable.push(categorizationRow);
             }
 
-            for (const [tagIndex, tag] of field.tags.entries()) {
+            for (const [tagIndex, tag] of field.tag.entries()) {
               let tagRow = tagsTable.find((t) => t.value == tag);
     
               if (!tagRow) {

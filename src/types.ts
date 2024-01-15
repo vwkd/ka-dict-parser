@@ -27,12 +27,12 @@ export interface ReferenceType {
   source: SourceType;
   meaning?: Integer;
   kind: KindType;
-  tags: TagType[];
+  tag: TagType[];
 }
 
 export interface FieldType {
   value: ElementType[];
-  tags: TagType[];
+  tag: TagType[];
 }
 
 export interface ElementType {
