@@ -101,7 +101,7 @@ export default async function exporter(entries: EntryType[]) {
   // populate sourceTable in advance for references
   for (const entry of entries) {
     const sourceRow = {
-      id: createId(sourceTable.length + 1),
+      id: createId(`source-${sourceTable.length + 1}`),
       value: entry.source.value,
       meaning: entry.source.meaning,
     };
@@ -120,7 +120,7 @@ export default async function exporter(entries: EntryType[]) {
       // { value, meaning? }
 
       const targetRow = {
-        id: createId(targetTable.length + 1),
+        id: createId(`target-${targetTable.length + 1}`),
         meaning: target.meaning,
         source_id: sourceRow.id,
       };
@@ -149,7 +149,7 @@ export default async function exporter(entries: EntryType[]) {
           }
 
           const referenceRow = {
-            id: createId(referenceTable.length + 1),
+            id: createId(`reference-${referenceTable.length + 1}`),
             target_id: targetRow.id,
             source_id: sourceRowReference.id,
             meaning: reference.meaning,
@@ -162,14 +162,16 @@ export default async function exporter(entries: EntryType[]) {
 
             if (!tagRow) {
               tagRow = {
-                id: createId(tagTable.length + 1),
+                id: createId(`tag-${tagTable.length + 1}`),
                 value: tag,
               };
               tagTable.push(tagRow);
             }
 
             const tagizationRow = {
-              id: createId(tagizationReferenceTable.length + 1),
+              id: createId(
+                `tagizationReference-${tagizationReferenceTable.length + 1}`,
+              ),
               tag_id: tagRow.id,
               reference_id: referenceRow.id,
               index: tagIndex + 1,
@@ -182,7 +184,7 @@ export default async function exporter(entries: EntryType[]) {
           // { value, tag }
 
           const fieldRow = {
-            id: createId(fieldTable.length + 1),
+            id: createId(`field-${fieldTable.length + 1}`),
             target_id: targetRow.id,
             index: fieldOrReferenceIndex + 1,
           };
@@ -192,7 +194,7 @@ export default async function exporter(entries: EntryType[]) {
             // { value, category }
 
             const elementRow = {
-              id: createId(elementTable.length + 1),
+              id: createId(`element-${elementTable.length + 1}`),
               value: element.value,
               field_id: fieldRow.id,
               index: elementIndex + 1,
@@ -208,14 +210,16 @@ export default async function exporter(entries: EntryType[]) {
 
               if (!categoryRow) {
                 categoryRow = {
-                  id: createId(categoryTable.length + 1),
+                  id: createId(`category-${categoryTable.length + 1}`),
                   value: category,
                 };
                 categoryTable.push(categoryRow);
               }
 
               const categorizationRow = {
-                id: createId(categorizationTable.length + 1),
+                id: createId(
+                  `categorization-${categorizationTable.length + 1}`,
+                ),
                 category_id: categoryRow.id,
                 element_id: elementRow.id,
                 index: categoryIndex + 1,
@@ -228,14 +232,16 @@ export default async function exporter(entries: EntryType[]) {
 
               if (!tagRow) {
                 tagRow = {
-                  id: createId(tagTable.length + 1),
+                  id: createId(`tag-${tagTable.length + 1}`),
                   value: tag,
                 };
                 tagTable.push(tagRow);
               }
 
               const tagizationRow = {
-                id: createId(tagizationFieldTable.length + 1),
+                id: createId(
+                  `tagizationField-${tagizationFieldTable.length + 1}`,
+                ),
                 tag_id: tagRow.id,
                 field_id: fieldRow.id,
                 index: tagIndex + 1,
