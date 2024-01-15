@@ -28,7 +28,7 @@ Element
 */
 const elementParser = coroutine((run) => {
   const value = run(wordsParser);
-  const category = (run(possibly(categoryParser)) ?? []);
+  const category = run(possibly(categoryParser)) ?? [];
 
   return {
     value,
@@ -47,7 +47,7 @@ Field
     TagsWhitespace? Elements
 */
 const fieldParser = coroutine((run) => {
-  const tag = (run(possibly(tagsWhitespaceParser)) ?? []);
+  const tag = run(possibly(tagsWhitespaceParser)) ?? [];
   const value = run(elementsParser);
 
   return {

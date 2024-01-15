@@ -50,11 +50,11 @@ Reference
     TagsWhitespace? Kind ws Source WhitespaceMeaning?
 */
 const referenceParser = coroutine((run) => {
-  const tag = (run(possibly(tagsWhitespaceParser)) ?? []);
+  const tag = run(possibly(tagsWhitespaceParser)) ?? [];
   const kind = run(kindParser);
   run(whitespaceParser);
   const source = run(sourceParser);
-  const meaning = (run(possibly(whitespaceMeaningParser)) ?? undefined);
+  const meaning = run(possibly(whitespaceMeaningParser)) ?? undefined;
 
   return {
     source,

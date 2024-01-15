@@ -29,10 +29,24 @@ const categoryTable: CategoryRow[] = [];
 const categorizationTable: CategorizationRow[] = [];
 
 const sourceTableHeaders: Array<keyof SourceRow> = ["id", "value", "meaning"];
-const targetTableHeaders: Array<keyof TargetRow> = ["id", "source_id", "meaning"];
+const targetTableHeaders: Array<keyof TargetRow> = [
+  "id",
+  "source_id",
+  "meaning",
+];
 const tagTableHeaders: Array<keyof TagRow> = ["id", "value"];
-const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = ["id", "tag_id", "reference_id", "index"];
-const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = ["id", "tag_id", "field_id", "index"];
+const tagizationReferenceTableHeaders: Array<keyof TagizationReferenceRow> = [
+  "id",
+  "tag_id",
+  "reference_id",
+  "index",
+];
+const tagizationFieldTableHeaders: Array<keyof TagizationFieldRow> = [
+  "id",
+  "tag_id",
+  "field_id",
+  "index",
+];
 const referenceTableHeaders: Array<keyof ReferenceRow> = [
   "id",
   "target_id",
@@ -41,9 +55,19 @@ const referenceTableHeaders: Array<keyof ReferenceRow> = [
   "kind",
 ];
 const fieldTableHeaders: Array<keyof FieldRow> = ["id", "target_id", "index"];
-const elementTableHeaders: Array<keyof ElementRow> = ["id", "field_id", "index", "value"];
+const elementTableHeaders: Array<keyof ElementRow> = [
+  "id",
+  "field_id",
+  "index",
+  "value",
+];
 const categoryTableHeaders: Array<keyof CategoryRow> = ["id", "value"];
-const categorizationTableHeaders: Array<keyof CategorizationRow> = ["id", "category_id", "element_id", "index"];
+const categorizationTableHeaders: Array<keyof CategorizationRow> = [
+  "id",
+  "category_id",
+  "element_id",
+  "index",
+];
 
 const exports = {
   "source": { rows: sourceTable, headers: sourceTableHeaders },
@@ -102,10 +126,13 @@ export default async function exporter(entries: EntryType[]) {
       };
       targetTable.push(targetRow);
 
-      for (const [fieldOrReferenceIndex, fieldOrReference] of target.value.entries()) {
+      for (
+        const [fieldOrReferenceIndex, fieldOrReference] of target.value
+          .entries()
+      ) {
         // reference
         if ((fieldOrReference as ReferenceType).kind) {
-          const reference = (fieldOrReference as ReferenceType);
+          const reference = fieldOrReference as ReferenceType;
           // { source, meaning, kind, tag }
 
           const sourceRowReference = sourceTable.find((s) =>
@@ -132,7 +159,7 @@ export default async function exporter(entries: EntryType[]) {
 
           for (const [tagIndex, tag] of reference.tag.entries()) {
             let tagRow = tagTable.find((t) => t.value == tag);
-  
+
             if (!tagRow) {
               tagRow = {
                 id: createId(tagTable.length + 1),
@@ -140,7 +167,7 @@ export default async function exporter(entries: EntryType[]) {
               };
               tagTable.push(tagRow);
             }
-  
+
             const tagizationRow = {
               id: createId(tagizationReferenceTable.length + 1),
               tag_id: tagRow.id,
@@ -151,7 +178,7 @@ export default async function exporter(entries: EntryType[]) {
           }
           // field
         } else {
-          const field = (fieldOrReference as FieldType);
+          const field = fieldOrReference as FieldType;
           // { value, tag }
 
           const fieldRow = {
@@ -172,7 +199,9 @@ export default async function exporter(entries: EntryType[]) {
             };
             elementTable.push(elementRow);
 
-            for (const [categoryIndex, category] of element.category.entries()) {
+            for (
+              const [categoryIndex, category] of element.category.entries()
+            ) {
               let categoryRow = categoryTable.find(
                 (c) => c.value == category,
               );
@@ -196,7 +225,7 @@ export default async function exporter(entries: EntryType[]) {
 
             for (const [tagIndex, tag] of field.tag.entries()) {
               let tagRow = tagTable.find((t) => t.value == tag);
-    
+
               if (!tagRow) {
                 tagRow = {
                   id: createId(tagTable.length + 1),
@@ -204,7 +233,7 @@ export default async function exporter(entries: EntryType[]) {
                 };
                 tagTable.push(tagRow);
               }
-    
+
               const tagizationRow = {
                 id: createId(tagizationFieldTable.length + 1),
                 tag_id: tagRow.id,
@@ -227,11 +256,11 @@ export default async function exporter(entries: EntryType[]) {
     }
   }
 
-  for (const [name, {rows, headers}] of Object.entries(exports)) {
+  for (const [name, { rows, headers }] of Object.entries(exports)) {
     console.log(`Exporting ${name}.csv`);
-  
+
     const csv = stringify(rows, { columns: headers });
-  
+
     await Deno.writeTextFile(`tables/${name}.csv`, csv.trim());
   }
 
